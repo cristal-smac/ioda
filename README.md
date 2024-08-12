@@ -129,9 +129,9 @@ You should have received [a copy](gpl.txt) of the GNU General Public License alo
 If not, see [https://www.gnu.org/licenses](https://www.gnu.org/licenses).
 
 
-![https://github.com/cristal-smac/ioda](doc/images/URL.png)&emsp;&emsp;&emsp;
-![SMAC logo](doc/images/small-smac.png)&emsp;&emsp;&emsp;
-![CRIStAL logo](doc/images/small-cristal.png)&emsp;&emsp;&emsp;
-![CNRS logo](doc/images/small-cnrs.png)&emsp;&emsp;&emsp;
-![University of Lille logo](doc/images/small-UL.png)
+![https://github.com/cristal-smac/ioda](doc/images/URL.png)&emsp;
+![SMAC logo](doc/images/small-smac.jpg)&emsp;
+![CRIStAL logo](doc/images/small-cristal.jpg)&emsp;
+![CNRS logo](doc/images/small-cnrs.png)&emsp;
+![University of Lille logo](doc/images/small-UL.jpg)
 
