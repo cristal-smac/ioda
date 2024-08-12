@@ -130,8 +130,9 @@ If not, see [https://www.gnu.org/licenses](https://www.gnu.org/licenses).
 
 
 ![https://github.com/cristal-smac/ioda](doc/images/URL.png)&emsp;
-![SMAC logo](doc/images/small-smac.jpg)&emsp;
-![CRIStAL logo](doc/images/small-cristal.jpg)&emsp;
+![SMAC logo](doc/images/small-smacop.png)&emsp;
+![CRIStAL logo](doc/images/small-cristalop.png)&emsp;
 ![CNRS logo](doc/images/small-cnrs.png)&emsp;
-![University of Lille logo](doc/images/small-UL.jpg)
+![University of Lille logo](doc/images/small-ULop.png)
+
 
