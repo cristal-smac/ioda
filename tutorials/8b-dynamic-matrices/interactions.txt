@@ -1,0 +1,45 @@
+; This file can be used to define your own interactions.
+; SYNTAX:
+; [EXCLUSIVE|PARALLEL] INTERACTION <name>
+; [TRIGGER <tr1> ... <tr_n>]
+; [...]
+; [TRIGGER <tr'1> ... <tr'_n>]
+; [CONDITION <cond1> ... <cond_n>]
+; [...]
+; [CONDITION <cond'1> ... <cond'_n>]
+; [ACTIONS <act1> ... <act_n>]
+; END
+;
+; NB1: tr_i and cond_i are abstract condition primitives,
+; which must be implemented by concrete reporters, while
+; act_i are abstract action primitives, which must be
+; implemented by concrete commands.
+;
+; NB2: any non-letter, non-digit character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+interaction	Grow
+  trigger	random-trial?
+  condition	place-nearby?
+  actions	duplicate
+end
+
+interaction	DieBySuffocation
+  trigger	not:place-nearby?
+  actions	die
+end
+
+interaction	WakeUpKillers
+  trigger	too-many-blobs?
+  actions	target:turn-red change-assignations die
+end
+
+interaction	Kill
+  actions	target:die
+end
+
+interaction	Wander
+  condition	place-nearby?
+  actions	move-to-free-place
+end

@@ -1,0 +1,27 @@
+; This file can be used to define your own interactions.
+; SYNTAX:
+; [EXCLUSIVE|PARALLEL] INTERACTION <name>
+; [TRIGGER <tr1> ... <tr_n>]
+; [CONDITION <cond1> ... <cond_n>]
+; [ACTIONS <act1> ... <act_n>]
+; END
+;
+; NB1: tr_i and cond_i are abstract condition primitives,
+; which must be implemented by concrete reporters, while
+; act_i are abstract action primitives, which must be
+; implemented by concrete commands.
+;
+; NB2: any non-letter, non-digit character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+interaction Die
+  actions  die
+end
+
+interaction Survive
+  condition multiple-of-400
+  condition multiple-of-4 not:multiple-of-100
+  actions   print-value
+end
+

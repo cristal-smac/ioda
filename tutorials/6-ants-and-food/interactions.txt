@@ -1,0 +1,42 @@
+parallel interaction Follow
+  trigger 	foraging?
+  actions	follow-target  target:decrease-strength
+end
+
+exclusive interaction Take
+  condition	can-take-load?
+  actions	take-target  target:die
+end
+
+interaction MoveRandomly
+  actions 	wiggle
+end
+
+interaction ReturnToNest
+  trigger 	carrying-food?
+  actions	drop-pheromone  move-to-home
+end
+
+interaction DropFood
+  condition	carrying-food?
+  actions	drop-load  turn-back
+end
+
+exclusive interaction Die 
+  trigger  	too-weak?
+  actions	die
+end
+
+interaction Evaporate
+  actions decrease-strength
+end
+
+interaction UpdateView
+  actions update-label
+end
+
+interaction Steal
+  trigger	foraging?
+  condition	target:carrying-food?
+  actions	steal-load
+end

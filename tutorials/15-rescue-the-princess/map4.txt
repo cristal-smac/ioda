@@ -1,0 +1,17 @@
+A rigid goal ordering might prevent the knight from reaching the princess!
+[21 15]
+WWWWWWWWWWWWWWWWWWWWW
+WK                WgW
+W                 W W
+W   WWWWWWGWWWWWW W W
+W   Wb         rW W W
+W   W           W W W
+W   W           W   W
+W   R     P     B   W
+W   W           W   W
+W   W           W   W
+W   W          yW   W
+W   WWWWWWYWWWWWW   W
+W                   W
+W                   W
+WWWWWWWWWWWWWWWWWWWWW

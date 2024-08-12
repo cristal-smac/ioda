@@ -1,0 +1,1107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>IODA: A Hands-On Tutorial - Steps in the Model Design</title>
+<!-- 2014-09-01 Mon 12:20 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta  name="generator" content="Org-mode">
+<meta  name="author" content="*Sébastien Picault*Sébastien Picault, SMAC Research Team, Lille 1 University (~sebastien.picault~ /at/ at~univ-lille1.fr~)">
+<link rel="stylesheet" type="text/css" href="Netlogo-Style.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<H2><b>Sébastien Picault</b>, SMAC Research Team, Lille 1 University (<code>sebastien.picault</code> <i>at</i> <code>univ-lille1.fr</code>)</H2>
+</div>
+<div id="content">
+<h1 class="title">IODA: A Hands-On Tutorial - Steps in the Model Design<DIV class="version">Social Simulation Conference, Barcelona, 2014 </DIV></h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Setup: Starting with the IODA NetLogo extension</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Include and extension</a></li>
+<li><a href="#sec-1-2">1.2. User Interface</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. First Steps: A Simple Predator-Prey Model</a>
+<ul>
+<li><a href="#sec-2-1">2.1. The corresponding interaction matrix</a></li>
+<li><a href="#sec-2-2">2.2. The definition of interactions</a></li>
+<li><a href="#sec-2-3">2.3. Pieces of NetLogo code</a>
+<ul>
+<li><a href="#sec-2-3-1">Breed declaration and initialization</a></li>
+<li><a href="#sec-2-3-2">From abstract to concrete primitives</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Extending the model</a>
+<ul>
+<li><a href="#sec-3-1">3.1. New agents, same interactions</a></li>
+<li><a href="#sec-3-2">3.2. Aging: UPDATE processes</a></li>
+<li><a href="#sec-3-3">3.3. Hunting and Escaping (the target selection policy)</a></li>
+<li><a href="#sec-3-4">3.4. Going further</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+The slides describing the main ideas underlying the
+<b>Interaction-Oriented Approach</b> to Agent-Based Simulation can be found
+<a href="Tutorial-slides.pdf">here</a>.
+</p>
+
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Setup: Starting with the IODA NetLogo extension</h2>
+<div class="outline-text-2" id="text-1">
+<blockquote>
+<div class="center">
+<p>
+Structure of the directory tree for a "standard" installation of the IODA extension within the NetLogo installation directory
+</p>
+</div>
+<pre class="example">
+-- NetLogo5	[i.e. your own NetLogo installation directory]
+   |-- NetLogo.jar
+   |-- ...
+   |-- extensions
+        |-- ioda
+            |-- ioda.jar
+            |-- IODA_2_2.nls   
+	    |-- tutorials
+	    |   |-- 0-template
+	    |   |   |-- interaction.txt
+	    |   |   |-- matrix.txt
+	    |   |   |-- model.nlogo
+	    |	|
+	    |   |-- ...
+	    |
+	    |-- docs
+</pre>
+</blockquote>
+
+
+<p>
+The <a href="http://www.lifl.fr/SMAC/projects/ioda/ioda_for_netlogo/">IODA extension</a> comes with a <code>tutorial</code> directory, which contains
+a large number of code examples. Especially, the <code>0-template</code>
+directory provides 3 files that can be used for starting your own model:
+</p>
+<ul class="org-ul">
+<li><code>model.nlogo</code> : a NetLogo file (see below)
+</li>
+<li><code>interactions.txt</code> : a text file which describes all available interactions
+</li>
+<li><code>matrix.txt</code> : a text file in CSV format which describes what
+interactions are assigned to source and target agent families,
+with the corresponding priority, limit distance and target
+selection policy.
+</li>
+</ul>
+
+<p>
+<b>For this tutorial we have packed a <a href="template.zip">template.zip</a> file which you just need to download and unpack.</b>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Include and extension</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+The IODA NetLogo extension is composed of 2 parts:
+</p>
+<ul class="org-ul">
+<li>the <code>ioda</code> directory, containing the file <code>ioda.jar</code>, can be
+either installed within the <code>extensions</code> directory of your
+NetLogo installation directory, or at the same level of the
+models that you develop
+</li>
+<li>the file <code>IODA_2_2.nls</code>, which is a source file written in
+NetLogo, can be put anywhere but you have to specify the full
+path of the file to access it; a quite simple solution is to put
+a copy of this file in the directory where you have your own
+models.
+</li>
+</ul>
+
+<p>
+Thus the template model begins with the following lines:
+</p>
+<pre class="example">
+__includes ["IODA_2_2.nls"]  ; here the path of the nls file
+extensions [ioda]
+</pre>
+<p>
+which ensure that both the include source code and the Java extension are loaded.
+</p>
+
+<p>
+The template model contains the two main procedures required to
+initialize and run any model: <code>setup</code> and <code>go</code> (attached to the
+corresponding buttons in the NetLogo graphical interface). 
+</p>
+<pre class="example">
+to setup
+  clear-all
+  ioda:load-interactions "interactions.txt"
+  ioda:load-matrices "matrix.txt" " \t"
+  ioda:setup
+  reset-ticks
+end
+
+to go
+  ioda:go
+  tick
+end
+</pre>
+<p>
+The <code>setup</code> procedure is in charge of loading the definition of
+interactions in the specified text file, then loading the assignation
+of interactions to specific agents through an interaction and an
+update matrix, then the IODA engine initializes the model. You may use
+your own filenames (provided that you change them in the <code>setup</code>
+procedure).
+</p>
+
+<p>
+The <code>go</code> procedure delegates the scheduling of the IODA agents to a
+dedicated procedure, <code>ioda:go</code>, which is defined in the include file.
+</p>
+
+<p>
+In the next steps, you should have very few things to add inside those
+procedures.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> User Interface</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+If everything is installed properly, the interface view should look as shown below.
+If any error occurs when clicking on the <code>setup</code> button or on the <code>go</code> button,
+you should check again the installation procedure.
+</p>
+
+
+<div class="figure">
+<p><img src="figures/template.png" alt="template.png">
+</p>
+<p><span class="figure-number">Figure 1:</span> The NetLogo view for the template model.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> First Steps: A Simple Predator-Prey Model</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Now we are going to implement a naive predator-prey model with the
+classical sheep and wolves. We shall start with the following
+specifications:
+</p>
+<ul class="org-ul">
+<li>sheep and wolves wander (walk randomly) through the environment
+</li>
+<li>when two sheep meet, they can produce offspring (a delay must be
+introduced to prevent them to produce offspring at each tick)
+</li>
+<li>a wolf can eat a sheep
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> The corresponding interaction matrix</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+This situation can be summarized in the form of an <b>interaction
+matrix</b> according to the IODA approach, like the matrix below.  Except
+for the 1st column (source agents) and the 1st line (target agents),
+each cell contains the interactions that the source agent (agent at
+the left of the line) can perform on the target agent (agent at the
+top of the column). The column marked with &empty; represents
+interactions where the target agent is the source agent itself, which
+are called <b>reflexive interactions</b>.
+</p>
+
+<blockquote>
+<table id="imatrix1" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 1:</span> A IODA interaction matrix for describing what interactions can occur between agents families</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">sheep</th>
+<th scope="col" class="left">wolves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>sheep</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">Mate (10, 0.5)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>wolves</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">Eat (10, 1)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+This description is to be read as follows: 
+</p>
+<ul class="org-ul">
+<li>a <b>sheep</b> can perform the <code>Wander</code> interaction alone (i.e. with no
+other target), with priority 0
+</li>
+<li>same thing for a <b>wolf</b>
+</li>
+<li>a <b>sheep</b> can perform the <code>Mate</code> interaction with <b>another sheep</b>,
+with priority level 10, at distance &le; 0.5
+</li>
+<li>a <b>wolf</b> can perform the <code>Eat</code> interaction with a <b>sheep</b>, with
+priority level 10, at distance &le; 1.
+</li>
+</ul>
+
+<p>
+N.B.: When an agent tries to perform interactions, it select one among the
+realizable interactions with the highest priority level. Thus only the
+order relation among interactions on the same line is relevant. 
+</p>
+</blockquote>
+
+<p>
+In the IODA extension, this interaction matrix is encoded as a CSV
+file where each line represents the affectation of an interaction to a
+source family, with a priority level, and possibly a target family and
+the corresponding limit distance. 
+</p>
+
+<p>
+Thus you have to add those informations to the file <code>matrix.txt</code>:
+</p>
+<pre class="example">
+; This file can be used to define your own interaction
+; matrix and update matrix.
+; SYNTAX:
+; &lt;source&gt; &lt;interaction&gt; &lt;priority&gt;
+; OR: &lt;source&gt; &lt;interaction&gt; &lt;priority&gt; UPDATE
+; OR: &lt;source&gt; &lt;interaction&gt; &lt;priority&gt; &lt;target&gt; &lt;distance&gt; [&lt;target-selection-policy&gt;]
+;
+; NB1: this file is read as a CSV file, thus you can use any field separator char 
+; since you put it in the second argument of the ioda:load-matrices command.
+;
+; NB2: any non-letter, non-digit character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+sheep	Wander	0
+sheep	Mate	10	sheep	0.5
+wolves	Wander	0
+wolves	Eat	10	sheep	1
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> The definition of interactions</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+The interactions we have here are quite simple:
+</p>
+<ul class="org-ul">
+<li><code>Wander</code> consists of a single action: the random walk
+</li>
+<li><code>Mate</code>: if both source and target are able
+to mate, they must produce a new agent and remember the current tick
+</li>
+<li><code>Eat</code>: if the source is hungry, if digests the target and destroys it
+</li>
+</ul>
+
+<p>
+Thus those interactions can be expressed in the IODA formalism as follows:
+</p>
+<blockquote>
+<pre class="example">
+; This file can be used to define your own interactions.
+; SYNTAX:
+; [EXCLUSIVE|PARALLEL] INTERACTION &lt;name&gt;
+; [TRIGGER &lt;tr1&gt; ... &lt;tr_n&gt;]
+; [...]
+; [TRIGGER &lt;tr'1&gt; ... &lt;tr'_n&gt;]
+; [CONDITION &lt;cond1&gt; ... &lt;cond_n&gt;]
+; [...]
+; [CONDITION &lt;cond'1&gt; ... &lt;cond'_n&gt;]
+; [ACTIONS &lt;act1&gt; ... &lt;act_n&gt;]
+; END
+;
+; NB1: tr_i and cond_i are abstract condition primitives,
+; which must be implemented by concrete reporters, while
+; act_i are abstract action primitives, which must be
+; implemented by concrete commands.
+;
+; NB2: any non-letter, non-digit character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+INTERACTION	Wander
+  ACTIONS	choose-direction advance
+END
+
+INTERACTION	Mate
+  CONDITION	after-delay? target:after-delay?
+  ACTIONS	reset-timer target:reset-timer produce-offspring
+END
+
+INTERACTION	Eat
+  TRIGGER	hungry?
+  ACTIONS	digest target:die
+END
+</pre>
+
+<p>
+Two important things to notice:
+</p>
+<ol class="org-ol">
+<li>Interactions use abstract condition and action primitives. By
+default, they are evaluated by the source agent (the agent that
+tries to perform the interaction). The special keyword <code>target:</code>
+means that the primitive is evaluated by the target agent (the
+partner of the interaction, the agent that undergoes the
+interaction).
+</li>
+<li><b>The <code>TRIGGER</code> clause</b> instead of the <code>CONDITION</code> in interaction
+<code>Eat</code>.  From an operational point of view it does not make any
+difference. Yet, the <code>TRIGGER</code> is aimed at expressing a <b>goal</b>
+(i.e. the reason why this interaction should be performed), while
+the <code>CONDITION</code> represents a prerequisite for executing the
+actions.
+</li>
+</ol>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Pieces of NetLogo code</h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1">Breed declaration and initialization</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+The first thing to do is to declare the two turtle breeds we are going
+to use, with their properties (for now, the <code>sheep</code> just need a timer
+to know whether they can mate or not).
+</p>
+
+<pre class="example">
+breed [sheep]
+breed [wolves wolf]
+
+sheep-own [ last-offspring ]
+</pre>
+
+<p>
+Then we have to write a procedure for initializing random populations.
+Below is an example for that. Do not forget to add the corresponding
+sliders in the user interface: respectively, <b><code>nb-sheep</code></b> and <b><code>nb-wolves</code></b>.
+</p>
+
+<pre class="example">
+to setup
+  clear-all
+  ioda:load-interactions "interactions.txt"
+  ioda:load-matrices "matrix.txt" " \t"
+  init-world
+  ioda:setup
+  reset-ticks
+end
+
+to init-world
+  ask patches [set pcolor green]
+  set-default-shape sheep "sheep"
+  set-default-shape wolves "wolf"
+  create-sheep nb-sheep [ setxy random-xcor random-ycor set color white]
+  create-wolves nb-wolves [ setxy random-xcor random-ycor set color gray]
+end
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2">From abstract to concrete primitives</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+At this step if you click on the <code>setup</code> button, then on the <code>go</code>
+button, you get an error message. Indeed, the IODA engine detects
+agent families (NetLogo breeds) that, according to the interaction
+matrix, can perform interactions which make use of (yet) undefined
+primitives.
+</p>
+
+<blockquote>
+<p>
+Now click on the <b><code>show primitives to write</code></b> button. In the output area, you get the following text:
+</p>
+<pre class="example">
+to-report sheep::after-delay?
+end
+
+to-report wolves::hungry?
+end
+
+to sheep::filter-neighbors
+end
+
+to wolves::filter-neighbors
+end
+
+to sheep::reset-timer
+end
+
+to sheep::produce-offspring
+end
+
+to sheep::choose-direction
+end
+
+to sheep::advance
+end
+
+to wolves::digest
+end
+
+to sheep::die
+end
+
+to wolves::choose-direction
+end
+
+to wolves::advance
+end
+</pre>
+</blockquote>
+
+<p>
+This is the list of all pieces of NetLogo code that you have to write
+so as to define the actual (operational) meaning of the primitives.
+Perception primitives are NetLogo <i>reporters</i> (<code>to-report ... report ... end</code>)
+while action primitives are NetLogo <i>procedures</i> (<code>to ... end</code>). The name of a
+concrete primitive is composed of the name of the breed (e.g. <code>sheep</code>
+or <code>wolves</code>) and the name of the abstract primitive (as it appears in
+the definition of the interaction), separated by <code>::</code>.
+</p>
+
+<ul class="org-ul">
+<li>A special primitive is required for agents that are able to act as
+sources on other agents (i.e. for <i>active</i> agent families): the
+<b><code>filter-neighbors</code></b> primitive. It defines <b>the perception
+capabilities</b> of the agent. If left empty, the agent is able to
+perceive all agents on which it can perform interactions (e.g. sheep
+would perceive all other sheep, wolves would perceive only
+sheep). Usually agents have a limited perception range, thus the
+actual neighbors, i.e. the agents that are likely to undergo
+interactions, result from a selection among the default list of
+potential targets. A simple way to do this is to use predefined IODA
+filtering procedures, e.g. for filtering within a given radius:
+</li>
+</ul>
+<pre class="example">
+; sheep can see other agents in a circle of radius 1
+to sheep::filter-neighbors
+  ioda:filter-neighbors-in-radius 1
+end
+
+; wolves have a larger perception halo
+to wolves::filter-neighbors
+  ioda:filter-neighbors-in-radius 2
+end
+</pre>
+<ul class="org-ul">
+<li>Another important thing is the way to "remove" agents from a IODA
+simulation. Since we use a special scheduling algorithm, you <b>must
+not</b> use the NetLogo <code>die</code> primitive: you have to use <b><code>ioda:die</code></b>
+instead. 
+</li>
+<li>For the same reasons, when creating a new agent, you have to notify
+the IODA simulation engine. This is done by calling
+<b><code>ioda:init-agent</code></b>.
+</li>
+</ul>
+
+
+<p>
+Now, try to write the corresponding code and test it (<code>setup</code> then
+<code>go</code>).
+</p>
+
+<p>
+<a href="text/code1.nls">Here</a> is a possible solution (typical values for parameters:
+<code>nb-sheep</code>: 300, <code>nb-wolves</code>: 10, <code>sheep-offspring-delay</code>: 20).
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Extending the model</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> New agents, same interactions</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+First, we want to add a new species in the simulation. This is quite
+simple, since the interactions are the <b>abstract description</b> of a
+behavior. Thus, they are designed to be re-used among different kinds of agents.
+</p>
+
+<p>
+For instance, we want to add <b>rabbits</b> in the ecosystem. At this step,
+rabbits behave like sheep (they mate and walk around), and we suppose
+that wolves prefer eating rabbits than sheep (easier to kill ?). Also,
+we suppose that rabbits move a bit faster than sheep and do not have
+the same delay between offspring.
+</p>
+
+<blockquote>
+<table id="imatrix1" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 2:</span> The interaction matrix for describing behaviors in the extended ecosystem</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">sheep</th>
+<th scope="col" class="left">wolves</th>
+<th scope="col" class="left">rabbits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>sheep</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">Mate (10, 0.5)</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>wolves</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">Eat (10, 1)</td>
+<td class="left">&#xa0;</td>
+<td class="left">Eat (20, 1)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>rabbits</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">Mate (10, 0.5)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+N.B.: The priority for the <code>Eat</code> interaction on the "wolves" row is
+higher for rabbits than for sheep: thus, during the interaction
+selection process, a wolf agent tries first to perform this
+interaction on a rabbit agent, if any is present and fulfils the
+conditions. If not possible, it tries then to perform it on a sheep
+agent.
+</p>
+</blockquote>
+
+<ol class="org-ol">
+<li>Add the convenient lines in the text file describing the interaction matrix.
+</li>
+<li>Add the new breed in the NetLogo model and initialise the population in the <code>setup</code> procedure.
+</li>
+<li>Finally, write the required primitives. The differences between
+sheep and rabbits (regarding how behaviors are actually carried
+out) are to be encoded in the primitives.
+</li>
+</ol>
+
+<p>
+<a href="text/code2.nls">Here</a> is a possible solution (typical values for parameters:
+<code>nb-sheep</code>: 300, <code>nb-wolves</code>: 10, <code>nb-rabbits</code>: 300,
+<code>sheep-offspring-delay</code>: 20, <code>rabbits-offspring-delay</code>: 10). At this
+step, you should also add a plot to follow the evolution of agents
+population.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Aging: UPDATE processes</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+We now want to extend the current simulation model by taking into
+account the following processes:
+</p>
+<ul class="org-ul">
+<li><b>wolves</b> have a limited lifetime and can die from old age
+</li>
+<li>they also can die of starvation (e.g. when they have no food reserve)
+</li>
+<li>to counterbalance the subsequent decrease of wolves population, we
+now want wolves to mate as sheep and rabbits do.
+</li>
+</ul>
+
+<p>
+Obviously the aging process takes place at each tick, independently
+from interaction selection. The fact that the age increases must not
+prevent a wolf from eating a sheep, and vice-versa. <i>Aging</i> is a
+spontaneous state change which occurs in the agent, while <i>Eating</i>
+is a "deliberate" behavior (chosen among others, such as
+<i>Wandering</i>).
+</p>
+
+<p>
+In IODA such processes are represented through an <b>update matrix</b>.
+At each tick, all interactions realizable in the update matrix are
+performed, then only the interaction selection step begins.
+</p>
+
+<p>
+The new update and interaction matrices can be rewritten as follows:
+</p>
+
+<blockquote>
+<table id="umatrix2" border="2" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 3:</span> The update matrix</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>sheep</b></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>rabbits</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>wolves</b></td>
+<td class="left">Age (10) <br> Metabolism <br> Die (0)</td>
+</tr>
+</tbody>
+</table>
+<p>
+N.B.: in the update matrix, all realizable interactions are performed
+in order of decreasing priority
+</p>
+
+<table id="imatrix2" border="2" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 4:</span> The interaction matrix</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">sheep</th>
+<th scope="col" class="left">wolves</th>
+<th scope="col" class="left">rabbits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>sheep</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">Mate (10, 0.5)</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>wolves</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">Eat (10, 1)</td>
+<td class="left">Mate (30, 1)</td>
+<td class="left">Eat (10, 1)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>rabbits</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">Mate (10, 0.5)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The interaction matrix now integrates the capability of wolves to Mate.
+</p>
+</blockquote>
+
+<p>
+This leads to the new <code>matrix.txt</code> file:
+</p>
+<pre class="example">
+; interaction matrix
+sheep	Wander	0
+sheep	Mate	10	sheep	0.5
+wolves	Wander	0
+wolves	Eat	10	sheep	1
+wolves	Eat	20	rabbits	1
+wolves	Mate	30	wolves	1
+rabbits	Wander	0
+rabbits	Mate	10	rabbits	0.5
+
+; update matrix
+wolves	 Age	10	UPDATE
+wolves	 Metabolism	10	UPDATE
+wolves	 Die	0	UPDATE
+</pre>
+
+<blockquote>
+<p>
+Now the new interactions have to be added in the <code>interactions.txt</code> file:
+</p>
+<pre class="example">
+INTERACTION	Age
+  ACTIONS	increase-age
+END
+
+INTERACTION Metabolism
+  ACTIONS   decrease-reserve
+END
+
+INTERACTION	Die
+  TRIGGER	old-age?
+  TRIGGER	starving?
+  ACTIONS	die
+END
+</pre>
+
+<p>
+An important thing to notice in the <code>Die</code> interaction: the <b>two</b>
+<code>TRIGGER</code> lines. This is the way to express a <b>disjunction (logical
+OR)</b>. In that case, the <code>Die</code> interaction is realizable either if
+the source agent is old, or if it has no more food reserve. At
+least one must be true to allow the interaction to occur.
+</p>
+</blockquote>
+
+
+<p>
+You also have several additional primitives to write, which themselves
+imply to endow the wolves with new attributes (e.g. <code>last-offspring</code>,
+<code>food-reserve</code>, <code>age</code>, <code>lifespan</code>):
+</p>
+<pre class="example">
+to-report wolves::after-delay?
+end
+
+to-report wolves::old-age?
+end
+
+to-report wolves::starving?
+end
+
+to wolves::reset-timer
+end
+
+to wolves::produce-offspring
+end
+
+to wolves::increase-age
+end
+
+to wolves::decrease-reserve
+end
+
+to wolves::die
+end
+</pre>
+
+<p>
+It is also a good idea to write a procedure <code>wolves::init</code> so as to
+initialize those new attributes and run <code>ioda:init-agent</code> each time a
+new wolf is created.
+</p>
+
+<p>
+A possible solution is proposed <a href="text/code3.nls">here</a> (typical values for parameters:
+<code>nb-sheep</code>: 200, <code>nb-wolves</code>: 15, <code>nb-rabbits</code>: 200,
+<code>sheep-offspring-delay</code>: 20, <code>rabbits-offspring-delay</code>: 10,
+<code>wolves-offspring-delay</code>: 15, <code>avg-wolves-lifespan</code>: 80,
+<code>wolves-metabolism</code>: 0.2).
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Hunting and Escaping (the target selection policy)</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Now we are going to refine the model so as to allow wolves to track
+sheep, and conversely to make sheep gather and flee the wolves. In
+addition, rabbits just try to flee the wolves.
+</p>
+
+<blockquote>
+<table id="imatrix3" border="2" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 5:</span> The new interaction matrix</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">sheep</th>
+<th scope="col" class="left">wolves</th>
+<th scope="col" class="left">rabbits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>sheep</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">Mate (10, 0.5) <br> MoveTowards (0, 1)</td>
+<td class="left">MoveAway (20, 1)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>wolves</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">Eat (10, 1)  <br> MoveTowards (5, 2)</td>
+<td class="left">Mate (30, 1)</td>
+<td class="left">Eat (20, 1)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>rabbits</b></td>
+<td class="left">Wander (0)</td>
+<td class="left">&#xa0;</td>
+<td class="left">MoveAway (20, 1)</td>
+<td class="left">Mate (10, 0.5)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+As you can see in this matrix, we need only two new interactions
+(<code>MoveTowards</code> and <code>MoveAway</code>) to introduce the new behaviors.
+</p>
+
+</blockquote>
+
+<ol class="org-ol">
+<li>Write the corresponding <code>matrix.txt</code> text file
+</li>
+<li>Write the <code>MoveTowards</code> and <code>MoveAway</code> interactions. Therefore you
+need to use a property called <code>ioda:my-target</code>, which refers to the
+agent which is interacting with the caller.
+</li>
+<li>Test your behaviors
+</li>
+</ol>
+
+<p>
+<a href="text/code4.nls">Here</a> is a possible implementation.
+</p>
+
+<p>
+You should note that the "hunt" behavior of the wolves is not very
+efficient, since they choose the target randomly (even if another one
+is closer). IODA allows the specification of a <b>target selection
+policy</b> in the matrix file:
+</p>
+<pre class="example">
+wolves  MoveTowards 5 sheep 2 BEST:proximity
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Going further</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Now you should be able to extend this model in many directions. Here
+are a few ideas to experiment.  If you need to use more advanced
+features of the IODA extension, you may look at the Tutorial provided
+in the extension package or available on-line <a href="http://www.lifl.fr/SMAC/projects/ioda/ioda_for_netlogo/doc/IODA-NetLogo-Tutorial.html">here</a>, or ask me
+directly!
+</p>
+
+<ol class="org-ol">
+<li>In order to limit the population of rabbits, endow them with an aging process.
+</li>
+<li><i>Human Hunters</i> arrive in the ecosystem: they hunt sheep too. But, indeed,
+they do not eat all the food but are able to share it.
+</li>
+<li>Human hunters are able to put a few collets in the environment to
+trap rabbits. They must memorize their position and inspect them
+from time to time.  Of course, according to the IODA point of view,
+<b>collets</b> are agents too!
+</li>
+<li>Human hunters can be attacked by wolves when these are really
+hungry, but conversely they can kill wolves when they have few food
+reserves.
+</li>
+<li>Sometimes human hunters suceed in turning young wolves into hounds
+which help them to hunt. Hunters share the food with hounds, but
+conversely when hounds are starving they may come back to wild
+life.
+</li>
+<li>Alternatively, you can use e.g. a <i>forum</i> to centralize or
+coordinate the activity of the hunters, share information or food,
+and so on&#x2026; Therefore, a good way to proceed is to consider the
+forum as an agent having a network-based perception of its
+neighbors (e.g. the human hunters that are related to it). To do
+so, you can create links between several hunters and a forum, and
+use the pre-defined primitive <b><code>ioda:filter-neighbors-on-mylinks</code></b>
+in the <code>forum::filter-neighbors</code> primitive.
+</li>
+</ol>
+
+<p>
+Thank you for attending this tutorial. We hope you are now convinced
+by the advantage of separating agents from generic behaviors expressed
+as interaction rules. Do not hesitate to use the IODA extension for
+NetLogo for your own research or teaching, or to contact us (<code>ioda</code>
+<i>at</i> <code>univ-lille1.fr</code>) if you need more information or if you plan to
+build large-scale simulations (e.g. using our Java platform, <a href="http://www.lifl.fr/SMAC/projects/ioda/jedi/presentation.php">JEDI</a>).
+</p>
+
+<hr >
+<p>
+<P class="center"><IMG SRC="figures/lifl.png" HEIGHT=80/> <IMG SRC="figures/cnrsfr.png" HEIGHT=80/> <IMG SRC="figures/lille1.jpg" HEIGHT=80/></P>
+<P class="center"> © 2014 <b><a href="http://www.lifl.fr/~picault">Sébastien Picault</a></b>, <a href="http://www.lifl.fr/SMAC">SMAC research team</a>, <a href="http://www.lifl.fr">LIFL</a>, <a href="http://www.univ-lille1.fr">Lille 1 University</a>. </P>
+</p>
+<hr >
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

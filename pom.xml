@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>fr.lifl.ioda</groupId>
+    <artifactId>ioda</artifactId>
+    <version>3.0</version>
+
+    <packaging>jar</packaging>
+
+    <repositories>
+        <repository>
+            <id>netlogo</id>
+            <name>netlogo</name>
+            <url>https://dl.cloudsmith.io/public/netlogo/netlogo/maven/</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <finalName>ioda</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.nlogo</groupId>
+            <artifactId>netlogo</artifactId>
+            <version>6.0.4</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,615 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>IODA NetLogo Frequently Asked Questions</title>
+<!-- 2015-04-14 Tue 14:56 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta  name="generator" content="Org-mode">
+<meta  name="author" content="Sébastien PICAULT, Nathan HALLEZ, Philippe MATHIEU">
+<meta  name="description" content="The IODA NetLogo extension provides users of NetLogo with many features of the Interaction-Oriented Methodology (IODA) so as to simplify the design and reusability of individual-based simulations. It is based on a strong separation between declarative and procedural parts of the model."
+>
+<meta  name="keywords" content="IODA, NetLogo, multiagent simulation, agent-based model, ABM, individual-based model, IBM, modeling methodology, interactions, interaction-oriented approach, interaction matrix, social simulation">
+<LINK rel="stylesheet" type="text/css" href="Netlogo-Style.css">
+<META name="author" lang="fr" content="Sébastien Picault, Nathan Hallez, Philippe Mathieu">
+<META name="copyright" lang="fr" content="2008-2024 Sébastien Picault and Philippe Mathieu (Université de Lille, France)">
+<META name="keywords" lang="en-us" content="IODA, NetLogo, multiagent simulation, agent-based model, ABM, individual-based model, IBM, modeling methodology, interactions, interaction-oriented approach, interaction matrix, social simulation">
+<META name="keywords" lang="fr" content="IODA, NetLogo, simulation multi-agents, modélisation par agents, ABM, modèle individu-centré, IBM, méthode de modélisation, interactions, approche orientée interactions, matrice d'interactions, simulation sociale">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">IODA NetLogo Frequently Asked Questions</h1>
+<DIV class="version">IODA NetLogo 3.0 User Manual&emsp;</DIV>
+
+<p>
+<b>Direct links to other parts of the IODA NetLogo Manual:</b>
+&emsp; <a href="IODA-NetLogo-Documentation-v3.0.html">General Documentation</a> &emsp; <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> &emsp; <a href="IODA-NetLogo-Dictionary.html">Dictionary</a> &emsp;
+</p>
+
+<p>
+Your feedback is very valuable to us in enhancing the IODA NetLogo
+extension. Please send comments, suggestions, questions or bug reports to 
+<a href="#contact">the authors</a>.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Topics</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">General</h3>
+<div class="outline-text-3" id="text-1-1">
+<DIV class="smaller">
+<ul class="org-ul">
+<li><b><a href="#general:name">Why is this extension called IODA?</a></b>
+</li>
+<li><b><a href="#general:citation">How do I cite IODA in an academic publication?</a></b>
+</li>
+<li><b><a href="#general:where">Where and when was IODA created?</a></b>
+</li>
+<li><b><a href="#general:language">What programming language was IODA written in?</a></b>
+</li>
+<li><b><a href="#general:license">Under what license is IODA NetLogo released? Is the source code available?</a></b>
+</li>
+</ul>
+</DIV>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Running</h3>
+<div class="outline-text-3" id="text-1-2">
+<DIV class="smaller">
+<ul class="org-ul">
+<li><b><a href="#running:compatibility">What version of NetLogo is IODA NetLogo 3.0 compatible with?</a></b>
+</li>
+<li><b><a href="#running:3d">Is IODA NetLogo compatible with NetLogo 3D?</a></b>
+</li>
+<li><b><a href="#running:slower">Is the simulation slower with IODA?</a></b>
+</li>
+</ul>
+</DIV>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Programming</h3>
+<div class="outline-text-3" id="text-1-3">
+<DIV class="smaller">
+<ul class="org-ul">
+<li>&#x2026; (please see the <a href="IODA-NetLogo-Tutorial.html">tutorial</a> and let us know what is missing)
+</li>
+</ul>
+</DIV>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Interactions files</h3>
+<div class="outline-text-3" id="text-1-4">
+<DIV class="smaller">
+<ul class="org-ul">
+<li><b><a href="#interactions:filename">What is the name of the file which defines interactions?</a></b>
+</li>
+<li><b><a href="#interactions:case-sensitive">Is the definition of interactions case-sensitive?</a></b>
+</li>
+<li><b><a href="#interactions:syntax">What is the syntax for defining an interaction?</a></b>
+</li>
+<li><b><a href="#interactions:adding">Can I create or modify interactions during the simulation?</a></b>
+</li>
+</ul>
+</DIV>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Matrix files</h3>
+<div class="outline-text-3" id="text-1-5">
+<DIV class="smaller">
+<ul class="org-ul">
+<li><b><a href="#matrix:filename">What is the name of the file which defines interaction and update matrices?</a></b>
+</li>
+<li><b><a href="#matrix:case-sensitive">Are the interaction matrix or the update matrix case-sensitive?</a></b>
+</li>
+<li><b><a href="#matrix:syntax">What is the syntax for defining a matrix?</a></b>
+</li>
+<li><b><a href="#matrix:adding-removing">How do I change the interaction or update matrix during the simulation?</a></b>
+</li>
+</ul>
+</DIV>
+</div>
+</div>
+
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">General</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-general:name" class="outline-3">
+<h3 id="general:name"><a id="sec-2-1" name="sec-2-1"></a>Why is this extension called IODA?</h3>
+<div class="outline-text-3" id="text-general:name">
+<p>
+"IODA" stands for "Interaction-Oriented Design of Agent simulations".
+</p>
+</div>
+</div>
+
+<div id="outline-container-general:citation" class="outline-3">
+<h3 id="general:citation"><a id="sec-2-2" name="sec-2-2"></a>How do I cite IODA in an academic publication?</h3>
+<div class="outline-text-3" id="text-general:citation">
+<ul class="org-ul">
+<li><b>The IODA methodology and simulation algorithms</b> (i.e. what is
+actually in use in this NetLogo extension):  <BR>
+Y. KUBERA, P. MATHIEU and S. PICAULT (2011), 
+<a href="https://doi.org/10.1007/s10458-010-9164-z">"IODA: an interaction-oriented approach for multi-agent based simulations"</a>,
+in: <i>Journal of Autonomous Agents and Multi-Agent Systems (JAAMAS)</i>,
+vol. 23 (3), p. 303-343, Springer DOI: 10.1007/s10458-010-9164-z.
+</li>
+<li><b>The key ideas of the IODA methodology:</b>  <BR>
+P. MATHIEU and S. PICAULT (2005),  
+"Towards an interaction-based design of behaviors", in: M.-P. Gleizes (ed.),
+<i>Proceedings of the The Third European Workshop on Multi-Agent Systems (EUMAS'2005)</i>.
+</li>
+<li><b>Do not forget to cite also NetLogo itself</b> when you refer to the IODA NetLogo extension:  <BR>
+U. WILENSKY (1999), <i>NetLogo.</i> 
+<a href="https://ccl.northwestern.edu/netlogo">https://ccl.northwestern.edu/netlogo</a>
+Center for Connected Learning and Computer-Based Modeling, 
+Northwestern University. Evanston, IL.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-general:where" class="outline-3">
+<h3 id="general:where"><a id="sec-2-3" name="sec-2-3"></a>Where and when was IODA created?</h3>
+<div class="outline-text-3" id="text-general:where">
+<p>
+This methodology was born in the <a href="https://github.com/cristal-smac/">MultiAgent Research Team</a> of the
+Centre de Recherche en Informatique, Signal et Automatique de Lille (CRIStAL), UMR CNRS 9189 at the Université de Lille (Sciences et Technologies), France. For more
+information on IODA please consult
+<a href="https://cristal.univ-lille.fr/SMAC/projects/ioda/">the IODA webpage</a> and the
+<a href="https://github.com/cristal-smac/">SMAC Research Team</a> webpage.
+</p>
+</div>
+</div>
+
+<div id="outline-container-general:language" class="outline-3">
+<h3 id="general:language"><a id="sec-2-4" name="sec-2-4"></a>What programming language was IODA written in?</h3>
+<div class="outline-text-3" id="text-general:language">
+<ul class="org-ul">
+<li>The IODA NetLogo extension is composed of a JAR file written in Java
+(<code>ioda.jar</code>) for the definition of new data types and file parsing,
+and an include file written in the NetLogo language
+(<code>IODA_3_0.nls</code>) for the simulation engine.
+</li>
+<li>This extension is derived from a research platform in Java, called
+"JEDI" (for: "Java Environment for the Design of agent
+Interactions"), which is the exact implementation of all concepts
+and algorithms proposed in the IODA approach. A subset of this
+engine was used for the implementation of a Serious Game (see the
+<a href="https://cristal.univ-lille.fr/SMAC/projects/formatstore">Format-Store project</a>).
+</li>
+<li>An experimental IODA version for the <a href="https://unity3d.com/">Unity 3</a> game engine has also been
+implemented, mostly in C# (see the <a href="https://cristal.univ-lille.fr/SMAC/projects/galaxian">Galaxian project</a>).
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-general:license" class="outline-3">
+<h3 id="general:license"><a id="sec-2-5" name="sec-2-5"></a>Under what license is IODA NetLogo released? Is the source code available?</h3>
+<div class="outline-text-3" id="text-general:license">
+<p>
+The IODA NetLogo extension is released under the GNU General Public
+License, version 3 (see <a href="https://www.gnu.org/licenses">https://www.gnu.org/licenses</a>). It is free and
+open source. The Java source code is available in the <code>ioda/src</code>
+folder, and the simulation engine is in file <code>IODA_3_0.nls</code>. We
+encourage users to report bugs or any suggestion for enhancing this
+extension, and share their IODA-based models with the NetLogo user
+community.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Running</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-running:compatibility" class="outline-3">
+<h3 id="running:compatibility"><a id="sec-3-1" name="sec-3-1"></a>What version of NetLogo is IODA NetLogo 3.0 compatible with?</h3>
+<div class="outline-text-3" id="text-running:compatibility">
+<p>
+The IODA NetLogo extension version 3.0 is fully
+compatible with NetLogo version 6.4 or later. If you are using NetLogo 5.x, please use the 2.2 instead. If you are using NetLogo 4.1.3,
+please use the 2.0 instead.  The 3.0 version incorporates API changes
+from NetLogo 5.x to NetLogo 6.4.
+</p>
+</div>
+</div>
+
+<div id="outline-container-running:3d" class="outline-3">
+<h3 id="running:3d"><a id="sec-3-2" name="sec-3-2"></a>Is IODA NetLogo compatible with NetLogo 3D?</h3>
+<div class="outline-text-3" id="text-running:3d">
+<p>
+Not yet. Especially, the simulation engine (nls include file) has been
+designed to cope with 2D patches only. However, it should work with
+little code modification, both in Java classes and NetLogo include
+file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-running:slower" class="outline-3">
+<h3 id="running:slower"><a id="sec-3-3" name="sec-3-3"></a>Is the simulation slower with IODA?</h3>
+<div class="outline-text-3" id="text-running:slower">
+<p>
+Indeed a simulation with the IODA extension of NetLogo is still a bit
+slower than a simulation using only NetLogo, because the IODA
+simulation engine defines its own scheduler, and the interaction
+selection process is not that simple. However, we the think that for
+simulations involving complex relations between several kinds of
+entities, the loss of performance (compared with pure NetLogo) is
+widely counterbalanced by the facility to design and change models.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Programming</h2>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Interactions files</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-interactions:filename" class="outline-3">
+<h3 id="interactions:filename"><a id="sec-5-1" name="sec-5-1"></a>What is the name of the file which defines interactions?</h3>
+<div class="outline-text-3" id="text-interactions:filename">
+<p>
+The name you want, since you can load any (syntactically correct)
+interactions file with the command <code>ioda:load-interactions</code>. Still, a
+name like "interactions.txt" is quite relevant.
+</p>
+</div>
+</div>
+
+<div id="outline-container-interactions:case-sensitive" class="outline-3">
+<h3 id="interactions:case-sensitive"><a id="sec-5-2" name="sec-5-2"></a>Is the definition of interactions case-sensitive?</h3>
+<div class="outline-text-3" id="text-interactions:case-sensitive">
+<p>
+No. You can write keywords, interaction names and primitive names in uppercase or lowercase.
+</p>
+</div>
+</div>
+
+<div id="outline-container-interactions:syntax" class="outline-3">
+<h3 id="interactions:syntax"><a id="sec-5-3" name="sec-5-3"></a>What is the syntax for defining an interaction?</h3>
+<div class="outline-text-3" id="text-interactions:syntax">
+<p>
+The syntax is the following (as mentioned in the file
+<code>interactions.txt</code> in the <code>tutorials/0-template</code> folder):
+</p>
+
+<pre class="example">
+[EXCLUSIVE|PARALLEL] INTERACTION &lt;name&gt;
+[TRIGGER &lt;tr_1&gt; ... &lt;tr_n&gt;]
+[...]
+[TRIGGER &lt;tr'_1&gt; ... &lt;tr'_n&gt;]
+[CONDITION &lt;cond_1&gt; ... &lt;cond_n&gt;]
+[...]
+[CONDITION &lt;cond'_1&gt; ... &lt;cond'_n&gt;]
+[ACTIONS &lt;act_1&gt; ... &lt;act_n&gt;]
+END
+</pre>
+
+<p>
+What is absolutely required is the <b>interaction name</b>. All other
+elements are optional.  <BR> 
+The basics of interactions are described in <a href="IODA-NetLogo-Tutorial.html#particles">the "particles" section</a> of
+the tutorial. The difference between <i>exclusive</i> and <i>parallel</i>
+interactions is explained in <a href="IODA-NetLogo-Tutorial.org#ecosystem:d">there</a>.  <BR> 
+When you specify <b>triggers</b> and <b>conditions</b>, one trigger line (at least)
+and one condition line (at least) must be fulfilled so as to allow the
+interaction to occur. A trigger (or condition) line is fulfilled if
+and only if all primitives of the line report true. Thus, if you need
+to define alternative conditions or triggers, e.g. a year is a leap
+year if it is divisible either by 400, or by 4 but not by 100
+(cf. tutorials, folder <code>4b-leap years</code>), you can express this logical
+disjunction by using two <code>CONDITION</code> clauses.   <BR>
+<b>Actions</b> are performed in the specified sequence.
+</p>
+</div>
+</div>
+
+<div id="outline-container-interactions:adding" class="outline-3">
+<h3 id="interactions:adding"><a id="sec-5-4" name="sec-5-4"></a>Can I create or modify interactions during the simulation?</h3>
+<div class="outline-text-3" id="text-interactions:adding">
+<p>
+Yes, you can. You can achieve this through two methods:
+</p>
+<ul class="org-ul">
+<li>New or modified interactions can be written in separate files that
+you load with the <code>ioda:load-interactions</code> command. 
+</li>
+<li>You can define an interaction "manually" using the
+<a href="IODA-NetLogo-Dictionary.html#ioda:interaction-make"><code>ioda:interaction-make</code></a> command.
+</li>
+</ul>
+
+<p>
+In order to <b>modify</b> an existing interaction, you just need to build
+an interaction with the <b>same name</b> and the new definition.
+</p>
+
+<p>
+ <span class="alert"> Be sure that all concrete primitives required by all changes
+are already written in your code!  </span>
+</p>
+
+<p>
+If needed, the set of all interactions (including the new or modified
+ones) canbe stored in a text file using the <a href="IODA-NetLogo-Dictionary.html#ioda:save-interactions"><code>ioda:save-interactions</code></a>
+command.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Matrix files</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-matrix:filename" class="outline-3">
+<h3 id="matrix:filename"><a id="sec-6-1" name="sec-6-1"></a>What is the name of the file which defines interaction and update matrices?</h3>
+<div class="outline-text-3" id="text-matrix:filename">
+<p>
+The name you want, since you can load any (syntactically correct)
+matrix file with the command <code>ioda:load-matrices</code>. Still, a name like
+"matrix.txt" is quite relevant.
+</p>
+</div>
+</div>
+
+<div id="outline-container-matrix:case-sensitive" class="outline-3">
+<h3 id="matrix:case-sensitive"><a id="sec-6-2" name="sec-6-2"></a>Are the interaction matrix or the update matrix case-sensitive?</h3>
+<div class="outline-text-3" id="text-matrix:case-sensitive">
+<p>
+No. You can write breed names, interaction names and other keywords in
+uppercase or lowercase.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-matrix:syntax" class="outline-3">
+<h3 id="matrix:syntax"><a id="sec-6-3" name="sec-6-3"></a>What is the syntax for defining a matrix?</h3>
+<div class="outline-text-3" id="text-matrix:syntax">
+<p>
+The syntax is the following (as mentioned in the file
+<code>matrix.txt</code> in the <code>tutorials/0-template</code> folder):
+</p>
+
+<pre class="example">
+&lt;source&gt; &lt;interaction&gt; &lt;priority&gt; UPDATE
+OR: &lt;source&gt; &lt;interaction&gt; &lt;priority&gt;
+OR: &lt;source&gt; &lt;interaction&gt; &lt;priority&gt; &lt;target&gt; &lt;distance&gt; [&lt;target-selection-policy&gt;]
+</pre>
+
+<p>
+Three items are required:
+</p>
+<ol class="org-ol">
+<li>the name of the source breed
+</li>
+<li>the name of the interaction
+</li>
+<li>the priority of this interaction from the point of view of the source
+</li>
+</ol>
+
+<p>
+With those three elements only, a reflexive interaction (i.e. an
+interaction performed on the source as target) is added to the
+<b>interaction matrix</b>. In order to add this line to the <b>update matrix</b>
+you only need to add the <b><code>UPDATE</code></b> keyword. Otherwise, to add a
+regular interaction to the <b>interaction matrix</b>, you need to specify
+at least two additional items:
+</p>
+<ol class="org-ol">
+<li>the name of the target breed
+</li>
+<li>the limit distance between source and target to allow the
+interaction to occur (if not relevant, this distance can be set to
+<code>Infinity</code>)
+</li>
+</ol>
+
+<p>
+The last optional item (the target selection policy) specifies how the
+target of the interactions has to be chosen (default is random). For
+more information on target selection policies, please refer to the
+corresponding sections of the tutorial (<a href="IODA-NetLogo-Tutorial.html#pheromones">Pheromones</a> and <a href="IODA-NetLogo-Tutorial.html#explosion">Explosion</a>).
+</p>
+
+<p>
+Last remarks:
+</p>
+<ul class="org-ul">
+<li>This file is read as a CSV file, thus you can use any field
+separator char since you put it in the second argument of the
+<code>ioda:load-matrices</code> command.
+</li>
+<li>Any non-letter, non-digit, non '+'/'-' character at the beginning of
+the line introduces a comment line. Empty lines are ignored.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-matrix:adding-removing" class="outline-3">
+<h3 id="matrix:adding-removing"><a id="sec-6-4" name="sec-6-4"></a>How do I change the interaction or update matrix during the simulation?</h3>
+<div class="outline-text-3" id="text-matrix:adding-removing">
+
+<p>
+By default, matrix lines are simply added to the appropriate matrix
+(interaction matrix or update matrix). Yet, since v&nbsp;2.3 you are
+provided with the ability to <b>remove</b> lines from the matrices. 
+</p>
+
+<p>
+Matrices modification can be achieved through two methods:
+</p>
+<ul class="org-ul">
+<li>You can specify an initial matrix together with predefined changes
+in separate files, and then use the <code>ioda:load-matrices</code> command to
+load each file when needed. This is demonstrated in the directory
+<code>8b-dynamic matrices</code> of the <code>tutorials</code> folder.  In that case, any
+line starting with the <b><code>-</code></b> character are <b>removed</b> from the
+appropriate matrix, while other lines (or starting with the optional
+<b><code>+</code></b> character) are added.
+</li>
+<li>You can use directly the appropriate commands (see the Dictionary):
+<a href="IODA-NetLogo-Dictionary.html#ioda:add-assignation"><code>ioda:add-assignation</code></a> and <a href="IODA-NetLogo-Dictionary.html#ioda:remove-assignation"><code>ioda:remove-assignation</code></a>.
+</li>
+</ul>
+
+<p>
+ <span class="alert"> Be sure that all concrete primitives required by all changes
+are already written in your code!  </span>
+</p>
+
+<p>
+If needed, the new interaction and update matrices can be stored in a
+text file using the <a href="IODA-NetLogo-Dictionary.html#ioda:save-matrices"><code>ioda:save-matrices</code></a> command.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-contact" class="outline-2">
+<h2 id="contact"><a id="sec-8" name="sec-8"></a>Contact Information</h2>
+<div class="outline-text-2" id="text-contact">
+<p>
+Authors: Sébastien PICAULT, Nathan HALLEZ and Philippe MATHIEU
+</p>
+
+<p>
+Email: <b><code>ioda</code> <i>(at)</i> <code>univ-lille1.fr</code></b>
+</p>
+
+<p>
+Team Web Site: <a href="https://github.com/cristal-smac/">https://github.com/cristal-smac/</a>
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-terms" class="outline-2">
+<h2 id="terms"><a id="sec-9" name="sec-9"></a>Terms of Use</h2>
+<div class="outline-text-2" id="text-terms">
+
+<p>
+<a href="https://validator.w3.org/check?uri=referer">
+  <img src="images/valid-html401.png" alt="Valid HTML
+  4.01 Strict" height="31" width="88" style="float: right"></a>
+</p>
+
+<p>
+All contents &copy; 2008-2024 Sébastien PICAULT and Philippe MATHIEU &ndash; <a href="https://github.com/cristal-smac/">SMAC Research Team</a>
+ <BR> Centre de Recherche en Informatique, Signal et Automatique de Lille (CRIStAL), UMR CNRS 9189 
+ <BR> Université de Lille (Sciences et Technologies)
+&ndash; Cité Scientifique, F-59655 Villeneuve d'Ascq Cedex, FRANCE.
+</p>
+
+<p>
+The IODA NetLogo extension is free software: you can redistribute it
+and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+</p>
+
+<p>
+The IODA NetLogo extension is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+</p>
+
+<p>
+You should have received <a href="gpl.txt">a copy</a> of the GNU General Public License
+along with IODA NetLogo extension.  If not, see
+<a href="https://www.gnu.org/licenses">https://www.gnu.org/licenses</a>.
+ <BR> <BR> <BR>
+</p>
+
+<hr >
+<P class="center">
+<IMG SRC="images/URL.png" HEIGHT=80 ALT="https://github.com/cristal-smac/ioda"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-smac.png" HEIGHT=80 ALT="SMAC logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-cristal.png" HEIGHT=80 ALT="CRIStAL logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-cnrs.jpg" HEIGHT=80 ALT="CNRS logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-UL.png" HEIGHT=80 ALT="University of Lille logo">
+</P>
+<hr >
+
+<div class="smaller">
+<p>
+ <P class="center"> <i>Created with Emacs Org-mode</i>
+</p>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

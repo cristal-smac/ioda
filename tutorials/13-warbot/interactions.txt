@@ -1,0 +1,100 @@
+parallel interaction UpdateView
+  trigger changed?
+  actions update-label
+end
+
+; interactions related to foraging 
+
+parallel interaction MoveRandomly
+  actions   wiggle
+end
+
+parallel interaction Explore
+  condition not:full?
+  actions   wiggle
+end
+
+parallel interaction MoveTo
+  condition not:full?
+  actions   move-towards
+end
+
+exclusive interaction Take
+  condition not:full?
+  actions   load target:die
+end
+
+parallel interaction BringBack
+  trigger full?
+  condition same-team?
+  actions move-towards
+end
+
+parallel interaction Drop
+  trigger carrying?
+  condition same-team?
+  actions unload target:load
+end
+
+
+; interactions related to attack/defense
+
+parallel interaction ReturnToBase
+  trigger low-munitions?
+  actions move-towards
+end
+
+parallel interaction LoadMunitions
+  trigger not:high-munitions?
+  condition target:available-munitions?
+  actions load-munitions
+end
+
+exclusive interaction Attack
+  trigger    ennemy?
+  condition  ready-to-fire?
+  actions    launch-missile
+end
+
+parallel interaction MoveForward
+  actions move-forward
+end
+
+parallel interaction CountDown
+  actions count-down
+end
+
+exclusive interaction Die
+  condition timeout?
+  actions die
+end
+
+exclusive interaction Destroy
+  actions target:damage die
+end
+
+exclusive interaction Explode
+  trigger fatal-energy-level?
+  actions die
+end
+
+parallel interaction Avoid
+  trigger danger?
+  actions move-away
+end
+
+parallel interaction Detect
+  trigger ennemy?
+  actions memorize-positions
+end
+
+parallel interaction TransmitOrder
+  trigger ennemy-detected?
+  condition same-team? target:not:low-munitions?
+  actions send-position
+end
+
+parallel interaction MoveToPlace
+  trigger has-a-destination?
+  actions move-to-place
+end

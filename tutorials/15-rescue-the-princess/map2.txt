@@ -1,0 +1,17 @@
+A rigid goals ordering leads to an exhaustive exploration of doors!
+[21 15]
+WWWWWWWWWWWWWWWWWWWWW
+WK      W           W
+W       W           W
+W  WGYBRWWWWWWWWWW  W
+W  W    W        W  W
+Wr W    W        W  W
+W  W    W        W  W
+WWWW  P W        W  W
+W  W    W        W  W
+W  W    W        W  W
+W  W gybW        W  W
+W  WWWWWWWWWWWWWWW  W
+W       W           W
+W       W           W
+WWWWWWWWWWWWWWWWWWWWW

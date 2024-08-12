@@ -1,0 +1,3556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>IODA NetLogo Tutorial</title>
+<!-- 2015-04-14 Tue 14:56 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta  name="generator" content="Org-mode">
+<meta  name="author" content="Sébastien PICAULT, Nathan HALLEZ and Philippe MATHIEU">
+<meta  name="description" content="The IODA NetLogo extension provides users of NetLogo with many features of the Interaction-Oriented Methodology (IODA) so as to simplify the design and reusability of individual-based simulations. It is based on a strong separation between declarative and procedural parts of the model."
+>
+<meta  name="keywords" content="IODA, NetLogo, multiagent simulation, agent-based model, ABM, individual-based model, IBM, modeling methodology, interactions, interaction-oriented approach, interaction matrix, social simulation">
+<LINK rel="stylesheet" type="text/css" href="Netlogo-Style.css">
+<META name="author" lang="fr" content="Sébastien Picault, Nathan Hallez, Philippe Mathieu">
+<META name="copyright" lang="fr" content="2008-2024 Sébastien Picault, Philippe Mathieu (Université de Lille, France)">
+<META name="keywords" lang="en-us" content="IODA, NetLogo, multiagent simulation, agent-based model, ABM, individual-based model, IBM, modeling methodology, interactions, interaction-oriented approach, interaction matrix, social simulation">
+<META name="keywords" lang="fr" content="IODA, NetLogo, simulation multi-agents, modélisation par agents, ABM, modèle individu-centré, IBM, méthode de modélisation, interactions, approche orientée interactions, matrice d'interactions, simulation sociale">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">IODA NetLogo Tutorial</h1>
+<DIV class="version">IODA NetLogo 2.3 User Manual&emsp;</DIV>
+
+<p>
+<b>Direct links to other parts of the IODA NetLogo Manual:</b>
+&emsp; <a href="IODA-NetLogo-Documentation-v2.3.html">General Documentation</a> &emsp; <a href="IODA-NetLogo-FAQ.html">FAQ</a> &emsp; <a href="IODA-NetLogo-Dictionary.html">Dictionary</a> &emsp; 
+</p>
+
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+In what follows, we assume that you are already familiar with the
+NetLogo platform and with the NetLogo programming language.
+Installation issues for the IODA NetLogo extension are discussed in
+the <a href="IODA-NetLogo-Documentation-v2.3.html">General Documentation</a>.
+</p>
+
+<p>
+The IODA methodology is aimed at facilitating the design of
+agent-based simulations, and also at enhancing reusability, model
+revision and bias elicitation. The examples provided in this tutorial
+will help you to get into IODA step by step, starting with very simple
+behaviors, and going up to subtle refinements in the interaction
+selection process. Thus, <b> <span class="alert"> this tutorial is also a IODA programming guide  </span></b>. We suggest that
+you follow this tutorial in sequence, since important IODA concepts
+and programming techniques are presented throughout this page.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Table of contents</h3>
+<div class="outline-text-3" id="text-1-1">
+<ol class="org-ol">
+<li><a href="#particles">Particles</a>: or, What's different in IODA?
+<ol class="org-ol">
+<li><a href="#particles:a">Moving particles: from NetLogo to IODA-NetLogo</a>
+</li>
+<li><a href="#particles:b">Adding behaviors: NetLogo vs. IODA-NetLogo</a>
+</li>
+</ol>
+</li>
+<li><a href="#termites">Termites Revisited</a>
+<ol class="org-ol">
+<li><a href="#termites:a">The backbone of the simulation program</a>
+</li>
+<li><a href="#termites:b">Definition of the interactions</a>
+</li>
+<li><a href="#termites:c">The interaction matrix: the role of priorities</a>
+</li>
+<li><a href="#termites:d">From abstract to concrete primitives</a>
+</li>
+</ol>
+</li>
+
+<li><a href="#termites2">Termites with only agents</a>
+<ol class="org-ol">
+<li><a href="#termites2:a">Initial program</a>
+</li>
+<li><a href="#termites2:b">More details on the interaction matrix</a>
+</li>
+<li><a href="#termites2:c">Back to interactions and primitives</a>
+</li>
+</ol>
+</li>
+
+<li><a href="#ecosystem">A simple ecosystem</a>
+<ol class="org-ol">
+<li><a href="#ecosystem:a">Grass, Sheep and Wolves: Patches as true agents</a>
+</li>
+<li><a href="#ecosystem:b">The Update Matrix</a>
+</li>
+<li><a href="#ecosystem:c">More details on the simulation step (<code>ioda:go</code>)</a>
+</li>
+<li><a href="#ecosystem:d">Specifying the interactions: parallel vs. exclusive</a>
+</li>
+<li><a href="#ecosystem:e">Interactions in the ecosystem</a>
+</li>
+<li><a href="#ecosystem:f">Implementation of the primitives</a>
+</li>
+<li><a href="#ecosystem:g">To extend the model&#x2026;</a>
+</li>
+</ol>
+</li>
+
+<li><a href="#leapyears">Leap years</a>, or: New features since v&nbsp;2.2
+<ol class="org-ol">
+<li><a href="#leapyears:a">Expressing alternatives in triggers/conditions</a>
+</li>
+<li><a href="#leapyears:b">Ordering policies for agent scheduling</a>
+</li>
+</ol>
+</li>
+
+<li><a href="#pheromones">Pheromones</a>, or: Target Selection Policies
+<ol class="org-ol">
+<li><a href="#pheromones:a">Nature of the problem</a>
+</li>
+<li><a href="#pheromones:b">Introducing a Target Selection Policy</a>
+</li>
+<li><a href="#pheromones:c">Results and explanations</a>
+</li>
+<li><a href="#pheromones:d">How to use Target Selection Policies</a>
+</li>
+</ol>
+</li>
+
+<li><a href="#ants-and-food">Ants and food Revisited</a>: Your turn to work!
+<ol class="org-ol">
+<li><a href="#ants-and-food:a">Exercise</a>
+</li>
+<li><a href="#ants-and-food:b">Hints</a>
+</li>
+<li><a href="#ants-and-food:c">Additional help: definition of interactions</a>
+</li>
+<li><a href="#ants-and-food:d">Additional help: interaction and update matrices</a>
+</li>
+<li><a href="#ants-and-food:e">What you should get</a>
+</li>
+</ol>
+</li>
+
+<li><a href="#perception">Tuning perception</a>: Enhancements since v&nbsp;2.3
+<ol class="org-ol">
+<li><a href="#perception:a">General principles in IODA perception</a>
+</li>
+<li><a href="#perception:b">Neighborhoods, or: composing built-in perception primitives</a>
+</li>
+<li><a href="#perception:c">Interactions in a network</a>
+</li>
+<li><a href="#perception:d">Termites sorting, or: custom perception tasks</a>
+</li>
+</ol>
+</li>
+
+<li><a href="#life">Conway's Life</a>, or: a Cellular Automaton with IODA?!?? 
+</li>
+
+<li><a href="#explosion">Explosion</a> and multi-target interactions
+<ol class="org-ol">
+<li><a href="#explosion:a">Description</a>
+</li>
+<li><a href="#explosion:b">The default selection policy: <code>RANDOM</code></a>
+</li>
+<li><a href="#explosion:c">Interaction-first selection policy: <code>RANDOM-INT</code></a>
+</li>
+<li><a href="#explosion:d">Property-driven selection policies: <code>BEST</code>, <code>PRORATA</code> and <code>ALL-BEST</code></a>
+</li>
+<li><a href="#explosion:e">"Multicast" interactions: <code>ALL</code>, <code>NUMBER</code> and <code>FILTER</code></a>
+</li>
+<li><a href="#explosion:f">Recommendation for the use of target selection policies</a>
+</li>
+<li><a href="#explosion:g">A parenthesis: specifying an alternative metric</a>
+</li>
+</ol>
+</li>
+
+<li><a href="#advanced">Advanced features</a>: reflection and meta-interactions
+</li>
+<li><a href="#others">Other code examples in the <code>tutorials</code> directory</a>
+</li>
+<li><a href="#contact">Contact information &amp; authors</a>
+</li>
+<li><a href="#terms">Terms of use</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-particles" class="outline-2">
+<h2 id="particles"><a id="sec-2" name="sec-2"></a>Tutorial #1: Particles, or: What's different in IODA?</h2>
+<div class="outline-text-2" id="text-particles">
+</div>
+
+<div id="outline-container-particles:a" class="outline-3">
+<h3 id="particles:a"><a id="sec-2-1" name="sec-2-1"></a>Moving particles: from NetLogo to IODA-NetLogo</h3>
+<div class="outline-text-3" id="text-particles:a">
+
+<p>
+Let's start with a simple problem: we want to model particles moving
+randomly. The corresponding NetLogo code is quite simple:
+</p>
+
+<pre class="example">
+to setup
+  clear-all
+  set-default-shape turtles "circle"
+  crt 1000 [ setxy random-xcor random-ycor
+             set color red ]
+  reset-ticks
+end
+
+to go
+  ask turtles [ wiggle ]
+  tick
+end
+
+to wiggle  
+  set heading random 360  fd 1 
+end
+</pre>
+
+<p>
+Since IODA is a generic methodology, it is not really convenient for
+such a simple simulation, because it requires a bit more code in that
+case. Yet, we are going to <i>IODA-ify</i> this model to explain the
+differences between the IODA approach and ad-hoc modelling.
+</p>
+
+<p>
+The first step in IODA consists in  <span class="info"> identifying <b>agents:</b>  </span>
+here, we have only <code>turtles</code>.
+</p>
+
+<p>
+Then, we must  <span class="info"> identify <b>interactions</b>  </span>, i.e. abstract
+conditions/actions rules that describe the behaviors of the agents. An
+interaction involves a <b>source agent</b> (which <i>performs</i> the
+interaction) and one (or more) <b>target agents</b> (which <i>undergo</i> the
+interaction). It is composed of:
+</p>
+<ul class="org-ul">
+<li><b>a sequence of actions</b> which are the commands that the source and
+the target have to execute
+</li>
+<li><b>a list of conditions</b> (possibly empty) that must be fulfilled by
+the source and/or the target to allow the execution of actions
+</li>
+<li><b>a list of triggers</b> (possibly empty) which describe <i>why</i> the
+source or the target are involved in the interaction, and must also
+be fulfilled.
+</li>
+</ul>
+
+<blockquote>
+<p>
+In the current case, the turtles just have to <i>move randomly</i>, without
+any restriction. Thus we have to define but one interaction, for
+instance <code>MoveRandomly</code>, which contains only a single action: <code>wiggle</code>
+(without any condition or trigger). Put the following lines in a text
+file named "interactions.txt":
+</p>
+
+<pre class="example">
+interaction MoveRandomly
+actions wiggle
+end
+</pre>
+</blockquote>
+
+<p>
+Now, you have to specify what interactions can be performed by agents.
+Thus, you must  <span class="info"> define an <b>interaction matrix</b>  </span>, which
+assigns interactions to source and target agents.
+</p>
+
+<blockquote>
+<p>
+Here, the agents (turtles) can only perform the <code>MoveRandomly</code>
+interaction. Additionnally, each turtle moves by itself: the target
+agent of the interaction is actually the same as the source. This is
+called a <b>reflexive interaction</b>.
+</p>
+
+<p>
+Put the following lines in a text file named "matrix.txt":
+</p>
+
+<pre class="example">
+turtles MoveRandomly 0
+</pre>
+</blockquote>
+
+<p>
+This means any turtle can perform interaction <code>MoveRandomly</code> with
+itself as a target. The "0" is the <b>priority level</b> of the
+interaction, from the point of view of the source agent (here it does
+not matter since there is only one interaction).
+</p>
+
+<p>
+Now you have to write some code to build the simulation. First, you
+must use the IODA simulation engine provided in the IODA extension
+folder, and the <code>ioda</code> extension for NetLogo.
+</p>
+
+<blockquote>
+<p>
+Put a copy of <code>IODA_2_3.nls</code> in your own folder and rewrite your
+procedures as follows:
+</p>
+
+<pre class="example">
+__includes ["IODA_2_3.nls"]        ; include file for the simulation engine
+extensions [ioda]                  ; the ioda extension itself
+
+to setup
+  clear-all
+  set-default-shape turtles "circle"
+  crt 1000 
+    [ setxy random-xcor random-ycor
+      set color red ]
+  ioda:setup                       ; initialization of the simulation engine
+  reset-ticks
+end
+
+to go
+  ioda:go                          ; one step of the IODA simulation
+  tick
+end
+
+to wiggle  
+  set heading random 360
+  fd 1 
+end
+</pre>
+</blockquote>
+
+<p>
+ <span class="warning"> The <code>ioda:setup</code> command initializes the IODA parameters of
+the simulation, while the <code>ioda:go</code> runs one simulation step in
+IODA.  </span> Though, if you press the "go" button, nothing happens.
+Indeed, at this time you did not specify the IODA model to use,
+i.e. you did not specify any interaction nor interaction matrix <i>in
+your NetLogo program</i>.
+</p>
+
+
+<blockquote>
+<p>
+Rewrite your <code>setup</code> procedure as follows:
+</p>
+
+<pre class="example">
+to setup
+  clear-all
+  set-default-shape turtles "circle"
+  crt 1000 
+    [ setxy random-xcor random-ycor
+      set color red ]
+  ioda:load-interactions "interactions.txt"
+  ioda:load-matrices "matrix.txt" " "
+  ioda:setup
+  reset-ticks
+end
+</pre>
+</blockquote>
+
+<p>
+Now, your interactions and your interaction matrix are automatically
+loaded into the NetLogo program. Unfortunately, if you press "go" at
+this time, you get an error message:
+</p>
+
+
+<div class="figure">
+<p><img src="images/tutorial1-exception.png" alt="tutorial1-exception.png"> 
+</p>
+<p><span class="figure-number">Figure 1:</span> Screenshot of the NetLogo exception.</p>
+</div>
+
+<p>
+Indeed, in IODA, the interactions make use of  <span class="info"> <b>abstract
+primitives</b>  </span> (here, <b><code>wiggle</code></b>), which  <span class="info"> must be instantiated
+into <b>concrete primitives.</b>  </span> Concrete primitives depend on the
+breed of the agent: thus, in that example, the <code>wiggle</code> abstract
+primitive is run by <i>turtles</i>, hence it must be renamed
+<b><code>turtles::wiggle</code></b>.
+</p>
+
+<blockquote>
+<p>
+Rename the <code>wiggle</code> procedure: <code>turtles::wiggle</code>.
+</p>
+
+<p>
+<b>Congratulations!</b> Your program should now run correctly and
+produce the same result as the ad-hoc NetLogo program.
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-particles:b" class="outline-3">
+<h3 id="particles:b"><a id="sec-2-2" name="sec-2-2"></a>Adding behaviors: NetLogo vs. IODA-NetLogo</h3>
+<div class="outline-text-3" id="text-particles:b">
+
+<p>
+Now, we are going to modify the behavior of our turtles as follows:
+when a turtle perceives another turtle "in radius" 1, the first turtle
+kills the other one. A turtle may kill at most one other turtle per
+tick. If it kills no turtle, it just keeps moving randomly.
+</p>
+
+<p>
+First, let's examine the classical <code>go</code> procedure that answers those
+specifications:
+</p>
+
+<pre class="example">
+to go
+  ask turtles 
+    [ let n other turtles in-radius 1
+      ifelse (any? n)
+        [ ask one-of n [ die ]]
+        [ wiggle ]
+    ] 
+  tick
+end
+</pre>
+
+<p>
+The behavior is still quite simple; nevertheless, this modification
+requires to re-write the <code>go</code> procedure and to introduce <code>ifelse</code>
+cascades, which would not be very convenient for more sophisticated
+behaviors.
+</p>
+
+<p>
+At the opposite, in the IODA version, the <code>go</code> procedure does not
+change. Instead, you have first to define a new interaction, which
+consists in making the target of the interaction die.
+</p>
+
+<blockquote>
+<p>
+Add the following lines to file "interactions.txt":
+</p>
+
+<pre class="example">
+interaction Delete
+  actions target:die
+end
+</pre>
+
+<p>
+<b>Note:</b> in the definition of an interaction, abstract primitives
+(reporters or commands) are always evaluated and run <i>by the source
+agent</i> (which owns a reference to its potential or actual target),
+unless they begin with the <b><code>target:</code> keyword</b> as above. 
+</p>
+</blockquote>
+
+<p>
+Then, you have to change your interaction matrix to take into account
+the <code>Delete</code> interaction: it can be performed by any turtle on any
+other turtle, within a distance less or equal to&nbsp;1.
+</p>
+
+<blockquote>
+<p>
+Add the following line to file "matrix.txt":
+</p>
+
+<pre class="example">
+turtles Delete 1 turtles 1
+</pre>
+
+<p>
+This line can be read as follows: <i>Turtles can perform interaction
+Delete with priority 1 on other turtles with distance &le; 1</i>
+</p>
+</blockquote>
+
+<p>
+As you changed the matrix file, the agents can perform or undergo new
+interactions. Thus, you certainly have to write additional primitives
+for your turtles. Fortunately, the extension can tell you what remains
+to write.
+</p>
+
+<blockquote>
+<p>
+Push the "setup" button, to ensure your model is loaded. Then, type in
+the command center:
+</p>
+
+<pre class="example">
+observer&gt;print ioda:primitives-to-write
+to turtles::filter-neighbors
+end
+ 
+to turtles::die
+end
+</pre>
+</blockquote>
+
+<p>
+The procedure <code>turtles::die</code> is required because of the <code>target:die</code>
+item in the <code>Delete</code> interaction, which means that the target (namely
+here, a turtle) must implement a concrete primitive for <code>die</code>.
+</p>
+
+<blockquote>
+<p>
+Add the following procedure to your program:
+</p>
+
+<pre class="example">
+to turtles::die
+  ioda:die
+end
+</pre>
+</blockquote>
+
+<p>
+<b>Note:</b>  <span class="alert"> You MUST NOT use the NetLogo <code>die</code> primitive in a
+IODA primitive  </span> because the IODA simulation engine has its own
+scheduler. By using <b><code>ioda:die</code></b> instead, you ensure that the agent is
+considered dead (through a convenient attribute), and that it will be
+actually removed from the NetLogo simulation at the end of the
+<code>ioda:go</code> procedure.
+</p>
+
+<p>
+The other procedure (<code>turtles::filter-neighbors</code>) is required for
+<b>perception</b>. Indeed, turtles now need to have a look on other agents
+so as to interact with them: thus you need to specify how neighboring
+agents are perceived.
+</p>
+
+<blockquote>
+<p>
+We assume here that turtles perceive their neighbors in a circle of
+radius 1. Then we can use a IODA built-in command:
+</p>
+
+<pre class="example">
+to turtles::filter-neighbors
+  ioda:filter-neighbors-in-radius 1
+end
+</pre>
+</blockquote>
+
+<p>
+Now, you can ensure that all concrete primitives have been written
+(click the "setup" button and print <code>ioda:primitives-to-write</code> again,
+which should print nothing at all) and run your model by clicking the
+"go" button. It works!
+</p>
+
+<p>
+At this point you may feel that a lot of work is required to obtain
+the same results as in the ad-hoc model. Nevertheless, you will soon
+discover that for more complex models, which require for instance a
+step-by-step design, possibly with backtracks or deep modifications
+(e.g. example <b><code>14-age of crisis</code></b> in <a href="#others">this section</a>), the separation
+between the simulation engine on the one hand, and the primitives of
+the agents and the abstract definition of the interactions on the
+other hand, will prove a source a speed-up in you design process, and
+prevent bugs related to complex ifelse cascades.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-termites" class="outline-2">
+<h2 id="termites"><a id="sec-3" name="sec-3"></a>Tutorial #2: Termites Revisited</h2>
+<div class="outline-text-2" id="text-termites">
+<p>
+This second step in getting familiar with IODA consists in
+re-implementing the classic "Termites" NetLogo model. In that model, a
+wandering termite can pick a wood chip up, wander again, and when it
+encounters another wood chip, it searches for an empty place and puts
+its load down. In the example that comes with the NetLogo Models
+Library, the wood chips are patches. Thus we have only one kind of
+agents (the turtles which play the role of termites).
+</p>
+</div>
+
+
+<div id="outline-container-termites:a" class="outline-3">
+<h3 id="termites:a"><a id="sec-3-1" name="sec-3-1"></a>The backbone of the simulation program</h3>
+<div class="outline-text-3" id="text-termites:a">
+
+<blockquote>
+<p>
+First, you have to sketch your program as previously. 
+</p>
+
+<pre class="example">
+__includes ["IODA_2_3.nls"]
+extensions [ioda]
+
+to setup
+  clear-all
+  set-default-shape turtles "bug"
+  create-turtles 50 
+    [ setxy random-xcor random-ycor
+      set color white ]
+  ask n-of 500 patches [set pcolor yellow]
+  ioda:load-interactions "interactions.txt"
+  ioda:load-matrices "matrix.txt" " "
+  ioda:setup
+  reset-ticks
+end
+
+to go
+  ioda:go
+  tick 
+end
+</pre>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-termites:b" class="outline-3">
+<h3 id="termites:b"><a id="sec-3-2" name="sec-3-2"></a>Definition of the interactions</h3>
+<div class="outline-text-3" id="text-termites:b">
+
+<p>
+Now we have to define possible interactions, by decomposing the
+activity of the agents into coarse-grained, abstract and coherent
+sequences: 
+</p>
+<ul class="org-ul">
+<li><b><code>MoveRandomly</code></b>: the same as in previous section
+</li>
+<li><b><code>PickUp</code></b>: if a wood chip is present and the source agent does not
+carry anything, it can pick a chip up
+</li>
+<li><b><code>FindEmptyPlace</code></b>: it has the same effect than <code>MoveRandomly</code>, but is
+triggered by the presence of a wood chip
+</li>
+<li><b><code>PutDown</code></b>: the source agent puts a wood chip down, if nothing is
+already at this place
+</li>
+</ul>
+
+<blockquote>
+<p>
+Put the following lines in a text file named "interactions.txt"
+</p>
+<pre class="example">
+interaction MoveRandomly
+  actions   wiggle
+end
+
+interaction PickUp
+  trigger 	      not:empty-here?
+  condition	      not:carrying?
+  actions	      take-load get-away
+end
+
+interaction FindEmptyPlace
+  trigger	not:empty-here?
+  condition     carrying?
+  actions 	wiggle
+end
+
+interaction PutDown
+  trigger	something-nearby?
+  condition 	carrying?  empty-here?
+  actions 	drop-load random-turn get-away	
+end
+</pre>
+</blockquote>
+
+<p>
+Please note the following IODA features:
+</p>
+<ul class="org-ul">
+<li>We introduced the <b><code>not:</code> keyword</b> which inverts the result of a
+trigger/condition primitive.
+</li>
+<li>Some interactions contain 2 items in addition to the actions:
+<ul class="org-ul">
+<li>the <b>trigger</b> represents the motivation or implicit goals that
+lead to choose the interaction,
+</li>
+<li>the <b>condition</b> represents physical or logical prerequisistes that
+must be fulfilled to execute the actions.
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+From an operational point of view, there is not much difference
+between trigger and condition, since ALL primitives found in both must
+return <code>true</code> to allow the interaction to be selected. The distinction
+makes sense from a knowledge representation viewpoint. For instance,
+the <code>PickUp</code> interaction is <i>triggered</i> by the perception of a wood
+chip (<code>not-empty-here?</code>), which means that the termite tries to
+perform <code>PickUp</code> <i>because</i> its perceives a wood chip (in order to
+carry it somewhere); yet, the actions of the interaction cannot take
+place if its <i>condition</i> is not fulfilled, namely the termite must not
+already carry any wood chip (<code>not-carrying?</code>). Anyway, if you
+hesitate, put your tests where you want&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-termites:c" class="outline-3">
+<h3 id="termites:c"><a id="sec-3-3" name="sec-3-3"></a>The interaction matrix: the role of priorities</h3>
+<div class="outline-text-3" id="text-termites:c">
+
+<p>
+You also have to define an interaction matrix. In that case, you only
+have one kind of agents, and their interactions are reflexive all the
+time (you could do exactly the same simulation with only one
+turtle!). Thus, you have litle to do but think about the priorities of
+interactions, i.e. if all interactions have their trigger and
+condition fulfilled, what will the source agent perform?
+</p>
+
+<p>
+It appears that the turtle should first try to pick a wood chip up; if
+not possible, to find an empty place if it is already carrying a wood
+chip; if not possible, try to put the wood chip down; finally, the
+random move is the default behavior.
+</p>
+
+<blockquote>
+<p>
+Put the following lines in a text file named "matrix.txt".
+</p>
+
+<pre class="example">
+turtles MoveRandomly   0
+turtles PutDown        10
+turtles FindEmptyPlace 20
+turtles PickUp         30
+</pre>
+
+<p>
+<b>Note:</b> the exact values of priorities have no importance. What is
+taken into account is the resulting order relation.
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-termites:d" class="outline-3">
+<h3 id="termites:d"><a id="sec-3-4" name="sec-3-4"></a>From abstract to concrete primitives</h3>
+<div class="outline-text-3" id="text-termites:d">
+
+<p>
+Finally, you have to write several primitives:
+</p>
+
+<pre class="example">
+observer&gt;setup
+observer&gt;print ioda:primitives-to-write
+to-report turtles::something-nearby?
+end
+
+to-report turtles::carrying?
+end
+
+to-report turtles::empty-here?
+end
+
+to turtles::take-load
+end
+
+to turtles::wiggle
+end
+
+to turtles::drop-load
+end
+
+to turtles::random-turn
+end
+
+to turtles::get-away
+end
+</pre>
+
+<blockquote>
+<p>
+Copy-paste those empty primitives to you program and define them. You
+can try to find what they should do in this model. 
+</p>
+
+<p>
+Then, compare your proposal to the solution we suggest:
+</p>
+
+<ol class="org-ol">
+<li>add after the <code>extensions</code> line: <code>turtles-own [carrying?]</code> 
+</li>
+<li>add in the initialization of the turtles: <code>set carrying? false</code> 
+</li>
+<li>define the concrete primitives through the code below:
+</li>
+</ol>
+
+<pre class="example">
+to-report turtles::something-nearby?
+  report any? neighbors with [pcolor = yellow]
+end
+
+to-report turtles::carrying?
+  report carrying? 
+end
+
+to-report turtles::empty-here?
+  report pcolor = black
+end
+
+to turtles::take-load
+  set carrying? true
+  set color red
+  set pcolor black
+end
+
+to turtles::wiggle
+  left random 50 right random 50 fd 1
+end
+
+to turtles::drop-load
+  set pcolor yellow
+  set carrying? false
+  set color white
+end
+
+to turtles::get-away
+  fd 20
+end
+
+to turtles::random-turn
+    right random 360
+end
+</pre>
+
+<p>
+&#x2026; and try it !
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-termites2" class="outline-2">
+<h2 id="termites2"><a id="sec-4" name="sec-4"></a>Tutorial #3: Termites with only agents</h2>
+<div class="outline-text-2" id="text-termites2">
+
+<p>
+The IODA methodology states that  <span class="info"> all relevant entities of the
+model must be agents:  </span> thus the latter case is not completely
+IODA-compliant, since patches are considered a mere discretization of
+the environment. But, why not use true wood chips instead? Then, we
+have two kinds of agents: termites of course (a NetLogo breed), buts
+also chips (another breed).
+</p>
+</div>
+
+<div id="outline-container-termites2:a" class="outline-3">
+<h3 id="termites2:a"><a id="sec-4-1" name="sec-4-1"></a>Initial program</h3>
+<div class="outline-text-3" id="text-termites2:a">
+
+<blockquote>
+<p>
+Here is the squeletton for this new simulation:
+</p>
+
+<pre class="example">
+__includes ["IODA_2_3.nls"]
+extensions [ioda]
+
+breed [ termites termite ]
+breed [ chips chip ]
+
+termites-own [carrying?]
+
+to setup
+  clear-all
+  set-default-shape termites "bug"
+  set-default-shape chips "line"
+  create-termites nb-termites [ init-termite ]
+  create-chips nb-chips [ init-chip ]
+  ioda:load-interactions "interactions.txt"
+  ioda:load-matrices "matrix.txt" " \t"
+  ioda:setup
+  reset-ticks
+end
+
+to init-termite
+  setxy random-xcor random-ycor
+  set color white
+  set carrying? false
+end
+
+to init-chip
+  setxy random-xcor random-ycor
+  set color yellow
+end
+
+to go
+  tick 
+  ioda:go
+end
+</pre>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-termites2:b" class="outline-3">
+<h3 id="termites2:b"><a id="sec-4-2" name="sec-4-2"></a>More details on the interaction matrix</h3>
+<div class="outline-text-3" id="text-termites2:b">
+
+<p>
+Now, we can examine the model of the previous tutorial to find out the
+consequences of the "agentification" of the wood chips. Especially, it
+appears that several abstract primitives, such as <code>empty-here?</code> or
+<code>something-nearby?</code>, rely implicitly upon the perception of a wood
+chip. Thus, handling wood chips as true agents removes this implicit
+perception: the interactions can be simplified. In particular, the
+<code>FindEmptyPlace</code> interaction no more exists. In counterpart, the
+interaction matrix now involves explicitely both termites and wood
+chips. We can summarize possible interactions as follows:
+</p>
+
+<table id="imatrix1" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 1:</span> The ioda-compliant interaction matrix for the description of behaviors.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">chips</th>
+<th scope="col" class="left">termites</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>chips</b></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>termites</b></td>
+<td class="left">(MoveRandomly, 0)</td>
+<td class="left">(MoveRandomly, 10, 1)  <BR> (PickUp, 30, 1)  <BR> (PutDown, 20, 0.3)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The matrix above should be read as follows: the first column is the
+list of source agents; the first row contains the list of target
+agents. An interaction at row <i>S</i> and column <i>T</i> can be performed by
+an agent of the kind <i>S</i> (source) on another agent of the kind <i>T</i>
+(target). The column marked with &empty; represents reflexive
+interactions (where the target is the source itself). In this
+category, we find for instance <code>MoveRandomly</code>: a termite can perform
+such an interaction alone. In the column <b>chips</b>, we find interactions
+that chips can undergo: for instance, a termite can perform <code>PickUp</code>
+on a chip.
+</p>
+
+<p>
+The association between an interaction, a source agent and a target
+agent is called an <b>assignation</b>. It comes with a priority and, in
+regular cases, a limit distance between source and target (this
+distance has no meaning in reflexive interactions). For instance, in
+the above matrix, the assignation <code>(PickUp, 30, 1)</code> means that each
+termite tries to perform the <code>PickUp</code> interaction first (since 30 is
+the highest priority level on the termites row), on chips situated
+within a radius of 1.
+</p>
+
+<p>
+Please also note that the interaction <code>MoveRandomly</code> is used
+twice. With the lowest priority level, it is present as a reflexive
+interaction, to allow termites to wander in search for wood
+chips. But, it also plays the role of the <code>FindEmptyPlace</code> interaction
+in the previous tutorial, as an interaction between termites and
+chips. Indeed, a termite which cannot perform <code>PickUp</code> on a chip (thus
+is already carrying a chip), is likely to perform <code>MoveRandomly</code>
+instead, i.e.  move around, and it will do that until being far enough
+from a chip (distance &gt; 1).
+</p>
+
+<blockquote>
+<p>
+To use the matrix above in your model, put the following lines in a
+text file named "matrix.txt"
+</p>
+
+<pre class="example">
+termites	MoveRandomly	0
+termites 	MoveRandomly 	10	chips	1
+termites 	PutDown 	20      chips   0.3
+termites 	PickUp 		30 	chips 	1
+</pre>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-termites2:c" class="outline-3">
+<h3 id="termites2:c"><a id="sec-4-3" name="sec-4-3"></a>Back to interactions and primitives</h3>
+<div class="outline-text-3" id="text-termites2:c">
+
+<p>
+Those considerations lead us to propose a simplified definition of the
+interactions needed in that model.
+</p>
+
+<blockquote>
+<p>
+Put the following lines in a text file named "interactions.txt"
+</p>
+
+<pre class="example">
+interaction MoveRandomly
+  actions   wiggle
+end
+
+interaction PickUp
+  condition       not:carrying?
+  actions         take-load get-away
+end
+
+interaction PutDown
+  condition       carrying?
+  actions         drop-load random-turn get-away
+end
+</pre>
+</blockquote>
+
+<p>
+You also have to write the primitives for termites and chips. Take
+some time to try by yourself. Useful indication: when running a
+concrete primitive (reporter or command) either as a source or as a
+target, you can refer to the <b>other agent</b> through the
+<code>ioda:my-target</code> reporter.
+</p>
+
+<blockquote>
+<p>
+Here is the set of primitives we propose:
+</p>
+
+<pre class="example">
+to-report termites::carrying?
+  report carrying?
+end
+
+to termites::filter-neighbors
+  ioda:filter-neighbors-in-radius 1
+end
+
+; note that this primitive has an action both on source and target agents
+; the target can be accessed through the ioda:my-target reporter
+to termites::take-load
+  set carrying? true
+  set color red
+  ask ioda:my-target [ioda:die]
+end
+
+to termites::wiggle
+  left random 50 right random 50 fd 1
+end
+
+to termites::drop-load
+  set carrying? false
+  set color white
+  hatch-chips 1 [init-chip]
+end
+
+to termites::get-away
+  fd 20
+end
+
+to termites::random-turn
+  right random 360
+end
+</pre>
+</blockquote>
+
+<p>
+The simulation of the above model should lead to the formation of
+compact piles as shown below. The sparseness of the piles depends on
+the limit distance assigned to the <code>PutDown</code> interaction.
+</p>
+
+
+<div class="figure">
+<p><img src="images/tutorial3.png" alt="tutorial3.png">
+</p>
+<p><span class="figure-number">Figure 2:</span> Screenshot of the termites simulation.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-ecosystem" class="outline-2">
+<h2 id="ecosystem"><a id="sec-5" name="sec-5"></a>Tutorial #4: A Simple Ecosystem</h2>
+<div class="outline-text-2" id="text-ecosystem">
+</div>
+
+<div id="outline-container-ecosystem:a" class="outline-3">
+<h3 id="ecosystem:a"><a id="sec-5-1" name="sec-5-1"></a>Grass, Sheep and Wolves: Patches as true agents</h3>
+<div class="outline-text-3" id="text-ecosystem:a">
+
+<p>
+In this section, we try to build a small ecosystem with three species:
+grass, sheep and wolves. At the beginning, we allow sheep to eat
+grass, wolves to eat sheep, and only sheep to mate (no death by
+starvation). In addition, we decide to use patches to represent grass;
+but, remember, in IODA any relevant entity should be an agent: hence,
+in the IODA NetLogo extension, <b>patches can be explicitly be used as
+regular agents in the model</b>. Thus, we can summarize the relations
+between agents through the interaction matrix below.
+</p>
+
+
+<table id="imatrix2" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 2:</span> The interaction matrix for the description of behaviors.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">patches</th>
+<th scope="col" class="left">sheep</th>
+<th scope="col" class="left">wolves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>patches</b></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>sheep</b></td>
+<td class="left">(MoveRandomly, 0)</td>
+<td class="left">(Eat, 20, 1)</td>
+<td class="left">(Mate, 10, 1)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>wolves</b></td>
+<td class="left">(MoveRandomly, 0)</td>
+<td class="left">&#xa0;</td>
+<td class="left">(Eat, 20, 1)  <BR> (Hunt, 10, 5)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-ecosystem:b" class="outline-3">
+<h3 id="ecosystem:b"><a id="sec-5-2" name="sec-5-2"></a>The Update Matrix</h3>
+<div class="outline-text-3" id="text-ecosystem:b">
+
+<p>
+Moreover, the grass resource must be at the same time limited (to
+avoid exponential growth of sheep) and regularly restored (to allow
+sheep to reproduce). Thus, the state of the patches has to change
+regularly, without considering interactions that the patches could
+perform or undergo.  <span class="info"> In IODA such update operations can be
+specified in an <b>update matrix</b> as shown below:  </span>
+</p>
+
+<table id="umatrix2" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix" width="40%">
+<caption class="t-above"><span class="table-number">Table 3:</span> The IODA update matrix describes interactions that make the state of agents change.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources</th>
+<th scope="col" class="left">UPDATE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>patches</b></td>
+<td class="left">(Grow, 0)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>sheep</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>wolves</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>
+Interaction matrix and update matrix can be specified in the same
+file. To do so, put the following lines in a text file named
+"matrix.txt":
+</p>
+
+<pre class="example">
+; interactions performed by wolves
+wolves      Eat           20      sheep      1
+wolves      Hunt          10      sheep      5
+wolves      MoveRandomly  0
+
+; interaction performed by sheep
+sheep       Eat           20      patches    1
+sheep       Mate          10      sheep      1
+sheep       MoveRandomly  0
+
+; interaction performed by patches
+patches     Grow          0       UPDATE
+</pre>
+
+<p>
+<b>Notes:</b>
+</p>
+<ol class="org-ol">
+<li>As you can see above, in order to  <span class="info"> put an interaction in
+the update matrix  </span> instead of the interaction matrix, you just
+have to  <span class="info"> write the "UPDATE" keyword after the priority  </span>
+(an interaction used for update is obviously reflexive).
+</li>
+<li>If you want to  <span class="info"> insert comments  </span> in the files, you only
+need to start the line with a non-letter, non-digit character
+(here, ';').
+</li>
+</ol>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-ecosystem:c" class="outline-3">
+<h3 id="ecosystem:c"><a id="sec-5-3" name="sec-5-3"></a>More details on the simulation step (<code>ioda:go</code>)</h3>
+<div class="outline-text-3" id="text-ecosystem:c">
+
+<p>
+This small parenthesis explains how the simulation engine works, to
+help you understand the difference between interactions put in the
+update matrix and those put in the interaction matrix.
+</p>
+
+<p>
+First, when matrices are loaded, the IODA NetLogo extension builds
+three lists of agents: 
+</p>
+<ul class="org-ul">
+<li><b>Active agents</b> are those with a  <span class="info"> non-empty row in the
+interaction matrix  </span> (agents that are able to <i>perform
+interactions</i>). In the example above, <code>wolves</code> and <code>sheep</code> are
+active agents; <code>patches</code> are not, because they cannot really perform
+interactions (only updates).
+</li>
+<li><b>Passive agents</b> are those with a  <span class="info"> non-empty column in the
+interaction matrix  </span> (agents that are able to <i>undergo
+interactions</i>). In the example above, <code>sheep</code> and <code>patches</code> are
+passive agents; <code>wolves</code> are not, because the "wolves" column is
+empty: wolves cannot undergo anything but reflexive interactions.
+</li>
+<li><b>Labile agents</b> are those with a  <span class="info"> non-empty row in the update
+matrix  </span> (agents that are subject to <i>state changes</i>). In the
+example above, <code>patches</code> are the only labile agents.
+</li>
+</ul>
+
+<p>
+From the above definitions, it appears that agents can be at the same
+time active, passive and labile: this only depends on the contents of
+the interaction and update matrices.
+</p>
+
+<p>
+The <code>ioda:setup</code> and the <code>ioda:go</code> commands make use of this
+characterization, to respectively initialize the state of all IODA
+agents and execute each step in the simulation.
+</p>
+
+<blockquote>
+<p>
+Among several operations, the <code>ioda:setup</code> command stamps all agents
+as <b>alive</b> (they "exist" in the IODA simulation).
+</p>
+
+<p>
+At each time step, the <code>ioda:go</code> command handles the behavior of the
+agents through the following operations:
+</p>
+<ol class="org-ol">
+<li>stamp all agents as <b>operative</b> (i.e. ready to work)
+</li>
+<li>reset the <i>list of dead agents</i>
+</li>
+<li><b>UPDATE STEP:</b> ask each alive <i>labile agent</i> (by default, in random
+order; yet, a convenient order can be specified,
+cf. <a href="#leapyears:b">scheduling policies</a> below) to perform its update interactions,
+i.e.:
+<ul class="org-ul">
+<li>for each assignation, by decreasing priority: if both trigger and
+condition are fulfilled, execute the actions
+</li>
+</ul>
+<p>
+It may happen that some actions (typically using <code>ioda:die</code>) stamp the
+agent <b>dead</b> and put it into the <i>list of dead agents</i>.
+</p>
+</li>
+<li><b>INTERACTION SELECTION STEP:</b> ask each alive and operative <i>active
+agent</i> (by default, in random order; yet a convenient order can be
+specified, cf. <a href="#leapyears:b">scheduling policies</a> below) to select and perform an
+interaction, i.e.:
+<ol class="org-ol">
+<li>perceive the neighboring alive <i>passive agents</i> (agents
+that cannot be a target are not taken into account)
+</li>
+<li>gather all assignations with the same priority level (starting
+with the highest level)
+</li>
+<li>for each assignation, determine all interaction/target pairs
+where trigger and condition are fulfilled (in case of reflexive
+interaction, the target is <code>nobody</code>)
+</li>
+<li>if some realizable interaction/target pairs have been found:
+<ol class="org-ol">
+<li>select one (according to a <i>target selection policy</i> which,
+by default, is a random choice; a specific policy can also be
+specified, see <a href="#pheromones:b">below</a>)
+</li>
+<li>execute the corresponding actions with the specified target
+</li>
+<li>stamp the source agent as <b>not operative</b>
+</li>
+</ol>
+<p>
+Again, it may happen that some agents (source or targets) are
+killed through <code>ioda:die</code> and thus put into the <i>list of dead
+agents</i>.
+</p>
+</li>
+<li>if no interaction/target pair was found, try again with a lower
+priority level; if all assignations have been checked without
+results, this agent does not perform any interaction (yet, it
+can be the target of several interactions performed by other
+agents)
+</li>
+</ol>
+</li>
+<li>remove from the NetLogo simulation all agents found in the <i>list of dead agents</i>
+</li>
+</ol>
+</blockquote>
+
+<p>
+ <span class="alert"> As a consequence of this scheduling algorithm, an agent may
+act as a source (i.e. perform an interaction) at most once during a
+time step.  </span> But it can generally undergo several
+operations performed by other sources.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-ecosystem:d" class="outline-3">
+<h3 id="ecosystem:d"><a id="sec-5-4" name="sec-5-4"></a>Specifying the interactions: parallel vs. exclusive</h3>
+<div class="outline-text-3" id="text-ecosystem:d">
+
+<p>
+Due to the scheduling of agents, actions that happen <i>during a same
+time step</i> are actually run in sequence. Thus, it can be sometimes
+very important to prevent some agents to perform and undergo
+interactions <i>simultaneously</i>, i.e. during the same time step.
+</p>
+
+<p>
+For instance, it is clear that several wolves can perform the <code>Hunt</code>
+interaction with the same sheep as target. Conversely, if we allow a
+sheep to be the target of <code>Mate</code> twice (or more) during the same time
+step, the actual birth rate will be higher than expected. It would be
+more likely that a sheep cannot perform nor undergo <code>Mate</code> but once at
+a time.
+</p>
+
+<p>
+In order to cope with such situations, IODA provides to classes of
+interactions: 
+</p>
+<ul class="org-ul">
+<li> <span class="info"> <b>parallel interactions</b> do not affect the ability to
+participate in other interactions:  </span>
+<ul class="org-ul">
+<li>the source of a parallel interaction cannot act again as a source,
+but can still undergo other interactions
+</li>
+<li>the target of a parallel interaction can still be the source or
+the target of other interactions.
+</li>
+</ul>
+</li>
+</ul>
+<p>
+Example: interactions such as <code>Hunt</code> or <code>MoveRandomly</code> are parallel
+interactions. 
+</p>
+<ul class="org-ul">
+<li> <span class="info"> <b>exclusive interactions</b> prevent agents from participating
+in other exclusive interactions:  </span>
+<ul class="org-ul">
+<li>the source of an exclusive interaction cannot be the target of
+another exclusive interaction; it can still be the target of
+parallel interactions
+</li>
+<li>the target of an exclusive interaction cannot be the source nor
+the target of another exclusive interaction; it can still be the
+target of parallel interactions. 
+</li>
+</ul>
+</li>
+</ul>
+<p>
+Example: interactions such as <code>Mate</code> or <code>Eat</code> are exclusive
+interactions.
+</p>
+
+<blockquote>
+<p>
+To identify the class of an interaction <code>I</code>, you have to answer the
+following questions:
+</p>
+<ol class="org-ol">
+<li>can a target of <code>I</code> be the source of other interactions, during
+the same time step?
+</li>
+<li>can an agent be twice the target in interaction <code>I</code> with
+different sources, during the same time step?
+</li>
+</ol>
+
+<p>
+ <span class="info"> If you answer "YES" to one or both questions, then
+interaction <code>I</code> is <b>parallel</b>. Otherwise  </span>
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-ecosystem:e" class="outline-3">
+<h3 id="ecosystem:e"><a id="sec-5-5" name="sec-5-5"></a>Interactions in the ecosystem</h3>
+<div class="outline-text-3" id="text-ecosystem:e">
+
+<p>
+We are now able to define the interactions required to build our
+little ecosystem. In IODA NetLogo,  <span class="warning"> interactions are
+considered parallel by default  </span>. To modify the class of the
+interaction, you can put one of the following keywords before
+<code>interaction</code>: <code>parallel</code> or <code>exclusive</code>. The general algorithm of
+interaction selection is designed to take automatically into account
+the class of each interaction.  <span class="info"> You are strongly recommended to
+explicitly specify the class of your interactions, in order to make
+their meaning unambiguous.  </span>
+</p>
+
+<blockquote>
+<p>
+Put the following lines in a text file called "interactions.txt":
+</p>
+
+<pre class="example">
+parallel interaction Hunt
+  trigger     hungry?
+  condition   adult? target:alone?
+  actions     chase
+end
+
+exclusive interaction Eat
+  trigger     hungry?
+  condition   target:healthy?
+  actions     digest target:die
+end
+
+parallel interaction MoveRandomly
+  actions     wiggle
+end
+
+parallel interaction Grow
+  condition   not:grown?
+  actions     increase-size
+end
+
+exclusive interaction Mate
+  trigger     adult? target:adult?
+  condition   not:hungry? target:not:hungry? 
+  actions     reproduce decrease-health target:decrease-health
+end
+</pre>
+
+<p>
+<b>Note:</b> The <code>target:</code> and <code>not:</code> keywords can be used together, and
+ can of course be combined in any order (i.e. <code>target:not:hungry?</code> is
+ equivalent to <code>not:target:hungry?</code>).
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-ecosystem:f" class="outline-3">
+<h3 id="ecosystem:f"><a id="sec-5-6" name="sec-5-6"></a>Implementation of the primitives</h3>
+<div class="outline-text-3" id="text-ecosystem:f">
+<p>
+We propose the following rules regarding the nature of the agents:   
+</p>
+<ul class="org-ul">
+<li>patches have a <code>food</code> attribute (between 0 and <code>max-food</code>), which
+represents the quantity of food available on the patch; food growth
+rate is 0.1 per tick; a patch is considered "healthy" if <code>food</code> &ge;
+<code>0.2*max-food</code>
+</li>
+<li>sheep have a <code>stomach</code> attribute to store the food; sheep are hungry
+when <code>stomach</code> &le; 20; any move costs 1 food unit; in
+addition, for now sheep are always considered adult, and healthy
+means "not hungry"; breeding offspring costs 5 food units to both
+source and target (<code>sheep::decrease-health</code>): as a counterpart the
+offspring starts with 10 food units in its <code>stomach</code>
+</li>
+<li>wolves have a <code>last-dinner</code> attribute to memorize the time (the
+<code>ticks</code>) they performed the <code>digest</code> action: thus they get hungry
+when <code>last-dinner</code> &ge; 50; wolves are also considered adult
+</li>
+</ul>
+
+<blockquote>
+<p>
+You can use the following lines as the beginning of your program:
+</p>
+
+<pre class="example">
+__includes ["IODA_2_3.nls"]
+extensions [ioda]
+ 
+breed [wolves wolf]
+breed [sheep a-sheep]
+
+wolves-own  [last-dinner]
+sheep-own   [stomach]
+patches-own [food]
+  
+to setup
+  clear-all
+  set-default-shape wolves "wolf"
+  set-default-shape sheep "sheep"
+  init-agents
+  ioda:load-interactions "interactions.txt"
+  ioda:load-matrices "matrix.txt" " \t"
+  ioda:setup
+  reset-ticks
+end
+
+to go
+  ioda:go
+  tick 
+end
+
+to init-agents
+  ask patches 
+    [ set food random max-food  
+      recolor-patch ]
+  create-sheep 50 
+    [ setxy random-xcor random-ycor
+      set color white
+      set stomach random 20 ]
+  create-wolves 5 
+    [ setxy random-xcor random-ycor
+      set last-dinner (- random 50)
+      set color brown ]
+end
+
+to recolor-patch
+  set pcolor scale-color green food 0 (max-food * 1.2)
+end
+
+to wolves::filter-neighbors
+  ioda:filter-neighbors-in-radius 5
+end
+
+to sheep::filter-neighbors
+  ioda:filter-neighbors-in-radius 2
+end
+</pre>
+</blockquote>
+
+<p>
+The end of the exercise for you is now to program the appropriate
+primitives according to the above indications and test your
+simulation. The program named "model1.nlogo" in the
+"4-simple-ecosystem" folder of the tutorial directory provides a
+solution, which leads to an equilibrium between grass and sheep:
+</p>
+
+
+<div class="figure">
+<p><img src="images/tutorial4-capture.png" alt="tutorial4-capture.png">
+</p>
+<p><span class="figure-number">Figure 3:</span> Screenshot of the simple ecosystem simulation.</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-ecosystem:g" class="outline-3">
+<h3 id="ecosystem:g"><a id="sec-5-7" name="sec-5-7"></a>To extend the model&#x2026;</h3>
+<div class="outline-text-3" id="text-ecosystem:g">
+
+<p>
+You should now be familiar enough with IODA to try adding the
+following extensions to your model (an implementation is proposed in
+the file named "model2.nlogo"):    
+</p>
+<ul class="org-ul">
+<li>make sheep die by starvation, i.e. if their <code>stomach = 0</code>
+</li>
+<li>make sheep flee to escape wolves
+</li>
+<li>introduce sexual differentiation in sheep in order to make the
+<code>Mate</code> interaction more realistic
+</li>
+<li>make sheep grow from newborn to adult (become adult after e.g. 40
+ticks)
+</li>
+<li>force newborns to stay with their mother, prevent them from eating
+grass and make them feed from their mother instead
+</li>
+<li>allow female to mate only if they have at most 2 newborns
+</li>
+<li>introduce seasonal variations in the food growth rate 
+</li>
+</ul>
+
+<p>
+Of course, a challenge here (but not related to IODA) is to find
+parameters which allow an equilibrium in the ecosystem! Besides this
+issue, if you are familiar with designing individual-based models, you
+should be able to notice the speed-up provided by the IODA approach.
+</p>
+
+
+<div class="figure">
+<p><img src="images/tutorial4-capture2.png" alt="tutorial4-capture2.png">
+</p>
+<p><span class="figure-number">Figure 4:</span> Screenshot of the simple ecosystem simulation with extensions.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-leapyears" class="outline-2">
+<h2 id="leapyears"><a id="sec-6" name="sec-6"></a>Tutorial #4b: Leap years, or: New features since v&nbsp;2.2</h2>
+<div class="outline-text-2" id="text-leapyears">
+
+<p>
+If you feel familiar with the IODA NetLogo extension and are
+interested in the details of the simulation engine, this section can
+be useful right now for you. Otherwise, just skip it for now and come
+back later.
+</p>
+</div>
+
+
+<div id="outline-container-leapyears:a" class="outline-3">
+<h3 id="leapyears:a"><a id="sec-6-1" name="sec-6-1"></a>Expressing alternatives in triggers/conditions</h3>
+<div class="outline-text-3" id="text-leapyears:a">
+
+<p>
+A trigger (or a condition) is fulfilled if <b>all</b> primitives report
+<code>true</code>: the <code>TRIGGER</code> and <code>CONDITION</code> items of an interaction express
+a <i>logical conjunction</i> of primitives. Yet, sometimes you need to
+express alternatives (or <i>logical disjunctions</i>). To do so, you just
+need to put as many <code>TRIGGER</code> (or <code>CONDITION</code>) lines as necessary.
+</p>
+
+<blockquote>
+<p>
+For example, the model provided in folder <code>*4b-leap years*</code> of the
+<code>tutorials</code> directory involves agents playing the role or years.  In
+order to keep only leap years, agents can perform an interaction
+called = Survive=, which needs to express that a year is a leap year
+if, and only if, its value is divisible either by 400, or by 4 but not
+by 100. This is done using two <code>CONDITION</code> lines:
+</p>
+
+<pre class="example">
+INTERACTION Survive
+  CONDITION multiple-of-400
+  CONDITION multiple-of-4 not:multiple-of-100
+  ACTIONS   print-value
+end
+</pre>
+</blockquote>
+
+<p>
+Thus, the interaction can occur if one (at least) of the <code>CONDITION</code>
+statements is fulfilled.  <span class="alert"> If you have both triggers and
+conditions, at least one trigger AND at least one condition must be
+fulfilled.  </span> Other examples for using this feature are shown in the
+model <b><a href="#others"><code>15-rescue the princess</code></a></b>.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-leapyears:b" class="outline-3">
+<h3 id="leapyears:b"><a id="sec-6-2" name="sec-6-2"></a>Ordering policies for agent scheduling</h3>
+<div class="outline-text-3" id="text-leapyears:b">
+
+<p>
+In order to avoid simulation biases, the IODA scheduler shuffles the
+list of labile agents before the update step, and the list of active
+agents before the interaction selection step (those steps are
+explained <a href="#ecosystem:c">above</a>). Yet, in some (rare) circumstances this is not
+adequate because the agents must act in a particular order. Thus we
+allow the user to define its own <b>ordering policy</b> for the update step
+and the interaction selection step, which consists in providing a
+two-parameter anonymous reporter which decides whether agent <code>?1</code> must be
+scheduled before agent <code>?2</code> or not.
+</p>
+
+<blockquote>
+<p>
+For example, if you want 'year' agents to print their value in the
+chronological order, they have to perform the <code>Survive</code> interaction
+according to the ascending order of their values. This can be
+performed by specifying an appropriate <i>ordering policy for
+interaction selection</i> after the execution of <code>ioda:setup</code>:
+</p>
+
+<pre class="example">
+to setup
+  clear-all
+  init-world
+  ioda:load-interactions "interactions.txt"
+  ioda:load-matrices "matrix.txt" " \t"
+  ioda:setup
+  if chronological-order?
+    [ ioda:set-ordering-policy-for-interaction-selection [ [?1 ?2] -> chronological-ordering ?1 ?2 ] ]
+  reset-ticks
+end
+
+to-report chronological-ordering [ag1 ag2]
+  report [value] of ag1 &lt; [value] of ag2
+end
+</pre>
+</blockquote>
+
+<p>
+The <b><code>ioda:set-ordering-policy-for-interaction-selection</code></b> primitive
+specifies the anonymous reporter to use for scheduling active agents before the
+interaction selection step ; similarly, the
+<b><code>ioda:set-ordering-policy-for-update</code></b> primitive specifies the task
+to use for scheduling labile agents before the update step. In both
+cases you can use the string "<b><code>random</code></b>" as parameter value so as to
+restore the default policy (shuffling the lists of
+agents).  <span class="alert"> In most situations you need no special ordering
+policy. Use them with caution in order to avoid simulation biases!  </span>
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-pheromones" class="outline-2">
+<h2 id="pheromones"><a id="sec-7" name="sec-7"></a>Tutorial #5: Pheromones, or: Target Selection Policies</h2>
+<div class="outline-text-2" id="text-pheromones">
+</div>
+
+<div id="outline-container-pheromones:a" class="outline-3">
+<h3 id="pheromones:a"><a id="sec-7-1" name="sec-7-1"></a>Nature of the problem</h3>
+<div class="outline-text-3" id="text-pheromones:a">
+
+<p>
+In the interaction selection process,  <span class="warning"> all realizable
+interaction/target pairs with a same priority level  </span> (eventually
+with target = <code>nobody</code>), i.e. pairs for which trigger and condition
+are fulfilled,  <span class="warning"> can occur with equal probability  </span>. But,
+is some cases, this might lead to an unconvincing behavior, or even to
+biased actions. For instance, if you consider implementing pheromones
+following, you expect your agents to go where pheromones have the
+highest level. In this tutorial, we are going to deal with this very
+problem.
+</p>
+
+<p>
+We are starting with a simple path following problem, with two kinds
+of agents: <code>patches</code>, which contain a certain amount of pheromones
+(according to a constant distribution), and <code>ants</code> which have to
+follow the pheromone gradient uphill. For convenience, ants die when
+they reach the highest level of pheromones: what is of interest here
+is the path followed.  We can summarize the problem with the
+interaction matrix below.
+</p>
+
+
+<table id="imatrix3" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 4:</span> The interaction matrix which describes pheromones following.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">patches</th>
+<th scope="col" class="left">ants</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>patches</b></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>ants</b></td>
+<td class="left">&#xa0;</td>
+<td class="left">(Die, 20, 0.5)  <BR> (FollowGradient, 10, 2)  <BR> (MoveRandomly, 0, 1)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>
+Put the following lines in text a file called "interactions.txt":
+</p>
+
+<pre class="example">
+; FollowGradient is a parallel interaction because
+; a same patch can be the target of several ants
+parallel interaction FollowGradient
+  trigger low-pheromone?
+  condition feel-gradient?
+  actions move-towards
+end
+
+parallel interaction MoveRandomly
+  trigger target:no-pheromone?
+  actions wiggle
+end
+
+parallel interaction Die
+  trigger target:high-pheromone?
+  actions die
+end
+</pre>
+</blockquote>
+
+<blockquote>
+<p>
+Put the following lines in a text file called "matrix.txt":
+</p>
+
+<pre class="example">
+ants	Die    		20	patches 0.5
+ants	FollowGradient	10	patches 2
+ants 	MoveRandomly	0	patches	1
+</pre>
+</blockquote>
+
+<p>
+Finally, here is the code of the program with appropriate primitives:
+</p>
+
+<pre class="example">
+__includes ["IODA_2_3.nls"] 
+extensions [ioda]
+ 
+breed [ants ant]
+patches-own [pheromone]
+  
+to setup
+  clear-all
+  set-default-shape ants "ant"
+  init-patches
+  create-ants 200 
+    [ setxy random-xcor random-ycor
+      set color brown  pen-down ]
+  ioda:load-interactions "interactions.txt"
+  ioda:load-matrices "matrix.txt" " \t"
+  ioda:setup
+  reset-ticks
+end
+
+to init-patches
+  ask patch -5 5 [ set pheromone 1000 ]
+  repeat 10 [ diffuse pheromone 0.5 ]
+  let m max [pheromone] of patches
+  ask patches 
+    [ set pcolor scale-color yellow pheromone 0 m ]
+end
+
+to go
+  tick 
+  ioda:go
+  if (not any? ants) [stop]
+end
+
+; restricts perception to patch here and surrounding patches
+to ants::filter-neighbors
+  ioda:filter-neighbors-on-patches (patch-set patch-here neighbors)
+end
+
+to ants::die
+  ioda:die
+end
+
+to-report patches::high-pheromone?
+  report pheromone &gt; 40 
+end
+
+to-report ants::low-pheromone?
+  report pheromone &lt; 40
+end
+
+to-report ants::feel-gradient?
+  report [pheromone] of ioda:my-target &gt; [pheromone] of patch-here
+end
+
+to ants::move-towards
+  face ioda:my-target
+  fd 1
+end
+
+to-report patches::no-pheromone?
+  report pheromone &lt; 1
+end
+
+to ants::wiggle  
+  left random 45 right random 45 fd 1 
+end
+</pre>
+
+<p>
+Try this model. You should see your ants wiggle and go more or less
+directly to the center of the yellow hill. However, you also can
+observe that their trails are not quite straight (see <a href="#pheromones:c">figure <b>a</b></a>
+below). They can reach the center thanks to the <code>feel-gradient?</code>
+primitive, which ensures that an ant moves to a neighboring patch only
+if the value of the pheromone on the new patch is higher than the
+value on the current patch. But,  <span class="alert"> this does not mean at all
+that the ant chooses the patch with the highest pheromone level  </span>.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-pheromones:b" class="outline-3">
+<h3 id="pheromones:b"><a id="sec-7-2" name="sec-7-2"></a>Introducing a Target Selection Policy</h3>
+<div class="outline-text-3" id="text-pheromones:b">
+
+<p>
+Obviously, we would expect ants to perform <code>FollowGradient</code> on "best"
+patches, i.e. on patches where the amount of pheromone is higher that
+others, or where it is the highest.
+</p>
+
+<p>
+IODA provides generic tools for refining the way interaction/target
+pairs are chosen. These tools are called  <span class="info"> Target Selection
+Policies  </span> (TSP). TSP are integrated in the IODA simulation engine,
+with a default policy: <code>RANDOM</code>, which ensures an equiprobable choice
+between all interaction/target pairs with the same priority level.
+</p>
+
+<p>
+The IODA NetLogo extension provides several other Target Selection
+Policies, among those which are most often needed. For now, we
+introduce two frequent policies: <code>BEST</code> and <code>PRORATA</code>. 
+</p>
+<ul class="org-ul">
+<li><b>BEST</b> allows to select the target among  <span class="info"> agents that
+maximize a given reporter  </span>
+</li>
+<li><b>PRORATA</b> allows to select the target with  <span class="info"> a probability
+that is proportional to a given reporter  </span>
+</li>
+</ul>
+
+<p>
+In the case of pheromones following, we can compare those policies,
+using a reporter that gives the amount of pheromones on a patch.
+</p>
+
+<blockquote>
+<p>
+Add the following reporter to your procedures:
+</p>
+
+<pre class="example">
+to-report patches::pheromone
+  report pheromone
+end
+</pre>
+
+<p>
+Put the following lines in a text file called "matrix-PRORATA.txt":
+</p>
+<pre class="example">
+ants 	Die		20	patches 0.5
+ants	FollowGradient	10	patches 2	PRORATA:pheromone
+ants 	MoveRandomly	0	patches	1
+</pre>
+<p>
+Put the following lines in a text file called "matrix-BEST.txt":
+</p>
+<pre class="example">
+ants 	Die		20	patches 0.5
+ants	FollowGradient	10	patches 2	BEST:pheromone
+ants 	MoveRandomly	0	patches	1
+</pre>
+</blockquote>
+
+<p>
+Test your model with each of the new matrices. You should obtain
+different trails, as shown on <a href="#pheromones:c">figures <b>b</b> and <b>c</b></a>
+below.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-pheromones:c" class="outline-3">
+<h3 id="pheromones:c"><a id="sec-7-3" name="sec-7-3"></a>Results and explanations</h3>
+<div class="outline-text-3" id="text-pheromones:c">
+
+<p>
+The figures below come from simulations with respectively a <code>RANDOM</code>
+(<b>a</b>), a <code>PRORATA</code> (<b>b</b>) and a <code>BEST</code> (<b>c</b>) Target Selection
+Policy. You can clearly see that, in the area where pheromones are
+felt, the trails left by ants are more and more
+deterministic. Especially, in the <code>BEST</code> TSP, the ants go straight to
+the patch with the highest pheromone level.
+</p>
+
+<IMG src="images/RANDOM.png" width="32%" ALT="RANDOM"> 
+<IMG src="images/PRORATA.png" width="32%" ALT="PRORATA">
+<IMG src="images/BEST.png" width="32%" ALT="BEST">
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void" class="matrix" width="94%">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><b>(a)</b></td>
+<td class="left"><b>(b)</b></td>
+<td class="left"><b>(c)</b></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-pheromones:d" class="outline-3">
+<h3 id="pheromones:d"><a id="sec-7-4" name="sec-7-4"></a>How to use Target Selection Policies</h3>
+<div class="outline-text-3" id="text-pheromones:d">
+<p>
+Target Selection Policies are designed to help you to specify
+preferences in the way target are chosen in an <i>assignation</i>.  Thus
+you can indicate one at the end of a line in the interaction
+matrix. Of course  <span class="warning"> it does not make sense in a reflexive
+interaction  </span>
+</p>
+
+<p>
+To use a Target Selection Policy, just add, at the end of the
+appropriate line, the keyword refering to the TSP (e.g. <code>BEST</code> or
+<code>PRORATA</code>) followed with ":" and the name of the abstract primitive
+which must be used to compare targets. That means that you have to
+write an additional concrete primitive, depending on the nature of the
+target agents. In the example above, the <code>BEST:pheromone</code> clause is
+used in the context where the target is a patch: hence you have to
+write a concrete reporter named <code>patches::pheromone</code>.
+</p>
+
+<p>
+Other Target Selection Policies are presented in <a href="#explosion">Tutorial #8</a>.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-ants-and-food" class="outline-2">
+<h2 id="ants-and-food"><a id="sec-8" name="sec-8"></a>Tutorial #6: Ants and food Revisited</h2>
+<div class="outline-text-2" id="text-ants-and-food">
+</div>
+
+<div id="outline-container-ants-and-food:a" class="outline-3">
+<h3 id="ants-and-food:a"><a id="sec-8-1" name="sec-8-1"></a>Exercise</h3>
+<div class="outline-text-3" id="text-ants-and-food:a">
+
+<p>
+Try to reproduce the classical "Ants" NetLogo model (<i>Models Library
+&rarr; Biology &rarr; Ants</i>) with IODA, using only agents. We suggest
+you start with the the following interaction and update matrices:
+</p>
+
+<table id="imatrix4" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 5:</span> The interaction matrix we propose to reproduce the NetLogo Ants model.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">ants</th>
+<th scope="col" class="left">food</th>
+<th scope="col" class="left">pheromones</th>
+<th scope="col" class="left">nests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>ants</b></td>
+<td class="left">(ReturnToNest, 10)  <BR> (MoveRandomly, 0)</td>
+<td class="left">&#xa0;</td>
+<td class="left">(Take, 30, 1)  <BR> (Follow, 20, 5)</td>
+<td class="left">(Follow, 10, 5)</td>
+<td class="left">(DropFood, 30, 1)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>food</b></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>pheromones</b></td>
+<td class="left">(Die, 20)  <BR> (MoveRandomly, 0)</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">(Take, 10, 0.8)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>nests</b></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+
+<P></P>
+
+<table id="umatrix4" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix" width="40%">
+<caption class="t-above"><span class="table-number">Table 6:</span> The update matrix for Ants.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources</th>
+<th scope="col" class="left">UPDATE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>ants</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>food</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>pheromones</b></td>
+<td class="left">(Evaporate, 0)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>nests</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-ants-and-food:b" class="outline-3">
+<h3 id="ants-and-food:b"><a id="sec-8-2" name="sec-8-2"></a>Hints</h3>
+<div class="outline-text-3" id="text-ants-and-food:b">
+<ul class="org-ul">
+<li>First, look closely at the original NetLogo model and compare the
+actions of the turtles to find the appropriate matching with the
+IODA model. 
+</li>
+<li>In the interaction and update matrices above, the following assumptions are made:
+<ul class="org-ul">
+<li>The path to the nest is not the problem, hence we can put the nest
+at (0,0) and go straight to it (<code>ReturnToNest</code>).
+</li>
+<li><i>Pheromones are true agents instead of a patch variable</i>: thus,
+diffusion and evaporation are handled through interactions
+(<code>MoveRandomly</code> and <code>Evaporate</code> respectively); pheromones can also
+merge (<code>Take</code>) since it does not make sense to have several
+pheromones agents at the same place. Finally, they <code>Die</code> when
+their value is too low.
+</li>
+<li>Food pieces are true agents too.  
+</li>
+</ul>
+</li>
+<li>First, try to write the definition of the interactions. If you
+really encounter difficulties, or if you want to check your ideas,
+we propose a solution <i>below</i>.
+</li>
+<li>Be careful, some interactions <i>must</i> be exclusive, otherwise you
+might get inconsistent behaviors! Do not rely upon a clever <i>ad hoc</i>
+implementation of the primitives, use the meaning of the interaction
+instead, to decide whether it is exclusive or parallel.
+</li>
+<li>When writing the matrix file, use the appropriate Target Selection
+Policy for efficient pheromones following. We propose a solution
+<i>below</i>.
+</li>
+<li>Implement your model step by step (<b>and test it!</b>) : e.g. start with
+<code>MoveRandomly</code>, then add <code>Take</code> and <code>ReturnToNest</code>, and so on.
+</li>
+<li>Make use of the difference between abstract and concrete primitives,
+so as to define multi-purpose interactions that can support similar
+rules. (e.g. <code>Take</code> food vs. <code>Take</code> pheromones).
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-ants-and-food:c" class="outline-3">
+<h3 id="ants-and-food:c"><a id="sec-8-3" name="sec-8-3"></a>Additional help: definition of interactions</h3>
+<div class="outline-text-3" id="text-ants-and-food:c">
+
+<blockquote>
+<p>
+We propose the following interactions to reproduce the Ants simulation:
+</p>
+
+<pre class="example">
+parallel interaction Follow
+  trigger 	foraging?
+  actions	follow-target  target:decrease-strength
+end
+
+exclusive interaction Take
+  condition	can-take-load?
+  actions	take-target  target:die
+end
+
+interaction MoveRandomly
+  actions 	wiggle
+end
+
+interaction ReturnToNest
+  trigger 	carrying-food?
+  actions	drop-pheromone  move-to-home
+end
+
+interaction DropFood
+  condition	carrying-food?
+  actions	drop-load  turn-back
+end
+
+exclusive interaction Die 
+  trigger  	too-weak?
+  actions	die
+end
+
+interaction Evaporate
+  actions decrease-strength
+end
+</pre>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-ants-and-food:d" class="outline-3">
+<h3 id="ants-and-food:d"><a id="sec-8-4" name="sec-8-4"></a>Additional help: interaction and update matrices</h3>
+<div class="outline-text-3" id="text-ants-and-food:d">
+
+<blockquote>
+<p>
+We propose the following matrix file to reproduce the Ants simulation:
+</p>
+
+<pre class="example">
+; FILE FORMAT: 
+; Source	Interaction  priority [UPDATE]
+; or
+; Source	Interaction  priority  Target  distance [&lt;TARGET-SEL-METHOD&gt;]
+
+; interactions performed by ants
+Ants	Take 	      30	Food        1	
+Ants	DropFood      30	Nests       1
+Ants	Follow        20	Food        5	
+Ants	Follow 	      10	Pheromones  5	BEST:strength
+Ants	ReturnToNest  10
+Ants 	MoveRandomly  0
+
+; interactions performed by pheromones
+Pheromones	Die           20
+Pheromones 	Take          10 	Pheromones  0.8
+Pheromones	MoveRandomly  0
+Pheromones	Evaporate     10	UPDATE
+</pre>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-ants-and-food:e" class="outline-3">
+<h3 id="ants-and-food:e"><a id="sec-8-5" name="sec-8-5"></a>What you should get</h3>
+<div class="outline-text-3" id="text-ants-and-food:e">
+
+<p>
+Your simulation will probably look like
+<a href="videos/ants.mp4">this little movie</a>, which demonstrates
+several additional features:
+</p>
+<ul class="org-ul">
+<li>Food agents are created in three piles (coordinates-based areas) as
+in the original model.
+</li>
+<li>Food agents owns a <code>quality</code> attribute, and ants choose the best
+quality (among perceived food agents).
+</li>
+<li>The quantity of food droped on the nest is shown with a counter
+(updated through an interaction).
+</li>
+</ul>
+
+<p>
+Please have a look at the "<b><code>6-ants-and-food</code></b>" folder in the
+<code>tutorials</code> directory for the details.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-perception" class="outline-2">
+<h2 id="perception"><a id="sec-9" name="sec-9"></a>Tutorial #6b-c-d: Tuning perception &mdash; Enhancements since v&nbsp;2.3</h2>
+<div class="outline-text-2" id="text-perception">
+
+<p>
+This section explains how each agent perceives its neighbors in the
+IODA approach and how it is handled in the IODA NetLogo extension.
+</p>
+</div>
+
+<div id="outline-container-perception:a" class="outline-3">
+<h3 id="perception:a"><a id="sec-9-1" name="sec-9-1"></a>General principles in IODA perception</h3>
+<div class="outline-text-3" id="text-perception:a">
+
+<p>
+As mentioned before (<a href="#ecosystem:c">details about the simulation step</a>), each
+potential source agent has to indentify the potential targets of
+interactions. In other words, among all other agents, each active
+agent has to retain only those that are likely to undergo an
+interaction. The simulation engine retains those that fulfil the
+following criteria:
+</p>
+<ul class="org-ul">
+<li>first, they must be <i>passive</i> agents (non-empty column in the interaction matrix)
+</li>
+<li>among passive agents, only those which have non-empty cells on the
+row of the source agent in the interaction matrix can be retained
+</li>
+</ul>
+
+<p>
+Yet, before each interaction is evaluated for those agents (using the
+triggers, conditions and limit distance), there is in general an
+intermediate step: in most individual-based models <b>the perception is
+only local</b>, thus each agent is endowed with a <b>neighborhood function</b>
+which defines <i>what other agents are considered close enough to be
+perceived.</i> In the IODA NetLogo extension, this user-defined function
+is <b><code>&lt;breed&gt;::filter-neighbors</code></b>. Since version 2.3, agent perception
+has been considerably improved. We show below several built-in
+primitives of the extension that allow to define and compose easily
+perception areas at a reasonable computational cost.
+</p>
+</div>
+</div>
+
+<div id="outline-container-perception:b" class="outline-3">
+<h3 id="perception:b"><a id="sec-9-2" name="sec-9-2"></a>#6b: Neighborhoods, or: composing built-in perception primitives</h3>
+<div class="outline-text-3" id="text-perception:b">
+
+<p>
+The first example, provided in the <b><code>6b-neighborhoods</code></b> directory of
+the <code>tutorials</code> folder, is inspired by the "Vision Cone Example" model
+in the NetLogo library (<i>Models Library</i> &rarr; <i>Code Examples</i> &rarr;
+<i>Vision Cone Example</i>) with two breeds: wanderers and
+standers. Wanderers move around and "light" the standers in their
+neighborhood.
+</p>
+
+<p>
+The neighborhood itself in this example can be built from the
+combination of several perception primitives. Basically, since
+v&nbsp;2.3 there are four main set operations which can be associated
+with five geometric operations:
+</p>
+
+<table border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix" width="100%">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Set operation</th>
+<th scope="col" class="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>filter-neighbors</code></td>
+<td class="left">initializes the list of neighbors</td>
+</tr>
+
+<tr>
+<td class="left"><code>add-neighbors</code></td>
+<td class="left">UNION: adds the specified list to the neighbors</td>
+</tr>
+
+<tr>
+<td class="left"><code>remove-neighbors</code></td>
+<td class="left">DIFFERENCE: removes the specified list from the neighbors</td>
+</tr>
+
+<tr>
+<td class="left"><code>retain-only-neighbors</code></td>
+<td class="left">INTERSECTION: retains only the neighbors matching the specifications</td>
+</tr>
+</tbody>
+</table>
+
+<table border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix" width="100%">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Geometric operations</th>
+<th scope="col" class="left">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>in-radius &lt;radius&gt;</code></td>
+<td class="left">computes agents in the specified radius</td>
+</tr>
+
+<tr>
+<td class="left"><code>on-patches &lt;patch-set&gt;</code></td>
+<td class="left">computes agents on the specified patches</td>
+</tr>
+
+<tr>
+<td class="left"><code>in-cone &lt;radius&gt; &lt;angle&gt;</code></td>
+<td class="left">computes agents within the specified cone</td>
+</tr>
+
+<tr>
+<td class="left"><code>on-links &lt;link-set&gt;</code></td>
+<td class="left">computes agents that are linked from the caller through the specified links</td>
+</tr>
+
+<tr>
+<td class="left"><code>custom &lt;"reporter"&gt; &lt;params&gt;</code></td>
+<td class="left">computes agents according to the specified reporter and its parameters</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+For instance, the following definition starts with agents within a
+radius of 10, adds those in cone of radius 30 and angle 30, then
+removes the agents within a radius of 5:
+</p>
+<pre class="example">
+to wanderers::filter-neighbors
+  ioda:filter-neighbors-in-radius 10
+  ioda:add-neighbors-in-cone 30 30
+  ioda:remove-neighbors-in-radius 5
+end
+</pre>
+
+<p>
+which leads to the following perception shape:
+</p>
+
+<div class="figure">
+<p><img src="images/perception.png" alt="perception.png" width="30%">
+</p>
+<p><span class="figure-number">Figure 5:</span> A complex geometric shape for agent perception, obtained by combining built-in primitives</p>
+</div>
+
+<p>
+The geometric operations mentioned above are metrics-dependent and
+able to cope automatically with x- or y-wrapping.
+</p>
+</div>
+</div>
+
+<div id="outline-container-perception:c" class="outline-3">
+<h3 id="perception:c"><a id="sec-9-3" name="sec-9-3"></a>#6c: Interactions in a network</h3>
+<div class="outline-text-3" id="text-perception:c">
+
+<p>
+NetLogo links provide also a kind of neighborhood that can be useful
+for handling "social" networks i.e. acquaintances relations between
+agents. Such a model is demonstrated in the <b><code>6c-network</code></b> directory
+of the <code>tutorials</code> folder, where all breeds can be bound by friendship
+relations (undirected link breed) on the one hand, while <code>persons</code> and
+<code>banks</code> may have an account in another <code>bank</code> (directed link breed).
+</p>
+
+<blockquote>
+<p>
+IODA perception primitives based on the <code>on-links</code> geometric
+operations select the appropriate link neighbors to add to the list of
+potential interaction targets. For instance:
+</p>
+
+<pre class="example">
+to persons::filter-neighbors
+  ioda:filter-neighbors-on-links my-out-accounts  ; banks where I have an account
+  ioda:add-neighbors-on-links my-friends    ; my friends (other persons or banks)
+end
+</pre>
+<p>
+<b>N.B.:</b> In the matrix file of this example, please note the
+ <b><code>Infinity</code></b> word used as a limit distance, so as to signify that the
+ <b>physical distance</b> is not to be taken into account (the
+ corresponding actions are not restricted by physical distance).
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-perception:d" class="outline-3">
+<h3 id="perception:d"><a id="sec-9-4" name="sec-9-4"></a>#6d: Termites sorting, or: custom perception tasks</h3>
+<div class="outline-text-3" id="text-perception:d">
+
+<p>
+Custom perception tasks may also be used for defining more complex
+perception modes without changing the behaviors (interactions and
+matrix files) of the agents. For instance, in the
+<b><code>6d-termites-with-colored-chips</code></b> directory of the <code>tutorials</code> folder
+demonstrates how to change the behavior of the termites so as
+specialize agents in a color. Wood chips are endowed with a specific
+color and so do the termites. We want each termite to focus only on
+the wood chips of the same color, without any modification of existing
+interactions.
+</p>
+
+<blockquote>
+<p>
+Therefore, we can modify the perception of termites so as to make them
+discard any neighbors with a "wrong" color:
+</p>
+
+<pre class="example">
+to termites::filter-neighbors
+  ; first the usual in-radius filtering
+  ioda:filter-neighbors-in-radius 1
+  ; then we retain only the neighbors that fulfil the specified reporter
+  ioda:retain-only-neighbors-custom "same-color?" []
+end
+
+; a reporter with two agents and a list of parameters (not used here)
+to-report same-color? [ ag1 ag2 p ]
+  report shade-of? [color] of ag1 [color] of ag2
+end
+</pre>
+</blockquote>
+
+<p>
+Then due to this special filtering, the simulation runs as if several
+independent worlds were just sharing a common space without any
+relation between them, leading to the expected result:
+</p>
+
+
+<div class="figure">
+<p><img src="images/termites2.png" alt="termites2.png">
+</p>
+<p><span class="figure-number">Figure 6:</span> A termites-based sorting of the colored wood chips, based on a custom perception primitive.</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-life" class="outline-2">
+<h2 id="life"><a id="sec-10" name="sec-10"></a>Tutorial #7: Conway's Life,  or: a Cellular Automaton with IODA?!??</h2>
+<div class="outline-text-2" id="text-life">
+
+<p>
+The IODA method is designed for simulations involving large numbers of
+agents, agent families, and interactions between agents. Yet, it can
+also be used for more simple computations, such as cellular
+automata. In addition, some agent-based simulations may rely upon a
+cellular automaton e.g. for representing resources. We show here how
+to program a cellular automaton with the IODA NetLogo extension.
+</p>
+
+<p>
+The Game of Life, invented by John Horton Conway, is a 2D cellular
+automaton with two states (usually called "alive" and "dead"). A
+NetLogo implementation is provided in the model library (<i>Models
+Library</i> &rarr; <i>Computer Science</i> &rarr; <i>Cellular Automata</i> &rarr;
+<i>Life</i>). The rules are the following:
+</p>
+<ul class="org-ul">
+<li>a dead cell becomes alive if it is surrounded by exactly 3 alive
+cells (in a Moore neighborhood)
+</li>
+<li>an alive cell remains alive only if it is surrounded by 2 or 3 alive
+cells
+</li>
+</ul>
+
+<p>
+State changes must occur simultaneously, thus at time <i>t</i> all cells
+have to compute their state at time <i>t+1</i>, then all cells must
+actually change their state if needed. Therefore, it is convenient in
+the IODA methode to make use of update interactions so as to compute
+state changes, and of regular interactions to perform real state
+changes, according to the following matrices:
+</p>
+
+<table id="umatrix5" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix" width="40%">
+<caption class="t-above"><span class="table-number">Table 7:</span> The update matrix for the Game of Life.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources</th>
+<th scope="col" class="left">UPDATE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>patches</b></td>
+<td class="left">(ComputeNextState, 0)</td>
+</tr>
+</tbody>
+</table>
+
+<P></P>
+
+<table id="imatrix5" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix">
+<caption class="t-above"><span class="table-number">Table 8:</span> The interaction matrix for the Game of Life.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">patches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>patches</b></td>
+<td class="left">(ChangeState, 0)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>Exercise:</b> Write the interactions and the corresponding NetLogo
+program.  <BR> A solution is provided in the "<b><code>7-life</code></b>"
+folder in the <code>tutorials</code> directory.
+</p>
+
+<p>
+<b>N.B.:</b> As you can see, though it is possible to implement such
+cellular automata with IODA, the method is not really efficient for
+that: instead of handling many agents families with many interactions
+between them, the engine has to perform repetitive, deterministic
+operations which forces each agent to consider many neighbors. This is
+indeed quite inefficient (but feasible!).
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-explosion" class="outline-2">
+<h2 id="explosion"><a id="sec-11" name="sec-11"></a>Tutorial #8: Explosion and Multi-Target Interactions</h2>
+<div class="outline-text-2" id="text-explosion">
+</div>
+
+
+<div id="outline-container-explosion:a" class="outline-3">
+<h3 id="explosion:a"><a id="sec-11-1" name="sec-11-1"></a>Description</h3>
+<div class="outline-text-3" id="text-explosion:a">
+
+<p>
+The files provided in the folder <b><code>8-explosion</code></b> of the <code>tutorials</code>
+directory aim at demonstrating several <b>target selection policies</b>
+available in IODA NetLogo. You are recommended to launch the
+corresponding model and to experiment while reading this section of
+the tutorial.
+</p>
+
+
+<table cellpadding="10"><tr><td>
+<p>
+The general context is the following: a mine, surrounded by
+soldiers, is going to explode. It is likely to blast several
+agents. Soldiers are characterized by their strength, and some wear
+shields (in yellow) which protect them against mines. What we show
+below is 1) how many agents can be the target of the <code>Blast</code>
+interaction <i>at the same time</i>, 2) how those agents are chosen among
+potential targets. The initial situation is illustrated on the figure
+below. The green area corresponds to the perception radius of the
+mine, and the red area to the limit distance assigned to the <code>Blast</code>
+interaction in the interaction matrix.
+</p>
+
+<table id="imatrix6" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix" width="90%">
+<caption class="t-above"><span class="table-number">Table 9:</span> The interaction matrix for the explosion of the mine.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">soldier</th>
+<th scope="col" class="left">mines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>soldiers</b></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>mines</b></td>
+<td class="left">(Blast, 0)</td>
+<td class="left">(Blast, 10, 4)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<P></P>
+
+<table id="umatrix6" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix" width="90%">
+<caption class="t-above"><span class="table-number">Table 10:</span> The update matrix for the explosion of the mine.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources</th>
+<th scope="col" class="left">UPDATE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>soldiers</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>mines</b></td>
+<td class="left">(CountDown, 0)</td>
+</tr>
+</tbody>
+</table>
+
+</td><td>
+
+<div class="figure">
+<p><img src="images/tutorial8-view.png" alt="tutorial8-view.png">
+</p>
+<p><span class="figure-number">Figure 7:</span> A view of the initial configuration of the "explosion" experiments. The mine is surrounded by soldiers, some of them wearing a protection shield (yellow). The number and the brightness of blue soldiers indicate their strength.</p>
+</div>
+
+</td></tr></table>
+
+<blockquote>
+<p>
+Below is the <code>Blast</code> interaction:
+</p>
+
+<pre class="example">
+EXCLUSIVE INTERACTION Blast
+  TRIGGER activated? countdown-finished?
+  CONDITION target:no-shield?
+  ACTIONS target:die die
+END
+</pre>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-explosion:b" class="outline-3">
+<h3 id="explosion:b"><a id="sec-11-2" name="sec-11-2"></a>The default selection policy: <code>RANDOM</code></h3>
+<div class="outline-text-3" id="text-explosion:b">
+<p>
+As it has been explained above, the default process used for
+interaction and target selection retrieves all interaction/target
+pairs for which the trigger and condition are fulfilled, then selects
+one pair randomly (the target can be <code>nobody</code>). This process is
+suitable for most simulations.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-explosion:c" class="outline-3">
+<h3 id="explosion:c"><a id="sec-11-3" name="sec-11-3"></a>Interaction-first selection policy: <code>RANDOM-INT</code></h3>
+<div class="outline-text-3" id="text-explosion:c">
+
+<p>
+Yet, suppose we have now the following interaction matrix:
+</p>
+
+<table id="imatrix7" border="1" cellspacing="0" cellpadding="5" rules="all" frame="border" class="matrix" width="60%">
+<caption class="t-above"><span class="table-number">Table 11:</span> An alternative IODA interaction matrix for the explosion of the mine.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Sources \ Targets</th>
+<th scope="col" class="left">&empty;</th>
+<th scope="col" class="left">soldier</th>
+<th scope="col" class="left">mines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>soldiers</b></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>mines</b></td>
+<td class="left">(Blast, 0)  <BR>  <span class="alert"> (Defuse, 10)  </span></td>
+<td class="left">(Blast, 10, 4)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+When a mine performs the <code>Defuse</code> interaction, it does not explode at
+all. The priority for that interaction is the same than for <code>Blast</code>
+other soldiers, but since it is a reflexive interaction, the target is
+<code>nobody</code>. Thus, the probability that <code>Defuse</code> occurs is: 1/(N + 1),
+where N is the number of unprotected soldiers within the <code>Blast</code>
+radius (here, 4).
+</p>
+
+<p>
+But, if the specifications of the simulation require that the <code>Defuse</code>
+and <code>Blast</code> interactions occur with the same probability, the default
+target selection policy is not suitable. Then, you can use the
+ <span class="info"> interaction-first selection policy:  </span> when several
+interactions have the same priority, a first random selection occurs
+(with equal probability) among those interactions (if they have
+potential targets), then for the interaction that was selected, the
+target is chosen randomly.  In our case, the probability for each
+interaction is 1/2, though <code>Blast</code> has a large number of potential
+targets while <code>Defuse</code> has only 1 (as a reflexive interaction).
+</p>
+
+<p>
+To use the interaction-first policy, you just have to use the keyword
+<code>RANDOM-INT</code> at the end of the matrix line.
+</p>
+
+<blockquote>
+<p>
+In the tutorial model, compare the two experiments named "RANDOM" and
+"RANDOM-INT": in the latter, there is a probability 1/2 that the mine
+does not explode. Examine the corresponding matrix files to see the
+difference.
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-explosion:d" class="outline-3">
+<h3 id="explosion:d"><a id="sec-11-4" name="sec-11-4"></a>Property-driven selection policies: <code>BEST</code>, <code>PRORATA</code> and <code>ALL-BEST</code></h3>
+<div class="outline-text-3" id="text-explosion:d">
+
+<p>
+We have already introduced  <span class="info"> property-driven selection
+policies  </span> in the <a href="#pheromones">pheromones</a> section of this tutorial. By using the
+keyword <code>BEST:</code> (resp. <code>PRORATA:</code>), followed by an abstract reporter,
+you ensure that the target is chosen with the highest value of the
+reporter (resp. with a probability which is proportional to the
+reporter). By using the keyword <code>ALL-BEST:</code> with a reporter, the
+target of the interaction is  <span class="alert"> the list of all targets with the
+highest value  </span> for the reporter.
+</p>
+
+<blockquote>
+<p>
+In the tutorial model, compare the three experiments named "BEST",
+"PRORATA" and "ALL-BEST". The reporter that is used there is
+<code>weakness</code> (the opposite of the strength of the soldier): thus, with
+"BEST" one of the weakest soldier is killed; with "ALL-BEST", all
+soldiers with the smallest strength are killed; and with "PRORATA",
+one soldier is killed, with a probability proportional to its
+weakness.
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-explosion:e" class="outline-3">
+<h3 id="explosion:e"><a id="sec-11-5" name="sec-11-5"></a>"Multicast" interactions: <code>ALL</code>, <code>NUMBER</code> and <code>FILTER</code></h3>
+<div class="outline-text-3" id="text-explosion:e">
+
+<p>
+The three policies we present here allow a source to  <span class="info"> perform
+an interaction on a list of agents  </span>.
+</p>
+
+<dl class="org-dl">
+<dt> <b><code>ALL</code></b> </dt><dd>When this policy is used, the target of the interaction
+is made of all target agents that fulfill the trigger and
+condition, within the limit distance.
+<blockquote>
+<p>
+In the tutorial model, if you experiment "ALL", the mine
+will blast all soldiers which are not protected by a
+shield.
+</p>
+</blockquote>
+</dd>
+<dt> <b><code>NUMBER:x-y</code>, <code>NUMBER:x-</code>, <code>NUMBER:-y</code>, <code>NUMBER:z</code></b> </dt><dd>When this
+policy is used, the target of the interaction is made of <i>N</i>
+target agents that fulfill the trigger and condition, within the
+limit distance. The highest number of agents is taken, with x &le;
+<i>N</i> &le; y (respectively: x &le; <i>N</i>, <i>N</i> &le; y, <i>N</i> = z).
+ <span class="alert"> If the number of targets is below <i>x</i>, the interaction
+cannot be performed.  </span>
+<blockquote>
+<p>
+In the tutorial model, you can compare experiments "NUMBER-10"
+(blast up to 10 soldiers), "NUMBER10-" (blast at least 10) and
+"NUMBER45-" (blast at least 45), which is not possible when too
+many soldiers wear a shield). In the latter, the <code>Blast</code>
+interaction cannot be performed on soldiers when too many of them
+wear a shield: then, only the reflexive occurrence of <code>Blast</code>
+(with a lower priority, see the interaction matrix above) is
+performed (the mine explodes without killing anyone).
+</p>
+</blockquote>
+</dd>
+<dt> <b><code>FILTER:reporter</code></b> </dt><dd>With this policy, the target of the
+interaction is first made of all target agents that fulfill the
+trigger and condition, within the limit distance. Then the
+ <span class="warning"> source agent  </span> runs the specified reporter to filter
+the target (accessible with the <code>ioda:my-target</code> reporter)
+according to global considerations.
+<blockquote>
+<p>
+In the tutorial model, you can compare experiments "FILTER1" and
+"FILTER2". In the first one, a global damage budget is used to
+determine which soldiers are killed, depending on their proximity
+to the mine and their own strength (see procedure
+<code>mines::distance-strength-tradeoff</code>). In the second one, a random
+number of soldiers is killed (see <code>mines::random-number</code>).
+</p>
+</blockquote>
+</dd>
+</dl>
+</div>
+</div>
+
+
+<div id="outline-container-explosion:f" class="outline-3">
+<h3 id="explosion:f"><a id="sec-11-6" name="sec-11-6"></a>Recommendations for the use of target selection policies</h3>
+<div class="outline-text-3" id="text-explosion:f">
+
+<ul class="org-ul">
+<li>When using selection policies which allow to perform an interaction
+on multiple targets at the same time, do not forget when writing the
+concrete action primitives of the source that
+ <span class="alert"> <code>ioda:my-target</code> reports a list  </span>. Trigger and condition
+are evaluated for each potential target individually, and actions
+performed by the target too (e.g. in the <code>Blast</code> interaction,
+<code>target:die</code>).
+</li>
+<li>When a source can perform several interactions at the same priority
+level with the same source, be very careful if you decide to use
+different target selection policies. You must be sure to write
+consistent lines in the matrix. For instance, if you have a <code>Blast</code>
+and a <code>Hurt</code> interactions realizable at the same time on soldiers,
+if one uses "RANDOM-INT" and the other nothing (or "RANDOM"), then
+"RANDOM-INT" overpowers "RANDOM" and is used for both.
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-explosion:g" class="outline-3">
+<h3 id="explosion:g"><a id="sec-11-7" name="sec-11-7"></a>A parenthesis: specifying an alternative metric</h3>
+<div class="outline-text-3" id="text-explosion:g">
+
+<p>
+As you can see in the interface tab of the provided model, you can
+change the metric used to compute distances between agents. This can
+be useful in several situations, especially when working with
+discretized space. By default, the <code>ioda:setup</code> procedure sets a
+variable (<code>ioda:metric</code>) to "<code>Euclidean</code>". You can change this value
+ <span class="warning"> after the setup  </span> through the <code>ioda:set-metric</code>
+primitive. Valid parameters are the following:
+</p>
+
+<ul class="org-ul">
+<li> <span class="info"> "<code>Euclidean</code>"  </span> (default value): the usual distance, or
+<i>2-norm distance</i>, defined by:  <BR> d(p<sub>1</sub>, p<sub>2</sub>) = ((x<sub>1</sub> -
+x<sub>2</sub>)<sup>2&nbsp;</sup>+&nbsp; (y<sub>1</sub> - y<sub>2</sub>)<sup>2</sup>)<sup>1/2</sup>
+</li>
+<li> <span class="info"> "<code>Moore</code>"  </span>: also called <i>&infin;-norm distance</i> or
+<i>Chebyshev distance</i>, defined by:  <BR> d(p<sub>1</sub>, p<sub>2</sub>) =
+max(|x<sub>1</sub> - x-2|, |y<sub>1</sub> - y<sub>2|</sub>)
+</li>
+<li> <span class="info"> "<code>Von Neumann</code>"  </span>: also called the <i>taxicab norm</i>, or
+<i>Manhattan distance</i>, or <i>1-norm distance</i>, defined by:  <BR>
+d(p<sub>1</sub>, p<sub>2</sub>) = |x<sub>1</sub> - x<sub>2|&nbsp;</sub>+&nbsp;|y<sub>1</sub> - y<sub>2|</sub>
+</li>
+</ul>
+
+<p>
+When a metric is chosen, it is used by neighbor perception primitives
+and by <code>ioda:distance</code>.  All three metrics automatically deal with x-
+or y-wrapping.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="void" class="matrix" width="94%">
+<caption class="t-above"><span class="table-number">Table 12:</span> Initial configuration with a Moore metric (a) or a Von Neumann metric (b).</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><img src="images/Moore.png" alt="Moore.png"></td>
+<td class="left"><img src="images/VonNeumann.png" alt="VonNeumann.png"></td>
+</tr>
+
+<tr>
+<td class="left"><b>(a)</b></td>
+<td class="left"><b>(b)</b></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-advanced" class="outline-2">
+<h2 id="advanced"><a id="sec-12" name="sec-12"></a>Advanced features: reflection and meta-interactions</h2>
+<div class="outline-text-2" id="text-advanced">
+
+<p>
+The separation between declarative parts (nature of agents, definition
+of interactions, assignation of interactions to agents) and procedural
+parts (code of the concrete primitives) of simulation models in IODA
+allows an easy implementation of <b>reflection</b> and <b>meta-behaviors</b>.
+</p>
+
+<p>
+"Reflection" means that in a model, information regarding the nature
+of this model (list of interactions, content of the interaction and
+update matrices) can be accessed quite easily and
+manipulated. "Meta-behaviors" are behaviors that use this capability
+of reflection so as to change the other behaviors.
+</p>
+
+<p>
+Since version&nbsp;2.3 of the IODA NetLogo extension, those facilities
+have been made quite straightforward through a set of built-in
+commands and reporters. Most of them are demonstrated in two code
+examples in the <code>tutorials</code> folder:
+</p>
+<ul class="org-ul">
+<li>in example <code>8b-dynamic matrices</code>, a <code>manager</code> agent observes the
+population of one breed and decides at some point to modify the
+interaction matrix depending on the choice of the user
+</li>
+<li>in example <code>12-colors</code>, a <b>custom matrix generator</b> has been added
+to the existing NetLogo model in order to allow for instance the
+design of random interactions, which are built by assigning
+interactions to random pairs of agents.
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="images/colors.png" alt="colors.png" width="60%">
+</p>
+<p><span class="figure-number">Figure 8:</span> A view of the <code>colors</code> code example with the matrix generator</p>
+</div>
+
+<blockquote>
+<p>
+If you intend to use reflection, keep in mind that:
+</p>
+<ul class="org-ul">
+<li>loading interaction or matrix files has a cumulative effect, unless
+you use the <code>ioda:clear-all</code> or <code>ioda:clear-matrices</code> primitives
+</li>
+<li>you have to define interactions <b>before</b> loading a matrix file or
+adding a matrix line that refers to them
+</li>
+<li>you also have to define the <b>concrete primitives</b> for the agents
+that are able to perform or undergo the new interactions
+</li>
+<li>in order to keep you model consistent, you are strongly recommended
+to call <code>ioda:check-consistency</code> after adding new interactions or
+matrix lines during runtime.
+</li>
+</ul>
+</blockquote>
+
+<p>
+This indeed is just an overview of what can be done using
+reflection. Reflection can be used in evolutionary algorithms
+(e.g. combined with the Behavior Space tool of NetLogo), in
+self-repairing systems, or for reifying emergent behaviors for
+instance. Though in most simulations it is not necessary at all, it
+may be stimulating sometimes to look a bit further. If you are
+interested in the use of reflection in IODA, you can read for
+instance: 
+</p>
+<ul class="org-ul">
+<li>F. Gaillard, Y. Kubera, P. Mathieu, S. Picault (2009), <a href="https://hal.science/hal-00731992">"A reverse
+engineering form for Multi Agent Systems"</a>, in: A. Artikis, G. Picard
+and L. Vercouter (eds.), <i>Post-proceedings of the 9th International
+Workshop Engineering Societies in the Agents World (ESAW'08)</i>,
+revised selected papers. Lecture Notes in Computer Science vol.&nbsp;
+5485, p.&nbsp; 137-153, Springer.
+</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-others" class="outline-2">
+<h2 id="others"><a id="sec-13" name="sec-13"></a>Other code examples in the <code>tutorials</code> directory</h2>
+<div class="outline-text-2" id="text-others">
+
+<p>
+We provide a few additional examples of IODA-based models in order to
+demonstrate various situations and help you find code examples that
+can fit your own issues. Each model below is stored in the
+corresponding directory in the <code>tutorials</code> folder.
+</p>
+
+<dl class="org-dl">
+<dt> <b><code>9-emergent planning</code></b> </dt><dd>An example of simple behaviors found in
+arcade-type games. The character is endowed to simple
+interactions which are hierarchized so as to make it search and
+eat the apple. It behaves thus <i>as if</i> following a plan, with a
+combination of forced steps and opportunistic actions. Two
+experiments are presented: in the first one, the character has to
+unlock and open the door by himself, while in the second one, the
+door automatically locks/unlocks and opens/close, if the
+character owns the appropriate remote. This illustrates how the
+IODA approach facilitates the transformation of "inanimate
+artifacts" (the passive door) into "true agents" (the automatic
+door), since all entities are agents from the beginning.
+</dd>
+
+<dt> <b><code>10-water</code></b> </dt><dd>An example of chemical reaction, here the synthesis
+of water from dioxygen and dihydrogen, according to
+the equation: O<sub>2</sub> + 2H<sub>2</sub> &rarr; 2H<sub>2</sub>O. This example
+makes use of the <code>NUMBER</code> target selection policy
+and demonstrates that total mass is conserved.
+</dd>
+
+<dt> <b><code>11-primes</code></b> </dt><dd>An example of distributed and spatialized
+computation of prime numbers, based on
+Eratosthenes' algorithm. Numbers, created by a
+generator, become primes if they are not killed by
+other primes.
+</dd>
+
+<dt> <b><code>12-colors</code></b> </dt><dd>A multi-purpose simulation with 4 agent breeds
+(named after heraldic tinctures: azure, gules, gold
+and silver). All breeds have exactly the same
+capabilities (in terms of perception and actions),
+so they all can perform or undergo generic and
+self-evident interactions (such as: <code>CloneSource</code>,
+<code>KillTarget</code>, etc). Several matrices demonstrate
+how to use such interactions to produce interesting
+phenomena, such as
+<a href="videos/spiral.mp4">emergent spirals</a>,
+<a href="videos/segregation.mp4">segregation models</a>
+or
+<a href="videos/self-repairing.mp4">self-repairing
+structures</a>. In addition, in order to
+demonstrate the reflection capabilities introduced
+in v.&nbsp;2.3, you can generate random matrices by
+adding or removing random assignations, and thus
+"explore" parts of the space of possible
+simulations.
+</dd>
+
+<dt> <b><code>13-warbot</code></b> </dt><dd>Basic agents and behaviors designed for "Warbot"
+simulations, aimed at testing strategies in robot
+teams competitions. This IODA Netlogo version is
+freely inspired from the original <a href="http://www.warbot.fr">Warbot</a> game,
+introduced by Jacques Ferber and distributed as a
+part of the <a href="https://www.madkit.org">MadKit</a> platform. This basic
+implementation can be used as a first sketch to
+design, test and compare various AI techniques.
+</dd>
+
+<dt> <b><code>14-age-of-crisis</code></b> </dt><dd>A little simulation of villages managing
+their environmental resources to build their civilization. Any
+similarity with well-known games would be more thant mere
+coincidence!
+</dd>
+
+<dt> <b><code>15-rescue-the-princess</code></b> </dt><dd>This model demonstrates the use of the
+interaction-oriented approach for designing behaviors driven by
+dynamic goals. It involves a knight in a labyrinth with several
+locked doors. The knight must meet the princess and therefore has
+to find a convenient path. Depending on the personality traits
+that are given to the knight, and on its knowledge regarding the
+environment, the goals and actions that are carried out may
+differ significantly. This model comes from an
+<a href="https://cristal.univ-lille.fr/SMAC/projects/cocoa/princesse.html">original
+applet</a> based on planification. It also provides example of
+interactions using alternatives in triggers or condition (as
+allowed in the extension since v.&nbsp;2.2).
+</dd>
+
+<dt> <b><code>16-lactose-operon</code></b> </dt><dd>This model is a very schematic model of the
+"Lactose operon", a genetic structure described in <span class="underline">Escherichia
+coli</span> by François Jacob, Jacques Monod and André Lwoff (Nobel
+prize 1965). The underlying concepts are the key ideas of genetic
+regulation. The LAC operon model explains how bacteria are able
+to switch from glucose metabolism to lactose metabolism when no
+glucose is available.
+</dd>
+</dl>
+
+<div class="figure">
+<p><img src="images/lactose.png" alt="lactose.png">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-contact" class="outline-2">
+<h2 id="contact"><a id="sec-14" name="sec-14"></a>Contact Information</h2>
+<div class="outline-text-2" id="text-contact">
+<p>
+Authors: Sébastien PICAULT, Nathan HALLEZ and Philippe MATHIEU
+</p>
+
+<p>
+Email: <b><code>ioda</code> <i>(at)</i> <code>univ-lille1.fr</code></b>
+</p>
+
+<p>
+Team Web Site: <a href="https://github.com/cristal-smac/">https://github.com/cristal-smac/</a>
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-terms" class="outline-2">
+<h2 id="terms"><a id="sec-15" name="sec-15"></a>Terms of Use</h2>
+<div class="outline-text-2" id="text-terms">
+
+<p>
+<a href="https://validator.w3.org/check?uri=referer">
+  <img src="images/valid-html401.png" alt="Valid HTML
+  4.01 Strict" height="31" width="88" style="float: right"></a>
+</p>
+
+<p>
+All contents &copy; 2008-2024 Sébastien PICAULT and Philippe MATHIEU &ndash; <a href="https://github.com/cristal-smac/ioda">SMAC Research Team</a>
+ <BR> Centre de Recherche en Informatique, Signal et Automatique de Lille (CRIStAL), UMR CNRS 9189 
+ <BR> Université de Lille (Sciences et Technologies)
+&ndash; Cité Scientifique, F-59655 Villeneuve d'Ascq Cedex, FRANCE.
+</p>
+
+<p>
+The IODA NetLogo extension is free software: you can redistribute it
+and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+</p>
+
+<p>
+The IODA NetLogo extension is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+</p>
+
+<p>
+You should have received <a href="gpl.txt">a copy</a> of the GNU General Public License
+along with IODA NetLogo extension.  If not, see
+<a href="https://www.gnu.org/licenses">https://www.gnu.org/licenses</a>.
+ <BR> <BR> <BR>
+</p>
+
+<hr >
+<P class="center">
+<IMG SRC="images/URL.png" HEIGHT=80 ALT="https://github.com/cristal-smac/ioda"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-smac.png" HEIGHT=80 ALT="SMAC logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-cristal.png" HEIGHT=80 ALT="CRIStAL logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-cnrs.jpg" HEIGHT=80 ALT="CNRS logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-UL.png" HEIGHT=80 ALT="University of Lille logo">
+</P>
+<hr >
+
+<div class="smaller">
+<p>
+ <P class="center"> <i>Created with Emacs Org-mode</i>
+</p>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+; This file can be used to define your own interaction
+; matrix and update matrix.
+; SYNTAX:
+; <source> <interaction> <priority>
+; OR: <source> <interaction> <priority> UPDATE
+; OR: <source> <interaction> <priority> <target> <distance> [<target-selection-policy>]
+;
+; By default, each line is added to the appropriate matrix.
+; Lines starting with a '-' character are removed from the appropriate matrix.
+; Lines starting with a '+' character are added to the appropriate matrix ('+' is optional).
+;
+; NB1: this file is read as a CSV file, thus you can use any field separator char 
+; since you put it in the second argument of the ioda:load-matrices command.
+;
+; NB2: any non-letter, non-digit, non '+'/'-' character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+characters	MoveRandomly	0
+characters	MoveTo		20	Keys 10
+characters	MoveTo		20	Remotes 10
+characters	MoveTo		20	Apples 10
+characters	MoveTo		20	Doors 10
+characters	Take		30	Keys 1
+characters	Take		30	Remotes 1
+characters	Cross		40	Doors 1
+characters	Take		50	Apples 1
+characters	Eat		60	
+
+doors	AutoUnlock		40	characters 5
+doors	AutoOpen		40	characters 5
+doors	AutoLock		30	
+doors	AutoClose		30	
+
+doors UpdateTimer		0 UPDATE
+

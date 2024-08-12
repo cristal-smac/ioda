@@ -1,0 +1,16 @@
+Will he consider useful to open the blue door?
+[21 14]
+WWWWWWWWWWWWWWWWWWWWW
+Wg  D     W   W     W
+WWWWWWWWW W W W WWW W
+W   G  yW W W   WKW W
+W W WWWWW W WWWWW W W
+W W       W   W W   W
+W WWWWWWWWWWW W W WWW
+W           W W W   W
+WWWWWWWWWWW W W WWW W
+W   W   R     W   W W
+W WbW W WWWWW WYW W W
+W WWW W WPW B W W W W
+W     W     W WrW   W
+WWWWWWWWWWWWWWWWWWWWW

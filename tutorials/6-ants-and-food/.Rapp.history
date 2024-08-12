@@ -1,0 +1,62 @@
+x <- window(sunspots, start=1750, end=1800)#
+plot(x,#
+     ylab = "",#
+     main = "Sunspot numbers")
+plot(x, #
+     type = 'p', #
+     ylab = "",#
+     main = "Sunspot numbers")#
+k <- 20#
+lines( filter(x, rep(1/k,k)), #
+       col = 'red', #
+       lwd = 3 )
+plot.band <- function (x, ...) {#
+  plot(x, ...)#
+  a <- time(x)#
+  i1 <- floor(min(a))#
+  i2 <- ceiling(max(a))#
+  y1 <- par('usr')[3]#
+  y2 <- par('usr')[4]#
+  if( par("ylog") ){#
+    y1 <- 10^y1#
+    y2 <- 10^y2#
+  }#
+  for (i in seq(from=i1, to=i2-1, by=2)) {#
+    polygon( c(i,i+1,i+1,i), #
+             c(y1,y1,y2,y2), #
+             col = 'grey', #
+             border = NA )#
+  }#
+  par(new=T)#
+  plot(x, ...)#
+}
+plot.band(x)
+time(x)
+plot(time(x))
+plot.band(x,usr=c(5,15))
+plot.band(x)
+help(polygon)
+setwd("/Applications/_programmation/NetLogo 4.1.3/extensions/ioda/tutorials/6-ants-and-food")
+t <- read.csv("DropFood.csv")
+t
+plot (sort(t$y))
+t1 <- read.csv("DropFood1.csv")
+t2 <- t1
+plot(sort(t1$y),col="blue")
+t2 <- t
+points(sort(t2$y), col="red")
+plot(sort(t2$y), col="red")
+points(sort(t1$y), col="blue")
+tt1 <- table(t1$y)
+tt2 <- table(t2$y)
+plot(tt2)
+tt1 <- sort(table(t1$y))
+tt1
+tt1 <- sort(t1$y)
+tt2 <- sort(t2$y)
+help(sort)
+s1 <- cumsum(tt1)
+s2 <- cumsum(tt2)
+plot(s2, col="red")
+points(s1, col="blue")
+s3 <- reverse()

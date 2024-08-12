@@ -1,0 +1,35 @@
+; This file can be used to define your own interaction
+; matrix and update matrix.
+; SYNTAX:
+; <source> <interaction> <priority>
+; OR: <source> <interaction> <priority> UPDATE
+; OR: <source> <interaction> <priority> <target> <distance> [<target-selection-policy>]
+;
+; By default, each line is added to the appropriate matrix.
+; Lines starting with a '-' character are removed from the appropriate matrix.
+; Lines starting with a '+' character are added to the appropriate matrix ('+' is optional).
+;
+; NB1: this file is read as a CSV file, thus you can use any field separator char 
+; since you put it in the second argument of the ioda:load-matrices command.
+;
+; NB2: any non-letter, non-digit, non '+'/'-' character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+; interactions performed by wolves
+wolves		Eat	 10	sheep	1
+wolves 		Hunt	 5 	sheep	5
+wolves 		MoveRandomly	0
+
+; interaction performed by sheep
+sheep		Starve	 50	
+sheep		Feed	 30	sheep	1
+sheep		Eat	 30	patches	1
+sheep		Flee	 20	wolves	2
+sheep		Mate	 10	sheep	1
+sheep		MoveRandomly	0
+sheep 		Grow	 0	UPDATE
+sheep 		Metabolism	0	UPDATE
+
+; interaction performed by patches
+patches 	Grow	 0	UPDATE

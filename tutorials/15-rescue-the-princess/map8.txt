@@ -1,0 +1,17 @@
+Open the door or go around?
+[21 15]
+WWWWWWWWWWWWWWWWWWWWW
+WK  W               W
+W W W WWWWWWWWWWWWW W
+WRW W W             W
+W WrW W WWWWWWWWWWWWW
+WPW W W             W
+W W W WWWWWWWWWWWWW W
+W W W W   W   W   W W
+W W W W W W W W W W W
+W   W   W W W   W   W
+WWWWWWWWW W WWWWWWWWW
+W         W         W
+W WWWWWWWWWWWWWWWWW W
+W                   W
+WWWWWWWWWWWWWWWWWWWWW

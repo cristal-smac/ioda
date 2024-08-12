@@ -1,0 +1,147 @@
+; This file can be used to define your own interaction
+; matrix and update matrix.
+; SYNTAX:
+; <source> <interaction> <priority>
+; OR: <source> <interaction> <priority> UPDATE
+; OR: <source> <interaction> <priority> <target> <distance> [<target-selection-policy>]
+;
+; By default, each line is added to the appropriate matrix.
+; Lines starting with a '-' character are removed from the appropriate matrix.
+; Lines starting with a '+' character are added to the appropriate matrix ('+' is optional).
+;
+; NB1: this file is read as a CSV file, thus you can use any field separator char 
+; since you put it in the second argument of the ioda:load-matrices command.
+;
+; NB2: any non-letter, non-digit, non '+'/'-' character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+; interactions performed by animals
+animals	       MoveRandomly  0 
+;animals	       Follow	     0 		animals  1 	RANDOM-INT
+animals	       Flee	     10 	peasants  1 
+
+animals	       Disappear     30 	UPDATE
+animals	       Decompose     20 	UPDATE
+
+
+; interactions performed by agoras
+agoras	       CreateSoldier   40 
+agoras	       CreatePeasant   50 
+agoras	       CreateFarm      60 
+agoras	       CreateHarbor    70 
+agoras	       CreateBarracks  70 
+agoras	       CreateHouse     80 
+agoras	       ChangeLevel     100 
+agoras	       Disappear       30 		UPDATE
+agoras	       UpdateNeeds     10 		UPDATE
+agoras	       UpdateView      0 		UPDATE
+agoras	       ProcessUpgrade  20 		UPDATE
+
+; interactions performed by peasants
+peasants       Disappear     30 	UPDATE
+peasants       Decompose     20 	UPDATE
+
+peasants       MoveRandomly  0 
+peasants       AskForPlace   10 	agoras  100 
+peasants       Hunt	     60 	animals  5 	BEST:quantity
+peasants       GoToResource  60 	mines    5 	BEST:quantity
+peasants       GoToResource  60 	trees    5 	BEST:effort
+peasants       GoToResource  60 	fishes     5
+peasants       Attack	     80 	animals  1 	BEST:quantity
+peasants       Attack	     80 	trees    1 	
+peasants       Return 	     85 
+peasants       GoToResource  90 	farms    5 	
+peasants       Quarry 	     90 	fishes     1
+peasants       Quarry 	     90 	mines    1 
+peasants       Quarry 	     90 	trees    1 	BEST:effort
+peasants       Cultivate     95 	farms    1 	
+peasants       Harvest       90 	farms    1 	
+peasants       Quarry 	     100 	animals  1      BEST:quantity
+peasants       BackToPit     100 	agoras   100 
+peasants       DropBasket    120 	agoras	 1 
+peasants       GoToBuilding  130 	harbors  5 
+peasants       GoToBuilding  130 	farms    5 
+peasants       GoToBuilding  130 	houses   5 
+peasants       GoToBuilding  130 	barracks 5 
+peasants       Build	     140 	houses   1 
+peasants       Build	     140 	harbors  1 
+peasants       Build	     140 	farms    1 
+peasants       Build	     140 	barracks 1 
+peasants       Seed	     140 	farms    1 
+
+; interactions performed by trees
+trees	       Die	     10 	UPDATE
+trees	       Disappear     20 	UPDATE
+
+; interactions performed by mines
+mines	       Disappear     0 		UPDATE
+
+; interactions performed by houses
+houses	       Disappear     0 		UPDATE
+
+; interactions performed by farms
+farms	       Disappear     0 		UPDATE
+
+; interactions performed by harbors
+harbors	       Disappear     0 		UPDATE
+harbors	       CreateBoat    10 
+
+; interactions performed by fish
+fishes	       Disappear     10
+fishes	       MoveRandomly  0
+fishes	       Reproduce     0 		UPDATE
+
+; interactions performed by boats
+boats	       Disappear     10 	UPDATE
+boats	       MoveRandomly  0 
+boats	       GoToResource  20 	fishes	 3
+boats	       Return        30 
+boats	       Quarry        50 	fishes	 1
+boats	       BackToPit     50 	harbors  100 
+boats          DropBasket    60 	harbors	 1 
+
+; interactions performed by barracks
+barracks       Disappear     0 		UPDATE
+barracks       TrainArmy     10 	soldiers  1 	NUMBER:4-8
+
+; interactions performed by barracks
+soldiers       Disappear     30 	UPDATE
+soldiers       Decompose     20 	UPDATE
+
+soldiers       MoveRandomly  0 
+soldiers       GoToBuilding  10 	agoras 	  5 
+soldiers       GoToTraining  20  	barracks  5 
+soldiers       Patrol	     40 	flags	  2 	BEST:lowest	
+soldiers       MoveToBorder  50 	
+soldiers       CreateFlag    60 	
+soldiers       Remove	     60 	flags	  1 
+soldiers       SetFire	     70 	houses	  1 
+soldiers       SetFire	     70 	barracks  1 
+soldiers       SetFire	     70 	agoras	  1 
+soldiers       SetFire	     70 	harbors	  1 
+soldiers       SetFire	     70 	farms	  1 
+
+
+; interactions performed by flags
+flags	       Disappear     20 	UPDATE
+flags	       Decompose     10 	UPDATE
+flags	       Recolor       0 		UPDATE
+flags	       Merge	     10 	flags	  0.1 
+
+; interactions performed by fire
+fires	       Vanish	     0
+fires	       Burn	     20 	houses	  0.1 	ALL
+fires	       Burn	     20 	barracks  0.1 	ALL
+fires	       Burn	     20 	agoras	  0.1 	ALL
+fires	       Burn	     20 	harbors	  0.1 	ALL
+fires	       Burn	     20 	farms	  0.1 	ALL
+fires	       Burn	     20 	boats	  0.5 	ALL
+fires	       Burn	     20 	trees	  0.5 	ALL
+fires	       Spread	     30 	houses	  1.5 	ALL
+fires	       Spread	     30 	barracks  1.5 	ALL
+fires	       Spread	     30 	agoras	  1.5 	ALL
+fires	       Spread	     30 	harbors	  1.5 	ALL
+fires	       Spread	     30 	boats	  1.5 	ALL
+fires	       Spread	     30 	farms	  1.5 	ALL
+fires	       Spread	     40 	trees	  1.5 	ALL

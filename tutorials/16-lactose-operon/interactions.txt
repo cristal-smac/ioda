@@ -1,0 +1,116 @@
+; This file can be used to define your own interactions.
+; SYNTAX:
+; [EXCLUSIVE|PARALLEL] INTERACTION <name>
+; [TRIGGER <tr1> ... <tr_n>]
+; [...]
+; [TRIGGER <tr'1> ... <tr'_n>]
+; [CONDITION <cond1> ... <cond_n>]
+; [...]
+; [CONDITION <cond'1> ... <cond'_n>]
+; [ACTIONS <act1> ... <act_n>]
+; END
+;
+; NB1: tr_i and cond_i are abstract condition primitives,
+; which must be implemented by concrete reporters, while
+; act_i are abstract action primitives, which must be
+; implemented by concrete commands.
+;
+; NB2: any non-letter, non-digit character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+INTERACTION	MoveForward
+  CONDITION	can-move? not:time-to-turn?
+  ACTIONS	advance
+END
+
+INTERACTION	Turn
+  ACTIONS	random-turn
+END
+
+INTERACTION	Cross
+  TRIGGER	chance-to-cross?
+  TRIGGER	target:permeable?
+  ACTIONS	move-to-other-side
+END
+
+INTERACTION	StartTranscription
+  TRIGGER	target:affinity-for-source?
+  CONDITION	not:transcribing? not:target:occupied?
+  ACTIONS	change-state choose-direction advance
+END
+
+INTERACTION	StopTranscription
+  CONDITION	active? target:transcribing?
+  ACTIONS	target:change-state target:random-turn
+END
+
+INTERACTION	Bind
+  TRIGGER	target:allows-binding?
+  CONDITION	not:target:occupied?
+  ACTIONS	bind-to-target
+END
+
+INTERACTION	StayHere
+  CONDITION	bound?
+END
+
+INTERACTION	Unbind
+  TRIGGER	chance-to-unbind?
+  TRIGGER	target:bad-conformation?
+  CONDITION	target:bound?
+  ACTIONS	target:unbind
+END
+
+INTERACTION	FormComplex
+  CONDITION	target:not:complexed?
+  ACTIONS	target:make-complex die
+END
+
+INTERACTION	Dissociate
+  TRIGGER	chance-to-dissociate?
+  CONDITION	complexed?
+  ACTIONS	break-complex
+END
+
+INTERACTION	Transcribe
+  TRIGGER	target:coding?
+  CONDITION	transcribing?
+  ACTIONS	target:build-RNA advance
+END
+
+INTERACTION	MakeProtein
+  TRIGGER	chance-for-translation?
+  ACTIONS	build-protein die
+END
+
+INTERACTION	Age
+  ACTIONS	increase-age
+END
+
+INTERACTION	Degradation
+  TRIGGER	time-to-die?
+  ACTIONS	die
+END
+
+INTERACTION	IncreaseActivity
+  TRIGGER	target:bound?
+  ACTIONS	increase-strength
+END
+
+INTERACTION	DecreaseActivity
+  ACTIONS	reduce-strength
+END
+
+INTERACTION	HelpPolymerase
+  TRIGGER	target:not:transcribing?
+  CONDITION	bound? promoter-nearby?
+  ACTIONS	help-target
+END
+
+INTERACTION	Align
+  TRIGGER	not:aligned?		
+  CONDITION	not:transcribing?
+  ACTIONS	align-to-target
+END
+

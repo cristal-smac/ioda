@@ -1,0 +1,12 @@
+azure	killsource	87.0	silver	1.95
+azure	turntogules	43.0	gules	2.00
+azure	turntogules	34.0	azure	0.57
+gold	infect	85.0	gules	1.17
+gold	changetoazure	76.0	gold	0.82
+gold	changetoazure	30.0	silver	2.44
+gold	infect	15.0	azure	0.61
+gules	donothing	94.0	azure	2.21
+gules	clonerandomly	55.0	silver	1.15
+silver	turntogules	68.0	silver	0.78
+silver	turntogules	48.0	gules	2.01
+silver	wander	33.0	gules	2.28	ALL

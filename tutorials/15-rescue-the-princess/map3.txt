@@ -1,0 +1,17 @@
+Will he find the best path?
+[21 15]
+WWWWWWWWWWWWWWWWWWWWW
+WKW               WgW
+W                   W
+W  WWWWWW   WWWWWW  W
+W  W    W   W    W  W
+W  W b  W   W    W  W
+W  W    W   W    W  W
+W  W    W   W    W  W
+W  W     WYW     W  W
+W  W             W  W
+W  W    WWDWW    W  W
+WGWWWWWWW   WWWWWWWRW
+W       W P W       W
+Wr      W   W      yW
+WWWWWWWWWWWWWWWWWWWWW

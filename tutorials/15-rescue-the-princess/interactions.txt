@@ -1,0 +1,117 @@
+; This file can be used to define your own interactions.
+; SYNTAX:
+; [EXCLUSIVE|PARALLEL] INTERACTION <name>
+; [TRIGGER <tr1> ... <tr_n>]
+; [CONDITION <cond1> ... <cond_n>]
+; [ACTIONS <act1> ... <act_n>]
+; END
+;
+; NB1: tr_i and cond_i are abstract condition primitives,
+; which must be implemented by concrete reporters, while
+; act_i are abstract action primitives, which must be
+; implemented by concrete commands.
+;
+; NB2: any non-letter, non-digit character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+parallel interaction UpdateView
+  actions update-map
+end
+
+parallel interaction StopExploration
+  trigger no-more-exploration?
+  actions exploration-finished
+end
+
+parallel interaction SimplifyGoals
+  trigger new-information?
+  condition flexible-goals?
+  actions reorder-goals
+end
+
+
+parallel interaction ResetMemory
+  condition new-information?
+  actions forget-new-info
+end
+
+
+exclusive interaction Rescue
+  trigger target-matches-goal?
+  actions succeed remove-goal end-game
+end
+
+parallel interaction MoveTowards
+  trigger target-matches-goal? 
+  condition  direct-path-to-target? shortest-path-free?
+  condition  possible-path-to-target? optimistic? shortest-path-free?
+  actions    remember-path-to-target choose-shortest-path move-one-step
+end
+
+parallel interaction Explore
+  trigger exploration-path?
+  condition partial-vision?
+  actions remember-exploration-path choose-shortest-path move-one-step update-map
+end
+
+parallel interaction Fail
+  actions fail end-game
+end
+
+parallel interaction Take
+  trigger target-matches-goal?
+  trigger opportunistic?
+  condition not:same-in-bag?
+  actions put-in-bag remove-goal target:die
+end
+
+parallel interaction MakeDetour
+  trigger opportunistic? direct-path-to-target? target-nearby?
+  condition not:already-goal? not:same-in-bag?
+  actions target:become-goal
+end
+  
+parallel interaction Inspect
+  trigger   target-matches-goal?
+  trigger   optimistic? possible-path-to-goal? target-on-shortest-path? 
+  trigger   optimistic? partial-vision? no-exploration-nearby?
+  condition target:unknown-state? 
+  actions   remove-goal target:reveal-state target:update-shape target:become-goal-if-rigid update-info
+end
+
+exclusive interaction Unlock
+  trigger target:locked? 
+  condition target:state-visible? owns-key?
+  actions target:unlock target:update-shape remember-key
+end
+
+exclusive interaction Open
+  trigger target:closed? 
+  condition target:state-visible? 
+  actions target:open target:update-shape move-on-target update-map remove-goal
+end
+
+parallel interaction AddToGoals
+  trigger target:unknown-state? pessimistic? partial-vision? not:exploration-path?
+  trigger target:unknown-state? pessimistic? omniscient?
+  trigger target:unknown-state? optimistic?
+  trigger target:state-visible? target:locked? owns-key?
+  trigger target:state-visible? target:closed?
+  condition not:already-goal? not:direct-path-to-goal?
+  actions   target:become-goal
+end  
+
+parallel interaction AddToNeeds
+  trigger target:would-help-goal? 
+  trigger direct-path-to-target?
+  condition not:same-in-bag?
+  actions target:become-goal
+end
+
+
+
+
+  
+
+

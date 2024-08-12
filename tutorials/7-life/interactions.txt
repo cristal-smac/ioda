@@ -1,0 +1,8 @@
+interaction ComputeNextState
+  actions inspect-neighbors
+end
+
+interaction ChangeState
+  condition 	changed?
+  actions 	change-color	
+end

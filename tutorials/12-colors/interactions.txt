@@ -1,0 +1,75 @@
+interaction DoNothing
+end
+
+interaction Wander
+  condition	empty-neighbor?
+  actions   	move-to-neighbor
+end
+
+exclusive interaction KillSource
+  actions	die
+end
+
+exclusive interaction KillTarget
+  actions	target:die
+end
+
+exclusive interaction KillRandomly
+  actions	die-or-kill
+end
+
+exclusive interaction CloneSource
+  condition	empty-neighbor?
+  actions	clone
+end
+
+exclusive interaction CloneTarget
+  condition	target:empty-neighbor?
+  actions 	target:clone
+end
+
+exclusive interaction CloneRandomly
+  condition	empty-neighbor? target:empty-neighbor?
+  actions	clone-or-let-clone
+end
+
+exclusive interaction Infect
+  actions	infect
+end
+
+exclusive interaction Mimic
+  actions	mimic-one
+end
+
+interaction ChangeToAzure
+  actions become-blue
+end
+
+interaction ChangeToGules
+  actions become-red
+end
+
+interaction ChangeToSilver
+  actions become-white
+end
+
+interaction ChangeToGold
+  actions become-yellow
+end
+
+interaction TurnToAzure
+  actions target:become-blue
+end
+
+interaction TurnToGules
+  actions target:become-red
+end
+
+interaction TurnToSilver
+  actions target:become-white
+end
+
+interaction TurnToGold
+  actions target:become-yellow
+end
+

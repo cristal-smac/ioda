@@ -1,0 +1,16 @@
+A rigid ordering of goals together with a partial vision might prevent the knight to rescue the princess.
+[21 14]
+WWWWWWWWWWWWWWWWWWWWW
+WKW               WrW
+W                   W
+W  WWWWWW   WWWWWW  W
+W  W    W   W    W  W
+W  W b  W   W    W  W
+W  W    W   W    W  W
+W  W   WWWGWWW   W  W
+W  W   D     D   W  W
+W  W   WWWBWWW   W  W
+WRWWWWWW     WWWWWWYW
+W      W  P  W      W
+W     yW     Wg     W
+WWWWWWWWWWWWWWWWWWWWW

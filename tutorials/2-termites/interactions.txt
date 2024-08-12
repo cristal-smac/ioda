@@ -1,0 +1,22 @@
+interaction MoveRandomly
+  actions   wiggle
+end
+
+interaction PickUp
+  trigger 	      not:empty-here?
+  condition	      not:carrying?
+  actions	      take-load get-away
+end
+
+interaction FindEmptyPlace
+  trigger	not:empty-here?
+  condition	carrying?
+  actions 	wiggle
+end
+
+interaction PutDown
+  trigger	something-nearby?
+  condition 	carrying?  empty-here?
+  actions 	drop-load random-turn get-away	
+end
+

@@ -1,0 +1,18 @@
+; FollowGradient is a parallel interaction because
+; a same patch can be the target of several ants
+
+parallel interaction FollowGradient
+  trigger low-pheromone?
+  condition feel-gradient?
+  actions move-towards
+end
+
+parallel interaction MoveRandomly
+  trigger target:no-pheromone?
+  actions wiggle
+end
+
+parallel interaction Die
+  trigger target:high-pheromone?
+  actions die
+end

@@ -1,0 +1,63 @@
+; This file can be used to define your own interaction
+; matrix and update matrix.
+; SYNTAX:
+; <source> <interaction> <priority>
+; OR: <source> <interaction> <priority> UPDATE
+; OR: <source> <interaction> <priority> <target> <distance> [<target-selection-policy>]
+;
+; By default, each line is added to the appropriate matrix.
+; Lines starting with a '-' character are removed from the appropriate matrix.
+; Lines starting with a '+' character are added to the appropriate matrix ('+' is optional).
+;
+; NB1: this file is read as a CSV file, thus you can use any field separator char 
+; since you put it in the second argument of the ioda:load-matrices command.
+;
+; NB2: any non-letter, non-digit, non '+'/'-' character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+explorers	Explore   0
+explorers	MoveTo    10	food-items 20	 BEST:proximity
+explorers	BringBack 10	bases 100
+explorers	Avoid  	  15	obstacles 1
+explorers	Take  	  20	food-items 1	 BEST:proximity
+explorers	Drop 	  20	bases 1
+explorers	Avoid 	  30	missile-launchers 10
+explorers	Avoid 	  40	missiles 10
+
+explorers   	Explode	  30	UPDATE
+
+
+bases   	TransmitOrder  20	missile-launchers 100	ALL
+bases   	Detect	       10	missile-launchers 20	ALL
+bases   	Explode	       30	UPDATE
+bases		UpdateView     0 	UPDATE
+
+
+missiles	MoveForward 0	
+missiles	Destroy 10	explorers	  1
+missiles	Destroy 10	missile-launchers 1
+missiles	Destroy 10	missiles 	  1
+missiles	Destroy 10	obstacles 	  1
+missiles	Destroy 10	bases 	  	  1
+
+missiles	Die 	  10 	UPDATE
+missiles	CountDown 0 	UPDATE
+	
+
+missile-launchers	   MoveRandomly 0
+;missile-launchers	   Attack 	10 	obstacles	  5
+missile-launchers	   Attack 	10 	explorers	  10
+missile-launchers	   ReturnToBase 20	bases 		  100
+missile-launchers	   Avoid 	30	missile-launchers 10
+missile-launchers	   LoadMunitions 30	bases 		  1
+missile-launchers	   MoveToPlace 	30
+missile-launchers	   Avoid  	35	obstacles 1
+missile-launchers	   Attack 	35 	missile-launchers 10
+missile-launchers	   Attack 	40 	missiles 	  10
+missile-launchers	   Attack 	40 	bases	  	  10
+missile-launchers	   Avoid 	45 	bases	  	  2
+missile-launchers	   Avoid 	50	missiles 	  10
+
+missile-launchers	   Explode 	10	UPDATE
+

@@ -1,0 +1,47 @@
+parallel interaction Hunt
+  trigger   	     hungry? 
+  condition 	     adult? target:alone? 
+  actions   	     chase
+end
+
+exclusive interaction Eat
+  trigger   	      hungry? 
+  condition 	      adult? target:healthy? 
+  actions   	      digest target:die
+end
+
+parallel interaction MoveRandomly
+  condition 	     adult?
+  actions 	     wiggle
+end
+
+parallel interaction Flee
+  condition 	     adult? target:adult? 
+  actions   	     move-away
+end
+
+parallel interaction Metabolism
+  actions 	     consume-energy
+end
+
+parallel interaction Grow
+  condition 	     not:grown?
+  actions   	     increase-size
+end
+
+exclusive interaction Mate
+  trigger   	      adult? target:adult? female? target:male?
+  condition 	      not:hungry? target:not:hungry? few-children?
+  actions   	      reproduce decrease-health target:decrease-health
+end
+
+exclusive interaction Starve
+  trigger 	      starving?
+  actions 	      die
+end
+
+parallel interaction Feed
+  trigger   	     target:female? target:has-child? hungry? 
+  condition 	     not:grown? target:not:hungry?
+  actions   	     target:nurse
+end

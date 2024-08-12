@@ -1,0 +1,15 @@
+EXCLUSIVE INTERACTION Blast
+  TRIGGER activated? countdown-finished?
+  CONDITION target:no-shield?
+  ACTIONS target:die die
+END
+
+EXCLUSIVE INTERACTION Defuse
+  TRIGGER countdown-finished?
+  ACTIONS deactivate
+END
+
+INTERACTION CountDown
+  CONDITION activated?
+  ACTIONS count-down
+END

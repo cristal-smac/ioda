@@ -1,0 +1,19 @@
+azure	killsource	97.0	gules	1.42
+azure	changetoazure	86.0	gules	0.53
+azure	changetogules	78.0	gules	0.88
+azure	killrandomly	58.0	azure	2.42
+azure	turntoazure	25.0	silver	0.89
+azure	clonetarget	24.0	gold	1.44	NUMBER:3-7
+azure	turntosilver	0.0	gold	1.66
+gold	infect	82.0	gules	2.11
+gold	mimic	66.0	gules	0.65
+gold	changetosilver	53.0	silver	1.93
+gold	clonesource	51.0	gules	1.63
+gold	killtarget	19.0	gold	1.94
+gules	infect	75.0	silver	1.23
+gules	clonetarget	56.0	gules	1.61
+gules	turntosilver	32.0	gold	0.52
+silver	infect	22.0	silver	2.42
+silver	killrandomly	7.0	gules	0.97
+
+

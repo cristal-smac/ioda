@@ -1,0 +1,93 @@
+; This file can be used to define your own interaction
+; matrix and update matrix.
+; SYNTAX:
+; <source> <interaction> <priority>
+; OR: <source> <interaction> <priority> UPDATE
+; OR: <source> <interaction> <priority> <target> <distance> [<target-selection-policy>]
+;
+; By default, each line is added to the appropriate matrix.
+; Lines starting with a '-' character are removed from the appropriate matrix.
+; Lines starting with a '+' character are added to the appropriate matrix ('+' is optional).
+;
+; NB1: this file is read as a CSV file, thus you can use any field separator char 
+; since you put it in the second argument of the ioda:load-matrices command.
+;
+; NB2: any non-letter, non-digit, non '+'/'-' character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+RNAs		MakeProtein		20
+RNAs		MoveForward		10
+RNAs		Turn			0
+
+glucoses		Unbind			60	CAPs	1
+glucoses		FormComplex		50	cAMPs	1
+glucoses		Cross			20	membranes	1	
+glucoses		MoveForward		10
+glucoses		Turn			0
+
+galactosidases	Dissociate		20
+galactosidases	MoveForward		10
+galactosidases	Turn			0
+galactosidases	Age			10	UPDATE
+galactosidases	Degradation		0	UPDATE
+
+permeases	Bind			50	membranes	1
+permeases	StayHere		40
+permeases	MoveForward		10
+permeases	Turn			0
+permeases	Age			10	UPDATE
+permeases	Degradation		0	UPDATE
+
+
+polymerases	StartTranscription	100	promoters	2
+polymerases	Transcribe		90	genes		0.2
+;polymerases	Align			50	genes		1
+polymerases	MoveForward		10
+polymerases	Turn			0
+
+
+terminators	StopTranscription	100	polymerases	1	ALL
+
+repressors	StopTranscription	60	polymerases	1	ALL
+repressors	Dissociate		50	
+repressors	StayHere		40
+repressors	Bind			20	operators		1
+repressors	MoveForward		10
+repressors	Turn			0
+repressors	Age			10	UPDATE
+repressors	Degradation		0	UPDATE
+
+operators	Unbind		20	repressors	0
+operators	Unbind		20	CAPs		0
+
+lactoses		FormComplex	50	galactosidases	1
+lactoses		FormComplex	50	repressors	1
+lactoses		Cross		30	permeases	2	
+lactoses		Cross		20	membranes	1	
+lactoses		MoveForward	10
+lactoses		Turn		0
+
+ATPs		MoveForward	10
+ATPs		Turn		0
+ATPs		Age		10	UPDATE
+ATPs		Degradation	0	UPDATE
+
+
+cAMPs		FormComplex	20	CAPs	1
+cAMPs		MoveForward	10
+cAMPs		Turn		0
+
+;CAPs		HelpPolymerase	100	polymerases	1
+CAPs		StayHere	60
+CAPs		Dissociate	50	glucoses		2	ALL
+CAPs		Bind		30	operators	1
+CAPs		Dissociate	20
+CAPs		MoveForward	10
+CAPs		Turn		0
+
+promoters	IncreaseActivity	10	CAPs	1
+promoters	DecreaseActivity	0
+
+
+

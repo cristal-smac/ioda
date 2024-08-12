@@ -1,0 +1,9 @@
+silver	infect	95.0	gold	1.12
+silver	changetogold	94.0
+silver	killsource	83.0
+silver	changetogules	43.0	gold	2.46
+silver	clonetarget	36.0
+azure	clonetarget	58.0	gold	2.21
+gules	killrandomly	72.0
+gules	donothing	8.0	azure	0.77
+ 

@@ -1,0 +1,29 @@
+interaction	CreateNumber
+  trigger 	check-period?
+  condition	not:at-limit?
+  actions	send-number increase-value
+end
+
+interaction	Die
+  actions	die
+end
+
+interaction	Advance
+  condition	not:arrived?
+  actions	go-ahead
+end
+
+interaction	Destroy
+  condition	is-divisor?
+  actions	target:die
+end
+
+interaction	ChangeHeading
+  actions	transmit-heading
+end
+
+interaction	BecomePrime
+  condition	not:prime-here?
+  actions	create-prime die
+end
+

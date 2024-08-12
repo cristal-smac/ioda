@@ -1,0 +1,16 @@
+Dedalus' Maze...
+[21 14]
+WWWWWWWWWWWWWWWWWWWWW
+Wg W             W  W
+W  W WWWWWWWWWWW Wy W
+W  B W         W W  W
+W  W W WWWWWWW W W  W
+W  W W W     W W W  W
+W  Y W W WWW W W W  W
+W  W W W WPW W W Wb W
+W  W W   W G W W W  W
+W  W WWWWWWWWW W W  W
+W  W     W     W W  W
+W  WWWWW W WWWWW R  W
+WrKD     W       D  W
+WWWWWWWWWWWWWWWWWWWWW

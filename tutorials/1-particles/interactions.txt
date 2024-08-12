@@ -1,0 +1,7 @@
+INTERACTION Delete
+  ACTIONS target:die
+END
+
+INTERACTION MoveRandomly
+  ACTIONS wiggle
+END

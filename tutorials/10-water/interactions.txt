@@ -1,0 +1,8 @@
+EXCLUSIVE INTERACTION React
+  ACTIONS make-product target:die die
+END
+
+PARALLEL INTERACTION MoveRandomly
+  ACTIONS wiggle
+END
+

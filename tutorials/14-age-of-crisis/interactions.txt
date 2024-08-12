@@ -1,0 +1,236 @@
+parallel interaction MoveRandomly
+  condition   not:dead?
+  actions     wiggle
+end
+
+parallel interaction Follow
+  condition   not:dead? not:target:ennemy?
+  actions     move-towards
+end
+
+parallel interaction Flee
+  condition   not:dead? target:ennemy?
+  actions     move-away
+end
+
+parallel interaction CreatePeasant
+  trigger	     not:enough-workforce?
+  condition	     grown? resources-for-peasant?
+  actions	     train-peasant
+end
+
+parallel interaction CreateSoldier
+  trigger	     not:enough-army? barracks?
+  condition	     grown? resources-for-soldier?
+  actions	     create-soldier
+end
+
+parallel interaction CreateBoat
+  trigger	     not:enough-workforce?
+  condition	     grown? resources-for-boat?
+  actions	     train-boat
+end
+
+parallel interaction UpdateView
+  condition	     changed-view?
+  actions 	     update-view
+end
+
+parallel interaction UpdateNeeds
+  condition	     changed-view?
+  actions 	     update-needs
+end
+
+parallel interaction Return
+  condition	     remember-last-place?
+  actions	     move-to-place
+end
+
+parallel interaction Hunt
+  trigger	     want-target-dead?
+  condition	     target:not:dead? not:basket-full?
+  actions	     move-towards
+end
+
+parallel interaction Reproduce
+  trigger	     depleted?
+  condition	     not:grown?
+  actions	     grow
+end
+
+parallel interaction GoToResource
+  trigger	     needs-target?
+  actions	     move-towards
+end
+
+parallel interaction Attack
+  trigger	     want-target-dead?
+  condition	     target:not:dead? 
+  actions	     hit-target
+end
+
+parallel interaction Quarry
+  trigger	     target:not:decomposed? needs-target?
+  condition	     not:basket-full? target:dead?
+  actions	     extract-resources
+end
+
+parallel interaction BackToPit
+  trigger	     basket-full?
+  condition	     same-team?
+  actions	     move-towards
+end
+
+parallel interaction DropBasket
+  trigger 	     basket-full? 
+  condition	     same-team?
+  actions	     empty-basket
+end     
+
+exclusive interaction Die
+  trigger 	      dead?
+  actions	      die
+end
+
+parallel interaction Decompose
+  trigger	     dead?
+  condition	     not:decomposed?
+  actions	     deteriorate
+end
+
+exclusive interaction Disappear
+  trigger 	      dead?
+  condition	      decomposed?
+  actions 	      clear
+end
+
+exclusive interaction ChangeLevel
+  trigger 	      ready-for-upgrade?
+  actions	      start-upgrade
+end
+
+exclusive interaction ProcessUpgrade
+  condition	      upgrading?
+  actions	      continue-upgrade
+end
+
+parallel interaction AskForPlace
+  trigger	     not:remember-last-place? target:knows-interesting-places? 
+  condition	     same-team?
+  actions	     target:suggest-place-to-go
+end
+
+parallel interaction CreateHouse
+  trigger	     needs-house?
+  condition	     place-for-house? resources-for-house?
+  actions	     create-house-base
+end
+
+parallel interaction Build
+  trigger	     target:not:grown?
+  condition	     same-team?
+  actions	     target:build
+end
+
+parallel interaction GoToBuilding
+  trigger	     target:needs-assistance?
+  condition	     same-team?
+  actions	     move-towards
+end
+
+parallel interaction GoToTraining
+  trigger	     not:trained?
+  condition	     same-team?
+  actions	     move-towards
+end
+
+parallel interaction CreateFarm
+  trigger	     needs-farm? 
+  condition	     place-for-farm? resources-for-farm?
+  actions	     create-farm-base
+end
+
+parallel interaction CreateBarracks
+  trigger	     needs-barracks? no-barracks?
+  condition	     place-for-barracks? resources-for-barracks?
+  actions	     create-barracks-base
+end
+
+parallel interaction CreateHarbor
+  trigger	     needs-harbor? no-harbor?
+  condition 	     place-for-harbor? resources-for-harbor?
+  actions	     create-harbor-base
+end
+
+exclusive interaction Cultivate
+  condition	     target:not:ripe?
+  actions	     target:grow  
+end
+
+parallel interaction Harvest
+  trigger	     needs-target? target:ripe?
+  condition	     not:basket-full? target:not:depleted?
+  actions	     extract-resources
+end
+
+parallel interaction Seed 
+  trigger	     target:depleted?
+  actions	     target:new-seeds
+end
+
+exclusive interaction TrainArmy
+  trigger 	      target:not:trained?
+  actions	      target:train
+end
+
+parallel interaction MoveToBorder
+  trigger	     border-nearby?
+  condition 	     trained?
+  actions	     select-border move-to-place
+end
+
+exclusive interaction CreateFlag
+  trigger 	      on-border? not:flag? 
+  condition 	      trained? 
+   actions	      drop-flag 
+end
+
+parallel interaction Patrol
+  condition	     trained? same-team?
+  actions	     drop-flag move-towards
+end
+
+parallel interaction Merge
+  actions	     digest target:clear
+end
+
+parallel interaction Recolor
+  actions	     recolor
+end
+
+parallel interaction Remove
+  trigger	     target:not:on-border?
+  condition	     same-team?	     
+  actions	     target:clear
+end
+
+parallel interaction SetFire
+  trigger	     trained? ennemy? war?
+  condition	     not:attacked? target:not:fire?
+  actions	     ignite move-away
+end
+
+parallel interaction Spread
+  trigger	     target:not:fire?
+  condition	     windy-weather?
+  actions	     ignite 
+end
+
+exclusive interaction Burn
+  condition	      target:not:decomposed?
+  actions	      target:deteriorate
+end
+
+exclusive interaction Vanish
+  actions 	      clear
+end

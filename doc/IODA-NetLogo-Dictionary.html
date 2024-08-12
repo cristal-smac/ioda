@@ -1,0 +1,2764 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>IODA NetLogo Dictionary</title>
+<!-- 2015-04-14 Tue 14:56 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta  name="generator" content="Org-mode">
+<meta  name="author" content="Sébastien PICAULT, Nathan HALLEZ and Philippe MATHIEU">
+<meta  name="description" content="The IODA NetLogo extension provides users of NetLogo with many features of the Interaction-Oriented Methodology (IODA) so as to simplify the design and reusability of individual-based simulations. It is based on a strong separation between declarative and procedural parts of the model."
+>
+<meta  name="keywords" content="IODA, NetLogo, multiagent simulation, agent-based model, ABM, individual-based model, IBM, modeling methodology, interactions, interaction-oriented approach, interaction matrix, social simulation">
+<LINK rel="stylesheet" type="text/css" href="Netlogo-Style.css">
+<META name="author" lang="fr" content="Sébastien Picault, Nathan Hallez, Philippe Mathieu">
+<META name="copyright" lang="fr" content="2008-2024 Sébastien Picault and Philippe Mathieu (Université de Lille, France)">
+<META name="keywords" lang="en-us" content="IODA, NetLogo, multiagent simulation, agent-based model, ABM, individual-based model, IBM, modeling methodology, interactions, interaction-oriented approach, interaction matrix, social simulation">
+<META name="keywords" lang="fr" content="IODA, NetLogo, simulation multi-agents, modélisation par agents, ABM, modèle individu-centré, IBM, méthode de modélisation, interactions, approche orientée interactions, matrice d'interactions, simulation sociale">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="https://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">IODA NetLogo Dictionary</h1>
+<DIV class="version">IODA NetLogo 3.0 User Manual&emsp;</DIV>
+
+<p>
+<b>Direct links to other parts of the IODA NetLogo Manual:</b>
+&emsp; <a href="IODA-NetLogo-Documentation-v3.0.html">General Documentation</a> &emsp; <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> &emsp; <a href="IODA-NetLogo-FAQ.html">FAQ</a> &emsp;
+</p>
+
+<p>
+The documentation of the commands and reporters of the IODA NetLogo
+extension follows. Most of the commands and reporters directly related
+to new data types (interaction, assignation, matrix) are defined in
+the Java extension, while most of the commands and reporters related
+to the simulation engine are defined in the IODA NetLogo include file.
+</p>
+
+<p>
+Please remember that the IODA NetLogo extension is aimed at providing
+a <i>simple</i> frame for the design of simulations. Thus, you need but a
+few primitives to master even the subtleties of the IODA
+methodology. This complete dictionary is provided to allow advanced
+users to build their own simulation engine or whatever application
+based on interactions. So, before starting your search, please have a
+look at the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> and at the <a href="IODA-NetLogo-FAQ.html">Frequently Asked Questions</a>.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Categories</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Frequently Used Primitives</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<a href="#ioda:filter-neighbors-in-cone">ioda:add-neighbors-in-cone</a>
+<a href="#ioda:filter-neighbors-in-radius">ioda:add-neighbors-in-radius</a>
+<a href="#ioda:filter-neighbors-on-patches">ioda:add-neighbors-on-patches</a>
+<a href="#ioda:filter-neighbors-on-links">ioda:add-neighbors-on-links</a>
+<a href="#ioda:clear-all">ioda:clear-all</a> 
+<a href="#ioda:clear-matrices">ioda:clear-matrices</a>
+<a href="#ioda:die">ioda:die</a> 
+<a href="#ioda:distance">ioda:distance</a>
+<a href="#ioda:filter-neighbors-custom">ioda:filter-neighbors-custom</a>
+<a href="#ioda:filter-neighbors-in-cone">ioda:filter-neighbors-in-cone</a>
+<a href="#ioda:filter-neighbors-in-radius">ioda:filter-neighbors-in-radius</a>
+<a href="#ioda:filter-neighbors-on-patches">ioda:filter-neighbors-on-patches</a>
+<a href="#ioda:filter-neighbors-on-links">ioda:filter-neighbors-on-links</a>
+<a href="#ioda:go">ioda:go</a> 
+<a href="#ioda:init-agent">ioda:init-agent</a>
+<a href="#ioda:load-interactions">ioda:load-interactions</a> 
+<a href="#ioda:load-matrices">ioda:load-matrices</a> 
+<a href="#ioda:my-target">ioda:my-target</a> 
+<a href="#ioda:primitives-to-write">ioda:primitives-to-write</a> 
+<a href="#ioda:filter-neighbors-in-cone">ioda:remove-neighbors-in-cone</a>
+<a href="#ioda:filter-neighbors-in-radius">ioda:remove-neighbors-in-radius</a>
+<a href="#ioda:filter-neighbors-on-patches">ioda:remove-neighbors-on-patches</a>
+<a href="#ioda:filter-neighbors-on-links">ioda:remove-neighbors-on-links</a>
+<a href="#ioda:filter-neighbors-in-cone">ioda:retain-only-neighbors-in-cone</a>
+<a href="#ioda:filter-neighbors-in-radius">ioda:retain-only-neighbors-in-radius</a>
+<a href="#ioda:filter-neighbors-on-patches">ioda:retain-only-neighbors-on-patches</a>
+<a href="#ioda:filter-neighbors-on-links">ioda:retain-only-neighbors-on-links</a>
+<a href="#ioda:set-metric">ioda:set-metric</a> 
+<a href="#ioda:set-ordering-policy-for-interaction-selection">ioda:set-ordering-policy-for-interaction-selection</a>
+<a href="#ioda:set-ordering-policy-for-update">ioda:set-ordering-policy-for-update</a>
+<a href="#ioda:setup">ioda:setup</a> 
+<a href="#ioda:version">ioda:version</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">General</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<a href="#ioda:check-consistency">ioda:check-consistency</a> 
+<a href="#ioda:clear-all">ioda:clear-all</a> 
+<a href="#ioda:get-breed-named">ioda:get-breed-named</a> 
+<a href="#ioda:primitives-to-write">ioda:primitives-to-write</a> 
+<a href="#ioda:set-metric">ioda:set-metric</a> 
+<a href="#ioda:version">ioda:version</a> 
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Simulation Engine-related</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<a href="#ioda:filter-neighbors-in-cone">ioda:add-neighbors-in-cone</a>
+<a href="#ioda:filter-neighbors-in-radius">ioda:add-neighbors-in-radius</a>
+<a href="#ioda:filter-neighbors-on-patches">ioda:add-neighbors-on-patches</a>
+<a href="#ioda:filter-neighbors-on-links">ioda:add-neighbors-on-links</a>
+<a href="#ioda:concrete-primitive">ioda:concrete-primitive</a> 
+<a href="#ioda:my-decision">ioda:my-decision</a>
+<a href="#ioda:die">ioda:die</a> 
+<a href="#ioda:distance">ioda:distance</a> 
+<a href="#ioda:filter-neighbors-in-cone">ioda:filter-neighbors-in-cone</a> 
+<a href="#ioda:filter-neighbors-in-radius">ioda:filter-neighbors-in-radius</a> 
+<a href="#ioda:filter-neighbors-on-patches">ioda:filter-neighbors-on-patches</a> 
+<a href="#ioda:filter-neighbors-on-links">ioda:filter-neighbors-on-links</a> 
+<a href="#ioda:go">ioda:go</a> 
+<a href="#ioda:init-agent">ioda:init-agent</a> 
+<a href="#ioda:is-alive">ioda:is-alive?</a>
+<a href="#ioda:is-operative">ioda:is-operative?</a>
+<a href="#ioda:my-neighbors">ioda:my-neighbors</a>
+<a href="#ioda:my-target">ioda:my-target</a> 
+<a href="#ioda:filter-neighbors-in-cone">ioda:remove-neighbors-in-cone</a>
+<a href="#ioda:filter-neighbors-in-radius">ioda:remove-neighbors-in-radius</a>
+<a href="#ioda:filter-neighbors-on-patches">ioda:remove-neighbors-on-patches</a>
+<a href="#ioda:filter-neighbors-on-links">ioda:remove-neighbors-on-links</a>
+<a href="#ioda:filter-neighbors-in-cone">ioda:retain-only-neighbors-in-cone</a>
+<a href="#ioda:filter-neighbors-in-radius">ioda:retain-only-neighbors-in-radius</a>
+<a href="#ioda:filter-neighbors-on-patches">ioda:retain-only-neighbors-on-patches</a>
+<a href="#ioda:filter-neighbors-on-links">ioda:retain-only-neighbors-on-links</a>
+<a href="#ioda:set-alive">ioda:set-alive</a>
+<a href="#ioda:set-my-neighbors">ioda:set-my-neighbors</a> 
+<a href="#ioda:set-operative">ioda:set-operative</a>
+<a href="#ioda:set-ordering-policy-for-interaction-selection">ioda:set-ordering-policy-for-interaction-selection</a>
+<a href="#ioda:set-ordering-policy-for-update">ioda:set-ordering-policy-for-update</a>
+<a href="#ioda:setup">ioda:setup</a> 
+</p>
+
+<p>
+Many other procedures from the simulation engine are NOT documented
+here, since they are defined for internal use.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Interaction-related</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+<a href="#ioda:eval-condition">ioda:eval-condition</a> 
+<a href="#ioda:eval-trigger">ioda:eval-trigger</a> 
+<a href="#ioda:get-interaction">ioda:get-interaction</a> 
+<a href="#ioda:get-interactions">ioda:get-interactions</a> 
+<a href="#ioda:interaction-from-list">ioda:interaction-from-list</a> 
+<a href="#ioda:interaction-make">ioda:interaction-make</a> 
+<a href="#ioda:interaction-name">ioda:interaction-name</a> 
+<a href="#ioda:is-exclusive">ioda:is-exclusive?</a> 
+<a href="#ioda:load-interactions">ioda:load-interactions</a> 
+<a href="#ioda:perform-actions">ioda:perform-actions</a> 
+<a href="#ioda:print-interactions">ioda:print-interactions</a> 
+<a href="#ioda:read-interactions-from-string">ioda:read-interactions-from-string</a> 
+<a href="#ioda:save-interactions">ioda:save-interactions</a> 
+<a href="#ioda:set-exclusive">ioda:set-exclusive</a> 
+<a href="#ioda:set-exclusive-interactions">ioda:set-exclusive-interactions</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Assignation-related</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+<a href="#ioda:assignation-from-list">ioda:assignation-from-list</a> 
+<a href="#ioda:assignation-to-list">ioda:assignation-to-list</a> 
+<a href="#ioda:get-distance">ioda:get-distance</a> 
+<a href="#ioda:get-interaction-of">ioda:get-interaction-of</a> 
+<a href="#ioda:get-priority">ioda:get-priority</a> 
+<a href="#ioda:get-source-breed">ioda:get-source-breed</a> 
+<a href="#ioda:get-target-breed">ioda:get-target-breed</a> 
+<a href="#ioda:is-degenerate">ioda:is-degenerate?</a> 
+<a href="#ioda:set-target-selection-method">ioda:set-target-selection-method</a> 
+<a href="#ioda:target-selection-method">ioda:target-selection-method</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6">Matrix-related</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+<a href="#ioda:active-agents">ioda:active-agents</a> 
+<a href="#ioda:active-agents-with-targets">ioda:active-agents-with-targets</a> 
+<a href="#ioda:add-assignation">ioda:add-assignation</a> 
+<a href="#ioda:clear-matrices">ioda:clear-matrices</a> 
+<a href="#ioda:get-breed-targets">ioda:get-breed-targets</a> 
+<a href="#ioda:get-interaction-matrix">ioda:get-interaction-matrix</a> 
+<a href="#ioda:get-matrix-line">ioda:get-matrix-line</a> 
+<a href="#ioda:get-update-matrix">ioda:get-update-matrix</a> 
+<a href="#ioda:is-active">ioda:is-active?</a> 
+<a href="#ioda:is-labile">ioda:is-labile?</a> 
+<a href="#ioda:is-passive">ioda:is-passive?</a> 
+<a href="#ioda:labile-agents">ioda:labile-agents</a> 
+<a href="#ioda:load-matrices">ioda:load-matrices</a> 
+<a href="#ioda:matrix-make">ioda:matrix-make</a> 
+<a href="#ioda:matrix-to-list">ioda:matrix-to-list</a> 
+<a href="#ioda:matrix-view">ioda:matrix-view</a> 
+<a href="#ioda:passive-agents">ioda:passive-agents</a> 
+<a href="#ioda:print-interaction-matrix">ioda:print-interaction-matrix</a> 
+<a href="#ioda:print-update-matrix">ioda:print-update-matrix</a> 
+<a href="#ioda:remove-assignation">ioda:remove-assignation</a> 
+<a href="#ioda:replace-assignation">ioda:replace-assignation</a> 
+<a href="#ioda:save-matrices">ioda:save-matrices</a> 
+<a href="#ioda:set-interaction-matrix">ioda:set-interaction-matrix</a> 
+<a href="#ioda:set-update-matrix">ioda:set-udpate-matrix</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7">Variables</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Global variables: 
+<a href="#ioda:metric">ioda:metric</a> 
+<a href="#ioda:ordering-policy-for-selection">ioda:ordering-policy-for-selection</a> 
+<a href="#ioda:ordering-policy-for-update">ioda:ordering-policy-for-update</a> 
+<a href="#ioda:performed-interactions">ioda:performed-interactions</a> 
+<a href="#ioda:performed-updates">ioda:performed-updates</a> 
+</p>
+
+
+
+<p>
+Turtle variables:
+<a href="#ioda:alive">ioda:alive?</a> 
+<a href="#ioda:decision">ioda:decision</a> 
+<a href="#ioda:neighbors">ioda:neighbors</a> 
+<a href="#ioda:operative">ioda:operative?</a> 
+<a href="#ioda:target">ioda:target</a> 
+</p>
+
+<p>
+Patch variables:
+<a href="#ioda:alive">ioda:patch-alive?</a> 
+<a href="#ioda:decision">ioda:patch-decision</a> 
+<a href="#ioda:neighbors">ioda:patch-neighbors</a> 
+<a href="#ioda:operative">ioda:patch-operative?</a>
+<a href="#ioda:target">ioda:patch-target</a> 
+</p>
+
+<p>
+Several variables are defined in the simulation engine for internal
+use only, thus they are not described here.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Frequently Used Primitives</h2>
+<div class="outline-text-2" id="text-2">
+<DIV class="dict_entry">
+</div>
+<div id="outline-container-ioda:clear-all" class="outline-3">
+<h3 id="ioda:clear-all"><a id="sec-2-1" name="sec-2-1"></a>ioda:clear-all</h3>
+<div class="outline-text-3" id="text-ioda:clear-all">
+</div>
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1">ioda:clear-all</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Clears all interactions and matrices. This is done automatically if
+you use the <code>clear-all</code> NetLogo command, but you might also
+need to re-load different interactions (or matrices) without resetting
+the whole model.
+</p>
+
+<p>
+See also <a href="#ioda:clear-matrices">ioda:clear-matrices</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:clear-matrices" class="outline-3">
+<h3 id="ioda:clear-matrices"><a id="sec-2-2" name="sec-2-2"></a>ioda:clear-matrices</h3>
+<div class="outline-text-3" id="text-ioda:clear-matrices">
+</div>
+<div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1">ioda:clear-matrices</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+Clears interaction and update matrices. This is done automatically if
+you use the <code>clear-all</code> NetLogo command, but you might also
+need to re-load different matrices without resetting the whole model.  <BR>
+<b>NB:</b> Interactions are kept unchanged. If you need to clear also
+interactions, use <a href="#ioda:clear-all">ioda:clear-all</a> instead.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:die" class="outline-3">
+<h3 id="ioda:die"><a id="sec-2-3" name="sec-2-3"></a>ioda:die</h3>
+<div class="outline-text-3" id="text-ioda:die">
+</div>
+<div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:die</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+Kills the agent with regards to the IODA simulation process: the agent
+is not immediately removed from the NetLogo simulation, but it is no
+more taken into account in the IODA engine. You <b>MUST</b> use this
+command instead of the <code>die</code> NetLogo command to destroy IODA agents in
+a proper way. If the agent is a turtle, it is actually removed from
+the NetLogo simulation at the end of the <code>ioda:go</code> procedure.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:distance" class="outline-3">
+<h3 id="ioda:distance"><a id="sec-2-4" name="sec-2-4"></a>ioda:distance</h3>
+<div class="outline-text-3" id="text-ioda:distance">
+</div>
+<div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:distance <i>agent</i></h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+&lt;p&gt;Reports the distance between the current agent (a turtle or a
+patch) and the specified agent (a turtle or a patch). Please remember
+that in NetLogo the distance to or from a patch is computed from the
+center of the patch. Thus, a turtle can interact with the <code>patch-here</code>
+at distance 0 only if it is exactly at the center of the patch.
+</p>
+
+<p>
+<b>N.B.:</b> By default, the distance is computed using the Euclidean
+metric (i.e. the NetLogo <code>distance</code> reporter), but you can use the
+Moore or the Von Neumann metric instead.
+</p>
+
+<p>
+See also <a href="#ioda:set-metric">ioda:set-metric</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:filter-neighbors-in-radius" class="outline-3">
+<h3 id="ioda:filter-neighbors-in-radius"><a id="sec-2-5" name="sec-2-5"></a>ioda:filter-neighbors-in-radius</h3>
+<div class="outline-text-3" id="text-ioda:filter-neighbors-in-radius">
+</div>
+<div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:filter-neighbors-in-radius <i>number</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:add-neighbors-in-radius <i>number</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:remove-neighbors-in-radius <i>number</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:retain-only-neighbors-in-radius <i>number</i></h4>
+<div class="outline-text-4" id="text-2-5-1">
+<p>
+Filters, adds, removes or retains only neighbors situated within the
+specified distance (using <code>ioda:distance</code>). This commands are very
+useful for writing concrete primitives for the <code>filter-neighbors</code>
+abstract primitive.
+</p>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed explanations about this process.
+ <BR> See also <a href="#ioda:distance">ioda:distance</a>, <a href="#ioda:filter-neighbors-in-cone">ioda:filter-neighbors-in-cone</a>, <a href="#ioda:filter-neighbors-custom">ioda:filter-neighbors-custom</a>,
+<a href="#ioda:filter-neighbors-on-patches">ioda:filter-neighbors-on-patches</a>, <a href="#ioda:filter-neighbors-on-links">ioda:filter-neighbors-on-links</a>.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:filter-neighbors-custom" class="outline-3">
+<h3 id="ioda:filter-neighbors-custom"><a id="sec-2-6" name="sec-2-6"></a>ioda:filter-neighbors-custom</h3>
+<div class="outline-text-3" id="text-ioda:filter-neighbors-custom">
+</div>
+<div id="outline-container-sec-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:filter-neighbors-custom <i>string</i> <i>list</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:add-neighbors-custom <i>string</i> <i>list</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:remove-neighbors-custom <i>string</i> <i>list</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:retain-only-neighbors-custom <i>string</i> <i>list</i></h4>
+<div class="outline-text-4" id="text-2-6-1">
+<p>
+Filters, adds, removes or retains only neighbors of the relevant kind
+(i.e. the breeds or patches which are likely to undergo interactions
+from the caller), according to the specified reporter name and its
+parameters. This commands may be used for writing concrete primitives
+for the <code>filter-neighbors</code> abstract primitive. The string is the name
+of a <b>reporter</b> which is supposed to take 3 arguments: the source
+agent, the target agent, and a list of parameters. It must return a
+boolean which indicates whether or not the target can be perceived by
+the source, w.r.t the parameters.
+</p>
+
+<p>
+For instance, suppose that you want to divide your worlds into logical
+"levels" (e.g. several floors, without using true 3D): then you endow
+all agents with a variable "level" and you expect that each agent
+cannot interact but with agents of the same level. This can be done as follows:
+</p>
+<pre class="example">
+turtles-own [ level ]
+...
+to-report same-level? [ source target params ] ; here we do not use params
+  report [level] of source = [level] of target
+end
+
+to myspecies::filter-neighbors
+  ioda:filter-neighbors-custom "same-level?" [] 
+end
+</pre>
+
+<p>
+Another example: suppose that you model <b>aerials</b> which can only
+interact with agents endowed with a specific frequency range defined
+by a slider. You can do this as follows:
+</p>
+<pre class="example">
+to-report within-range? [source target range]
+  let f [frequency] of target
+  report (f &gt;= first range) and (f &lt;= last range)
+end
+
+to aerials::filter-neighbors
+  ioda:filter-neighbors-custom "within-range?" (list min-freq max-freq)
+end
+</pre>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed explanations about this process.
+ <BR> 
+See also <a href="#ioda:distance">ioda:distance</a>, <a href="#ioda:filter-neighbors-in-cone">ioda:filter-neighbors-in-cone</a>, 
+<a href="#ioda:filter-neighbors-in-radius">ioda:filter-neighbors-in-radius</a>, <a href="#ioda:filter-neighbors-on-patches">ioda:filter-neighbors-on-patches</a>,
+<a href="#ioda:filter-neighbors-on-links">ioda:filter-neighbors-on-links</a>.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:filter-neighbors-in-cone" class="outline-3">
+<h3 id="ioda:filter-neighbors-in-cone"><a id="sec-2-7" name="sec-2-7"></a>ioda:filter-neighbors-in-cone</h3>
+<div class="outline-text-3" id="text-ioda:filter-neighbors-in-cone">
+</div>
+<div id="outline-container-sec-2-7-1" class="outline-4">
+<h4 id="sec-2-7-1"><img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:filter-neighbors-in-cone <i>distance</i> <i>angle</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:add-neighbors-in-cone <i>distance</i> <i>angle</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:remove-neighbors-in-cone <i>distance</i> <i>angle</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:retain-only-neighbors-in-cone <i>distance</i> <i>angle</i></h4>
+<div class="outline-text-4" id="text-2-7-1">
+<p>
+Filters, adds, removes or retains only neighbors situated within the
+specified distance and angle. This commands are very useful for
+writing concrete primitives for the <code>filter-neighbors</code> abstract
+primitive.
+</p>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed explanations about this process.
+ <BR> See also <a href="#ioda:distance">ioda:distance</a>, <a href="#ioda:filter-neighbors-in-radius">ioda:filter-neighbors-in-radius,</a> <a href="#ioda:filter-neighbors-custom">ioda:filter-neighbors-custom</a>,
+<a href="#ioda:filter-neighbors-on-patches">ioda:filter-neighbors-on-patches</a>, <a href="#ioda:filter-neighbors-on-links">ioda:filter-neighbors-on-links</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:filter-neighbors-on-patches" class="outline-3">
+<h3 id="ioda:filter-neighbors-on-patches"><a id="sec-2-8" name="sec-2-8"></a>ioda:filter-neighbors-on-patches</h3>
+<div class="outline-text-3" id="text-ioda:filter-neighbors-on-patches">
+</div>
+<div id="outline-container-sec-2-8-1" class="outline-4">
+<h4 id="sec-2-8-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:filter-neighbors-on-patches <i>patch-set</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:add-neighbors-on-patches <i>patch-set</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:remove-neighbors-on-patches <i>patch-set</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:retain-only-neighbors-on-patches <i>patch-set</i></h4>
+<div class="outline-text-4" id="text-2-8-1">
+<p>
+Filters, adds, removes or retains only neighbors situated on the
+specified patches. This commands are very useful for writing concrete
+primitives for the <code>filter-neighbors</code> abstract primitive.
+</p>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed explanations about this process.
+ <BR> See also <a href="#ioda:filter-neighbors-in-radius">ioda:filter-neighbors-in-radius</a>,
+<a href="#ioda:filter-neighbors-in-cone">ioda:filter-neighbors-in-cone</a>, <a href="#ioda:filter-neighbors-custom">ioda:filter-neighbors-custom</a>,
+ <a href="#ioda:filter-neighbors-on-links">ioda:filter-neighbors-on-links</a>.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:filter-neighbors-on-links" class="outline-3">
+<h3 id="ioda:filter-neighbors-on-links"><a id="sec-2-9" name="sec-2-9"></a>ioda:filter-neighbors-on-links</h3>
+<div class="outline-text-3" id="text-ioda:filter-neighbors-on-links">
+</div>
+<div id="outline-container-sec-2-9-1" class="outline-4">
+<h4 id="sec-2-9-1"><img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:filter-neighbors-on-links <i>linkset</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:add-neighbors-on-links <i>linkset</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:remove-neighbors-on-links <i>linkset</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:retain-only-neighbors-on-links <i>linkset</i></h4>
+<div class="outline-text-4" id="text-2-9-1">
+<p>
+Filters, adds, removes or retains only neighbors which are linked with
+the current agent through the specified linkset (which can contain
+symmetrical links or outgoing links at the same time). This commands
+are very useful for writing concrete primitives for the
+<code>filter-neighbors</code> abstract primitive, especially if you work with
+social networks.
+</p>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed explanations about this process.
+ <BR> See also <a href="#ioda:filter-neighbors-on-patches">ioda:filter-neighbors-on-patches</a>,
+<a href="#ioda:filter-neighbors-in-cone">ioda:filter-neighbors-in-cone</a>, <a href="#ioda:filter-neighbors-custom">ioda:filter-neighbors-custom</a>,
+<a href="#ioda:filter-neighbors-in-radius">ioda:filter-neighbors-in-radius</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:go" class="outline-3">
+<h3 id="ioda:go"><a id="sec-2-10" name="sec-2-10"></a>ioda:go</h3>
+<div class="outline-text-3" id="text-ioda:go">
+</div>
+<div id="outline-container-sec-2-10-1" class="outline-4">
+<h4 id="sec-2-10-1">ioda:go</h4>
+<div class="outline-text-4" id="text-2-10-1">
+<p>
+Performs one simulation step according to the IODA simulation
+process. During a IODA simulation step, the following operations
+occur:
+</p>
+<ol class="org-ol">
+<li>All <i>labile</i> agents perform their update interactions
+</li>
+<li>All <i>active</i> and operative agents try to perform an
+</li>
+</ol>
+<p>
+interaction on either themselves, or one or more target agents chosen
+among their <i>passive</i> neighbors.  
+</p>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed explanations about this process. 
+ <BR> See also <a href="#ioda:setup">ioda:setup</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:init-agent" class="outline-3">
+<h3 id="ioda:init-agent"><a id="sec-2-11" name="sec-2-11"></a>ioda:init-agent</h3>
+<div class="outline-text-3" id="text-ioda:init-agent">
+</div>
+<div id="outline-container-sec-2-11-1" class="outline-4">
+<h4 id="sec-2-11-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:init-agent</h4>
+<div class="outline-text-4" id="text-2-11-1">
+<p>
+Initializes a new agent. Especially, notifies the IODA scheduler about
+the new agent. Thus, you are <b>strongly</b> recommended to run this
+command as soon as you create a new agent during the simulation,
+especially in the action primitives of an interaction.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:load-interactions" class="outline-3">
+<h3 id="ioda:load-interactions"><a id="sec-2-12" name="sec-2-12"></a>ioda:load-interactions</h3>
+<div class="outline-text-3" id="text-ioda:load-interactions">
+</div>
+<div id="outline-container-sec-2-12-1" class="outline-4">
+<h4 id="sec-2-12-1">ioda:load-interactions <i>string</i></h4>
+<div class="outline-text-4" id="text-2-12-1">
+<p>
+Reads the specified text file and builds the corresponding
+interactions. An interaction file must follow the following syntax:
+</p>
+
+<pre class="example">
+[EXCLUSIVE|PARALLEL] INTERACTION &lt;name&gt;
+[TRIGGER &lt;tr_1&gt; ... &lt;tr_n&gt;]
+[TRIGGER &lt;tr'_1&gt; ... &lt;tr'_n&gt;]
+...
+[CONDITION &lt;cond_1&gt; ... &lt;cond_n&gt;]
+[CONDITION &lt;cond'_1&gt; ... &lt;cond'_n&gt;]
+...
+[ACTIONS &lt;act_1&gt; ... &lt;act_n&gt;]
+END
+</pre>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed examples.  <BR> 
+See also <a href="#ioda:load-matrices">ioda:load-matrices</a>, <a href="#ioda:read-interactions-from-string">ioda:read-interactions-from-string</a>.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:save-interactions" class="outline-3">
+<h3 id="ioda:save-interactions"><a id="sec-2-13" name="sec-2-13"></a>ioda:save-interactions</h3>
+<div class="outline-text-3" id="text-ioda:save-interactions">
+</div>
+<div id="outline-container-sec-2-13-1" class="outline-4">
+<h4 id="sec-2-13-1">ioda:save-interactions <i>string</i> <i>boolean</i></h4>
+<div class="outline-text-4" id="text-2-13-1">
+<p>
+Save the interactions of the current model into the specified text
+file. If the boolean is <code>true</code>, then a confirmation is asked before
+overwriting an existing file.
+</p>
+
+<p>
+See also <a href="#ioda:save-matrices">ioda:save-matrices</a>, <a href="#ioda:load-interactions">ioda:load-interactions</a>.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:read-interactions-from-string" class="outline-3">
+<h3 id="ioda:read-interactions-from-string"><a id="sec-2-14" name="sec-2-14"></a>ioda:read-interactions-from-string</h3>
+<div class="outline-text-3" id="text-ioda:read-interactions-from-string">
+</div>
+<div id="outline-container-sec-2-14-1" class="outline-4">
+<h4 id="sec-2-14-1">ioda:read-interactions-from-string <i>string</i></h4>
+<div class="outline-text-4" id="text-2-14-1">
+<p>
+Reads the specified multi-linge string and builds the corresponding
+interactions. An interaction string must follow the following syntax:
+</p>
+
+<pre class="example">
+[EXCLUSIVE|PARALLEL] INTERACTION &lt;name&gt;
+[TRIGGER &lt;tr_1&gt; ... &lt;tr_n&gt;]
+[TRIGGER &lt;tr'_1&gt; ... &lt;tr'_n&gt;]
+...
+[CONDITION &lt;cond_1&gt; ... &lt;cond_n&gt;]
+[CONDITION &lt;cond'_1&gt; ... &lt;cond'_n&gt;]
+...
+[ACTIONS &lt;act_1&gt; ... &lt;act_n&gt;]
+END
+</pre>
+
+<p>
+See also <a href="#ioda:load-interactions">ioda:load-interactions</a>.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:load-matrices" class="outline-3">
+<h3 id="ioda:load-matrices"><a id="sec-2-15" name="sec-2-15"></a>ioda:load-matrices</h3>
+<div class="outline-text-3" id="text-ioda:load-matrices">
+</div>
+<div id="outline-container-sec-2-15-1" class="outline-4">
+<h4 id="sec-2-15-1">ioda:load-matrices <i>string1</i> <i>string2</i></h4>
+<div class="outline-text-4" id="text-2-15-1">
+<p>
+Reads the text file specified by <i>string1</i> and builds the
+corresponding interaction and update matrices. Since matrix files are
+CSV files, <i>string2</i> provides the characters used as field
+separators: in most example, spaces (' ') and tabs ('\t'),
+thus <i>string2</i> is " \t". A matrix file must follow the following
+fields:
+</p>
+
+<pre class="example">
+&lt;source&gt; &lt;interaction&gt; &lt;priority&gt;
+OR: 
+&lt;source&gt; &lt;interaction&gt; &lt;priority&gt; UPDATE
+OR: 
+&lt;source&gt; &lt;interaction&gt; &lt;priority&gt; &lt;target&gt; &lt;distance&gt; [&lt;target-selection-policy&gt;]
+</pre>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed examples.  <BR>   
+See also <a href="#ioda:load-interactions">ioda:load-interactions</a>.
+</p>
+</DIV>
+
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:save-matrices" class="outline-3">
+<h3 id="ioda:save-matrices"><a id="sec-2-16" name="sec-2-16"></a>ioda:save-matrices</h3>
+<div class="outline-text-3" id="text-ioda:save-matrices">
+</div>
+<div id="outline-container-sec-2-16-1" class="outline-4">
+<h4 id="sec-2-16-1">ioda:save-matrices <i>string</i> <i>boolean</i></h4>
+<div class="outline-text-4" id="text-2-16-1">
+<p>
+Save the interaction and update matrices of the current model into the
+specified text file. If the boolean is <code>true</code>, then a confirmation is
+asked before overwriting an existing file.
+</p>
+
+<p>
+See also <a href="#ioda:save-interactions">ioda:save-interactions</a>, <a href="#ioda:load-matrices">ioda:load-matrices</a>.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:my-target" class="outline-3">
+<h3 id="ioda:my-target"><a id="sec-2-17" name="sec-2-17"></a>ioda:my-target</h3>
+<div class="outline-text-3" id="text-ioda:my-target">
+</div>
+<div id="outline-container-sec-2-17-1" class="outline-4">
+<h4 id="sec-2-17-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:my-target</h4>
+<div class="outline-text-4" id="text-2-17-1">
+<p>
+This reporter is frequently used in perception or action primitives,
+during interaction selection and interaction execution. It reports
+either the potential (in perception primitives) or actual (in action
+primitives) target(s) of an interaction (when run by the potential or
+actual source agent), or the potential or actual source of an
+interaction (when run in the target agent). This is used very
+frequently for the evaluation of triggers and conditions, and for
+performing the actions of an interaction.
+</p>
+
+<p>
+Three kind of values may be reported:
+</p>
+<ul class="org-ul">
+<li><code>nobody</code> means that the interaction is a reflexive one (the target
+agent is also the source): thus trigger, condition and actions only
+depend on the source agent.
+</li>
+<li><i>one agent</i>: this agent is a candidate partner for an
+interaction. If <code>ioda:my-target</code> is run by a potential target
+agents, it reports the source of the potential interaction.
+</li>
+<li><i>a list of agents</i> is reported when special interaction target
+policies are used (namely: <code>ALL</code>, <code>FILTER:</code>, <code>ALL-BEST:</code> and
+<code>NUMBER:</code>)
+</li>
+</ul>
+
+<p>
+See the <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> for detailed examples.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:primitives-to-write" class="outline-3">
+<h3 id="ioda:primitives-to-write"><a id="sec-2-18" name="sec-2-18"></a>ioda:primitives-to-write</h3>
+<div class="outline-text-3" id="text-ioda:primitives-to-write">
+</div>
+<div id="outline-container-sec-2-18-1" class="outline-4">
+<h4 id="sec-2-18-1">ioda:primitives-to-write</h4>
+<div class="outline-text-4" id="text-2-18-1">
+<p>
+Reports a string representing the declaration of all IODA primitives
+needed by your current model (i.e. for your current interaction matrix
+and update matrix). IODA primitives are:
+</p>
+<ul class="org-ul">
+<li>reporters of the form "A-BREED::A-REPORTER", where "A-REPORTER"
+appears in the trigger or condition of an interaction, and "A-BREED"
+is the agentset name (including patches) of the agent that will have
+to evaluate the reporter
+</li>
+<li>commands of the form "A-BREED::A-COMMAND", where "A-COMMAND" appears
+in the actions of an interaction, and "A-BREED" is the agentset name
+(including patches) of the agent that will have to run the command
+</li>
+</ul>
+
+<p>
+The resulting string is the squeletton for writing the appropriate
+code without forgetting any IODA primitive. You just have copy-paste
+the commands and reporters in your Procedures tab, and fill them with
+your own code.
+</p>
+
+<p>
+See also <a href="#ioda:check-consistency">ioda:check-consistency</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:setup" class="outline-3">
+<h3 id="ioda:setup"><a id="sec-2-19" name="sec-2-19"></a>ioda:setup</h3>
+<div class="outline-text-3" id="text-ioda:setup">
+</div>
+<div id="outline-container-sec-2-19-1" class="outline-4">
+<h4 id="sec-2-19-1">ioda:setup</h4>
+<div class="outline-text-4" id="text-2-19-1">
+<p>
+Initializes all variables and data structures needed to run a IODA
+NetLogo simulation. This command has to be run at the end of the setup
+procedure, just before starting the simulation.
+</p>
+
+<p>
+See also <a href="#ioda:go">ioda:go</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-metric" class="outline-3">
+<h3 id="ioda:set-metric"><a id="sec-2-20" name="sec-2-20"></a>ioda:set-metric</h3>
+<div class="outline-text-3" id="text-ioda:set-metric">
+</div>
+<div id="outline-container-sec-2-20-1" class="outline-4">
+<h4 id="sec-2-20-1">ioda:set-metric <i>string</i></h4>
+<div class="outline-text-4" id="text-2-20-1">
+<p>
+Specifies a metric for computing distances in the IODA NetLogo
+simulation engine. At the end of the <a href="#ioda:setup">ioda:setup</a> procedure, the <a href="#ioda:metric">ioda:metric</a>
+variable is set to "Euclidean". You can change it either to "Moore" or
+to "Von Neumann".  
+</p>
+
+<pre class="example">
+ioda:set-metric "Euclidean" 
+print [ioda:distance patch 2 1] of patch 0 0 
+=&gt; 2.23606797749979
+
+ioda:set-metric "Moore"
+print [ioda:distance patch 2 1] of patch 0 0
+=&gt; 2
+
+ioda:set-metric "Von Neumann"
+print [ioda:distance patch 2 1] of patch 0 0
+=&gt; 3
+</pre>
+
+<p>
+See also <a href="#ioda:distance">ioda:distance</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:version" class="outline-3">
+<h3 id="ioda:version"><a id="sec-2-21" name="sec-2-21"></a>ioda:version</h3>
+<div class="outline-text-3" id="text-ioda:version">
+</div>
+<div id="outline-container-sec-2-21-1" class="outline-4">
+<h4 id="sec-2-21-1">ioda:version</h4>
+<div class="outline-text-4" id="text-2-21-1">
+<p>
+Reports the product version of the IODA NetLogo extension.
+</p>
+
+<pre class="example">
+print ioda:version
+=&gt; 3.0
+</pre>
+</DIV>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">General</h2>
+<div class="outline-text-2" id="text-3">
+<DIV class="dict_entry">
+</div>
+<div id="outline-container-ioda:check-consistency" class="outline-3">
+<h3 id="ioda:check-consistency"><a id="sec-3-1" name="sec-3-1"></a>ioda:check-consistency</h3>
+<div class="outline-text-3" id="text-ioda:check-consistency">
+</div>
+<div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1">ioda:check-consistency</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+Reports true if all IODA primitives of your current model (i.e. for
+your current interaction matrix and update matrix) have been written
+in your program; throws an exception otherwise. IODA primitives are:
+</p>
+<ul class="org-ul">
+<li>reporters of the form "A-BREED::A-REPORTER", where "A-REPORTER"
+appears in the trigger or condition of an interaction, and "A-BREED"
+is the agentset name (including patches) of the agent that will have
+to evaluate the reporter
+</li>
+<li>commands of the form "A-BREED::A-COMMAND", where "A-COMMAND" appears
+in the actions of an interaction, and "A-BREED" is the agentset name
+(including patches) of the agent that will have to run the command
+</li>
+</ul>
+
+<p>
+See also <a href="#ioda:primitives-to-write">ioda:primitives-to-write</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-breed-named" class="outline-3">
+<h3 id="ioda:get-breed-named"><a id="sec-3-2" name="sec-3-2"></a>ioda:get-breed-named</h3>
+<div class="outline-text-3" id="text-ioda:get-breed-named">
+</div>
+<div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1">ioda:get-breed-named <i>string</i></h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+Reports the agentset which corresponds to the specified string. For
+turtles and patches the string can use the singular or plural form,
+but for other breeds only the plural form gives the appropriate
+agentset. Otherwise, reports nobody.
+</p>
+
+<pre class="example">
+breed [ants ant]
+print ioda:get-breed-named "ants"
+=&gt; ants
+print ioda:get-breed-named "ant"
+=&gt; nobody
+print ioda:get-breed-named "turtles"
+=&gt; turtles
+print ioda:get-breed-named "patch"
+=&gt; patches
+</pre>
+</DIV>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Simulation engine-related</h2>
+<div class="outline-text-2" id="text-4">
+<DIV class="dict_entry">
+</div>
+<div id="outline-container-ioda:concrete-primitive" class="outline-3">
+<h3 id="ioda:concrete-primitive"><a id="sec-4-1" name="sec-4-1"></a>ioda:concrete-primitive</h3>
+<div class="outline-text-3" id="text-ioda:concrete-primitive">
+</div>
+<div id="outline-container-sec-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1">ioda:concrete-primitive <i>breed</i> <i>string</i></h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+Reports the name of the concrete primitive that this breed must
+implement so as to be able to run the abstract primitive given in the
+string.
+</p>
+
+<pre class="example">
+print ioda:concrete-primitive one-of wolves "wiggle"
+=&gt; wolves::wiggle
+</pre>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:is-alive" class="outline-3">
+<h3 id="ioda:is-alive"><a id="sec-4-2" name="sec-4-2"></a>ioda:is-alive?</h3>
+<div class="outline-text-3" id="text-ioda:is-alive">
+</div>
+<div id="outline-container-sec-4-2-1" class="outline-4">
+<h4 id="sec-4-2-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:is-alive?</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+Reports true if this agent can take part in the IODA simulation,
+false otherwise (i.e. if it is ignored by the IODA simulation engine).
+</p>
+
+<p>
+See also <i>ioda:alive?</i> <a href="#ioda:set-alive">ioda:set-alive</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-alive" class="outline-3">
+<h3 id="ioda:set-alive"><a id="sec-4-3" name="sec-4-3"></a>ioda:set-alive</h3>
+<div class="outline-text-3" id="text-ioda:set-alive">
+</div>
+<div id="outline-container-sec-4-3-1" class="outline-4">
+<h4 id="sec-4-3-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:set-alive <i>boolean</i></h4>
+<div class="outline-text-4" id="text-4-3-1">
+<p>
+Defines whether or not this agent can take part in the IODA
+simulation, or if must be ignored by the IODA simulation engine.
+</p>
+
+<p>
+See also <i>ioda:alive?</i> <i>ioda:is-alive?</i>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:is-operative" class="outline-3">
+<h3 id="ioda:is-operative"><a id="sec-4-4" name="sec-4-4"></a>ioda:is-operative?</h3>
+<div class="outline-text-3" id="text-ioda:is-operative">
+</div>
+<div id="outline-container-sec-4-4-1" class="outline-4">
+<h4 id="sec-4-4-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:is-operative?</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<p>
+Reports false if the agent has already performed an interaction or if
+it has been the target of an exclusive interaction within the current
+time step.
+</p>
+
+<p>
+See also <i>ioda:operative?</i> <a href="#ioda:set-operative">ioda:set-operative</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-operative" class="outline-3">
+<h3 id="ioda:set-operative"><a id="sec-4-5" name="sec-4-5"></a>ioda:set-operative</h3>
+<div class="outline-text-3" id="text-ioda:set-operative">
+</div>
+<div id="outline-container-sec-4-5-1" class="outline-4">
+<h4 id="sec-4-5-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:set-operative <i>boolean</i></h4>
+<div class="outline-text-4" id="text-4-5-1">
+<p>
+Defines whether or not this agent can act as a source, or undergo an
+exclusive interaction, during the current time step.
+</p>
+
+<p>
+See also <i>ioda:operative?</i> <i>ioda:is-operative?</i>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:my-decision" class="outline-3">
+<h3 id="ioda:my-decision"><a id="sec-4-6" name="sec-4-6"></a>ioda:my-decision</h3>
+<div class="outline-text-3" id="text-ioda:my-decision">
+</div>
+<div id="outline-container-sec-4-6-1" class="outline-4">
+<h4 id="sec-4-6-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:my-decision</h4>
+<div class="outline-text-4" id="text-4-6-1">
+<p>
+Reports the interaction and target chosen and performed by this agent
+during the current time step. 
+</p>
+
+<p>
+See also <a href="#ioda:decision">ioda:decision</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:my-neighbors" class="outline-3">
+<h3 id="ioda:my-neighbors"><a id="sec-4-7" name="sec-4-7"></a>ioda:my-neighbors</h3>
+<div class="outline-text-3" id="text-ioda:my-neighbors">
+</div>
+<div id="outline-container-sec-4-7-1" class="outline-4">
+<h4 id="sec-4-7-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:my-neighbors</h4>
+<div class="outline-text-4" id="text-4-7-1">
+<p>
+Reports the agents (turtles or patches) that have been perceived by
+this agent during the current time step.
+</p>
+
+<p>
+See also <a href="#ioda:neighbors">ioda:neighbors</a> <a href="#ioda:set-my-neighbors">ioda:set-my-neighbors</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-my-neighbors" class="outline-3">
+<h3 id="ioda:set-my-neighbors"><a id="sec-4-8" name="sec-4-8"></a>ioda:set-my-neighbors</h3>
+<div class="outline-text-3" id="text-ioda:set-my-neighbors">
+</div>
+<div id="outline-container-sec-4-8-1" class="outline-4">
+<h4 id="sec-4-8-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:set-my-neighbors <i>list</i></h4>
+<div class="outline-text-4" id="text-4-8-1">
+<p>
+Defines the list of the agents (turtles or patches) that are perceived
+by this agent during the current time step. This can be used to
+customize the <code>filter-neighbors</code> perception primitive.
+</p>
+
+<p>
+See also <a href="#ioda:neighbors">ioda:neighbors</a> <a href="#ioda:my-neighbors">ioda:my-neighbors</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-ordering-policy-for-interaction-selection" class="outline-3">
+<h3 id="ioda:set-ordering-policy-for-interaction-selection"><a id="sec-4-9" name="sec-4-9"></a>ioda:set-ordering-policy-for-interaction-selection</h3>
+<div class="outline-text-3" id="text-ioda:set-ordering-policy-for-interaction-selection">
+</div>
+<div id="outline-container-sec-4-9-1" class="outline-4">
+<h4 id="sec-4-9-1">ioda:set-ordering-policy-for-interaction-selection <i>reporter-task</i>  <BR> ioda:set-ordering-policy-for-interaction-selection "random"</h4>
+<div class="outline-text-4" id="text-4-9-1">
+<p>
+Defines a special ordering for scheduling <b>active agents</b> during the
+interaction selection step. By default, the list of active agents is
+shuffled at each tick: by using this primitive, the list is sorted
+according to the reporter task that is specified. This should be used
+carefully so as to avoid simulation biases. In order to work properly,
+this primitive has to be executed after the <code>ioda:setup</code>
+primitive. Using this primitive with parameter "random" restores the
+default scheduling.  <BR>
+Below is an example that schedules active agents according to their ID (<code>who</code>).
+</p>
+
+<pre class="example">
+ioda:set-ordering-policy-for-interaction-selection task [ [who] of ?1 &lt; [who] of ?2]
+</pre>
+
+<p>
+See also: the example provided in tutorial files (<code>4b-leap years</code>), <a href="#ioda:set-ordering-policy-for-update">ioda:set-ordering-policy-for-update</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-ordering-policy-for-update" class="outline-3">
+<h3 id="ioda:set-ordering-policy-for-update"><a id="sec-4-10" name="sec-4-10"></a>ioda:set-ordering-policy-for-update</h3>
+<div class="outline-text-3" id="text-ioda:set-ordering-policy-for-update">
+</div>
+<div id="outline-container-sec-4-10-1" class="outline-4">
+<h4 id="sec-4-10-1">ioda:set-ordering-policy-for-update <i>reporter-task</i>  <BR> ioda:set-ordering-policy-for-update "random"</h4>
+<div class="outline-text-4" id="text-4-10-1">
+<p>
+Defines a special ordering for scheduling <b>labile agents</b> during the
+update step. By default, the list of labile agents is shuffled at each
+tick: by using this primitive, the list is sorted according to the
+reporter task that is specified. This should be used carefully so as
+to avoid simulation biases. In order to work properly, this primitive
+has to be executed after the <code>ioda:setup</code> primitive. Using this
+primitive with parameter "random" restores the default
+scheduling.  <BR>
+Below is an example that schedules labile agents according to their ID
+(<code>who</code>).
+</p>
+
+<pre class="example">
+ioda:set-ordering-policy-for-update task [ [who] of ?1 &lt; [who] of ?2]
+</pre>
+
+<p>
+See also: the example provided in tutorial files (<code>4b-leap years</code>), <a href="#ioda:set-ordering-policy-for-interaction-selection">ioda:set-ordering-policy-for-interaction-selection</a>
+</p>
+</DIV>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Interaction-related</h2>
+<div class="outline-text-2" id="text-5">
+<DIV class="dict_entry">
+</div>
+<div id="outline-container-ioda:get-interactions" class="outline-3">
+<h3 id="ioda:get-interactions"><a id="sec-5-1" name="sec-5-1"></a>ioda:get-interactions</h3>
+<div class="outline-text-3" id="text-ioda:get-interactions">
+</div>
+<div id="outline-container-sec-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1">ioda:get-interactions</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<p>
+Reports the list of all interactions defined in the model.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:print-interactions" class="outline-3">
+<h3 id="ioda:print-interactions"><a id="sec-5-2" name="sec-5-2"></a>ioda:print-interactions</h3>
+<div class="outline-text-3" id="text-ioda:print-interactions">
+</div>
+<div id="outline-container-sec-5-2-1" class="outline-4">
+<h4 id="sec-5-2-1">ioda:print-interactions</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<p>
+Prints the list of all interactions defined in the model as they can be found in the text files.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:is-exclusive" class="outline-3">
+<h3 id="ioda:is-exclusive"><a id="sec-5-3" name="sec-5-3"></a>ioda:is-exclusive?</h3>
+<div class="outline-text-3" id="text-ioda:is-exclusive">
+</div>
+<div id="outline-container-sec-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1">ioda:is-exclusive? <i>interaction</i></h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+Reports true if the interaction is EXCLUSIVE, false if it is
+PARALLEL. The <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> provides explanations about exclusive and
+parallel interactions.
+</p>
+
+<p>
+See also <a href="#ioda:set-exclusive">ioda:set-exclusive</a>, <a href="#ioda:set-exclusive-interactions">ioda:set-exclusive-interactions</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-exclusive" class="outline-3">
+<h3 id="ioda:set-exclusive"><a id="sec-5-4" name="sec-5-4"></a>ioda:set-exclusive</h3>
+<div class="outline-text-3" id="text-ioda:set-exclusive">
+</div>
+<div id="outline-container-sec-5-4-1" class="outline-4">
+<h4 id="sec-5-4-1">ioda:set-exclusive <i>interaction</i> <i>boolean</i></h4>
+<div class="outline-text-4" id="text-5-4-1">
+<p>
+Specifies wether or not the interaction must be used as EXCLUSIVE or
+PARALLEL. The <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> provides explanations about exclusive and
+parallel interactions.
+</p>
+
+<p>
+See also <i>ioda:is-exclusive?</i>, <a href="#ioda:set-exclusive-interactions">ioda:set-exclusive-interactions</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-exclusive-interactions" class="outline-3">
+<h3 id="ioda:set-exclusive-interactions"><a id="sec-5-5" name="sec-5-5"></a>ioda:set-exclusive-interactions</h3>
+<div class="outline-text-3" id="text-ioda:set-exclusive-interactions">
+</div>
+<div id="outline-container-sec-5-5-1" class="outline-4">
+<h4 id="sec-5-5-1">ioda:set-exclusive-interactions <i>boolean</i></h4>
+<div class="outline-text-4" id="text-5-5-1">
+<p>
+Specifies wether or not the interaction to be declared must be defined
+as EXCLUSIVE (<code>true</code>) or PARALLEL (<code>false</code>) by default. Interactions
+that have already been declared are kept unchanged. By default,
+interactions are considered PARALLEL. The <a href="IODA-NetLogo-Tutorial.html">Tutorial</a> provides
+explanations about exclusive and parallel interactions.
+</p>
+
+<p>
+See also <i>ioda:is-exclusive?</i>, <a href="#ioda:set-exclusive">ioda:set-exclusive</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-interaction" class="outline-3">
+<h3 id="ioda:get-interaction"><a id="sec-5-6" name="sec-5-6"></a>ioda:get-interaction</h3>
+<div class="outline-text-3" id="text-ioda:get-interaction">
+</div>
+<div id="outline-container-sec-5-6-1" class="outline-4">
+<h4 id="sec-5-6-1">ioda:get-interaction <i>string</i></h4>
+<div class="outline-text-4" id="text-5-6-1">
+<p>
+Reports the interaction of the specified name.
+</p>
+
+<pre class="example">
+print ioda:get-interaction "Hunt"
+=&gt; {{ioda:interaction ["hunt" [["hungry?"]] [["adult?" "target:alone?"]] ["chase"]]}}
+</pre>
+
+<p>
+See also <a href="#ioda:interaction-from-list">ioda:interaction-from-list</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:interaction-make" class="outline-3">
+<h3 id="ioda:interaction-make"><a id="sec-5-7" name="sec-5-7"></a>ioda:interaction-make</h3>
+<div class="outline-text-3" id="text-ioda:interaction-make">
+</div>
+<div id="outline-container-sec-5-7-1" class="outline-4">
+<h4 id="sec-5-7-1">ioda:interaction-make <i>string</i> <i>list</i> <i>list</i> <i>list</i></h4>
+<div class="outline-text-4" id="text-5-7-1">
+<p>
+Reports an interaction with the specified name, trigger, condition and actions.
+</p>
+
+<pre class="example">
+print ioda:interaction-make "Hunt" [["hungry?"]] [["adult?" "target:alone?"]] ["chase"]
+=&gt; {{ioda:interaction ["Hunt" [["hungry?"]] [["adult?" "target:alone?"]] ["chase"]]}}
+</pre>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:interaction-name" class="outline-3">
+<h3 id="ioda:interaction-name"><a id="sec-5-8" name="sec-5-8"></a>ioda:interaction-name</h3>
+<div class="outline-text-3" id="text-ioda:interaction-name">
+</div>
+<div id="outline-container-sec-5-8-1" class="outline-4">
+<h4 id="sec-5-8-1">ioda:interaction-name <i>interaction</i></h4>
+<div class="outline-text-4" id="text-5-8-1">
+<p>
+Reports the name of the interaction.
+</p>
+
+<pre class="example">
+print ioda:interaction-name ioda:interaction-make "Hunt" [["hungry?"]] [["adult?" "target:alone?"]] ["chase"]
+=&gt; Hunt
+</pre>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:interaction-from-list" class="outline-3">
+<h3 id="ioda:interaction-from-list"><a id="sec-5-9" name="sec-5-9"></a>ioda:interaction-from-list</h3>
+<div class="outline-text-3" id="text-ioda:interaction-from-list">
+</div>
+<div id="outline-container-sec-5-9-1" class="outline-4">
+<h4 id="sec-5-9-1">ioda:interaction-from-list <i>list</i></h4>
+<div class="outline-text-4" id="text-5-9-1">
+<p>
+Reports an interaction built from a list containing a name, a list of
+triggers, a list of conditions and a list of actions.
+</p>
+
+<pre class="example">
+print ioda:interaction-from-list ["Hunt" [["hungry?"]] [["adult?" "target:alone?"]] ["chase"]]
+=&gt; {{ioda:interaction ["Hunt" [["hungry?"]] [["adult?" "target:alone?"]] ["chase"]]}}
+</pre>
+
+<p>
+See also <a href="#ioda:interaction-make">ioda:interaction-make</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:eval-condition" class="outline-3">
+<h3 id="ioda:eval-condition"><a id="sec-5-10" name="sec-5-10"></a>ioda:eval-condition</h3>
+<div class="outline-text-3" id="text-ioda:eval-condition">
+</div>
+<div id="outline-container-sec-5-10-1" class="outline-4">
+<h4 id="sec-5-10-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:eval-condition <i>interaction</i> <i>target-turtle-or-patch</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:eval-condition <i>interaction</i> nobody</h4>
+<div class="outline-text-4" id="text-5-10-1">
+<p>
+Reports a list containing one or two lists, which themselves contain
+the actual reporters that should be evaluated in order to know wether
+the condition of the interaction is fulfilled or not, with a list
+identifying the agent (turtle or patch) running this reporter as the
+source agent, and the other turtle or patch as the target of the
+interaction (or nobody if the interaction is degenerate). The first
+item each sublist identifies the agent that should evaluate the
+reporters, the other items are the reporter themselves with their
+target.
+</p>
+
+<pre class="example">
+let i ioda:interaction-make "Hunt" [["hungry?"]] [["adult?" "target:alone?"]] ["chase"]
+print [ioda:eval-condition i one-of sheep] of one-of wolves
+=&gt; [[[[51] [WOLVES::adult? [25]]] [[25] [SHEEP::alone? [51]]]]]
+;; means that turtle 51 (a wolf) must evaluate reporter wolves::adult? 
+;; with parameter turtle 25, and conversely turtle 25 (a sheep) must 
+;; evaluate reporter sheep::alone? with parameter turtle 51
+
+set i ioda:interaction-make "Sleep" [["tired?"]] [["no-danger?"]] ["rest"]
+print [ioda:eval-condition i nobody] of one-of wolves
+=&gt; [[[[50] [WOLVES::no-danger? []]]]]
+;; turtle 50 has to evaluate reporter wolves::no-danger? with parameter nobody
+;; (no target agent, represented by the empty list following the reporter)
+</pre>
+
+<p>
+See also <a href="#ioda:eval-trigger">ioda:eval-trigger</a>, <a href="#ioda:perform-actions">ioda:perform-actions</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:eval-trigger" class="outline-3">
+<h3 id="ioda:eval-trigger"><a id="sec-5-11" name="sec-5-11"></a>ioda:eval-trigger</h3>
+<div class="outline-text-3" id="text-ioda:eval-trigger">
+</div>
+<div id="outline-container-sec-5-11-1" class="outline-4">
+<h4 id="sec-5-11-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:eval-trigger <i>interaction</i> <i>target-turtle-or-patch</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:eval-trigger <i>interaction</i> nobody</h4>
+<div class="outline-text-4" id="text-5-11-1">
+<p>
+Reports a list containing one or two lists, which themselves contain
+the actual reporters that should be evaluated in order to know wether
+the trigger of the interaction is fulfilled or not, with the agent
+(turtle or patch) running this reporter as the source agent, and the
+other turtle or patch as the target of the interaction (or nobody if
+the interaction is degenerate). The first item of each sublist is the
+agent that should evaluate the reporters, the other items are the
+reporter themselves.
+</p>
+
+<pre class="example">
+let i ioda:interaction-make "Hunt" [["hungry?"]] [["adult?" "target:alone?"]] ["chase"]
+print [ioda:eval-trigger i one-of sheep] of one-of wolves
+=&gt; [[[(TURTLE 5) (WOLVES::hungry?(TURTLE 1))]]]
+;; means that turtle 5 (a wolf) must evaluate reporter wolves::hungry? with parameter turtle 1 
+
+set i ioda:interaction-make "Sleep" [["tired?"]] [["no-danger?"]] ["rest"]
+print [ioda:eval-trigger i nobody] of one-of wolves
+=&gt; [[[(TURTLE 4) (WOLVES::tired?(nobody))]]]
+;; turtle 4 has to evaluate reporter wolves::tired? with parameter nobody (no target agent)
+</pre>
+
+<p>
+See also <a href="#ioda:eval-condition">ioda:eval-condition</a>, <a href="#ioda:perform-actions">ioda:perform-actions</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:perform-actions" class="outline-3">
+<h3 id="ioda:perform-actions"><a id="sec-5-12" name="sec-5-12"></a>ioda:perform-actions</h3>
+<div class="outline-text-3" id="text-ioda:perform-actions">
+</div>
+<div id="outline-container-sec-5-12-1" class="outline-4">
+<h4 id="sec-5-12-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:perform-actions <i>interaction</i> <i>target-turtle-or-patch</i>  <BR> <img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:perform-actions <i>interaction</i> nobody</h4>
+<div class="outline-text-4" id="text-5-12-1">
+<p>
+Reports a list containing zero, one or more lists, which themselves
+contain the actual procedures that should be run in order to perform
+the interaction, with the agent (turtle or patch) running this command
+as the source agent, and the other turtle or patch as the target of
+the interaction (or nobody if the interaction is degenerate). The
+first item of each sublist is the agent that should run the
+procedures, the other items are the procedures themselves. Note that
+the order of the procedures is generally important.
+</p>
+
+<pre class="example">
+let i ioda:interaction-make "Eat" [["hungry?"]] [["target:healthy?"]] ["digest" "roar" "target:die"]
+print [ioda:perform-actions i one-of sheep] of one-of wolves
+=&gt; [[(TURTLE 4) (WOLVES::digest(TURTLE 0)) (WOLVES::roar(TURTLE 0))] [(TURTLE 0) (SHEEP::die(TURTLE 4))]]
+;; means that turtle 4 (a wolf) must run procedure wolves::digest with parameter turtle 0, 
+;; then procedure wolves::roar with parameter turtle 0 ; after that turtle 0 (a sheep) must
+;; run procedure sheep::die with parameter turtle 4
+
+set i ioda:interaction-make "Sleep" ["tired?"] ["no-danger?"] ["rest"]
+print [ioda:perform-actions i nobody] of one-of sheep
+=&gt; [[(TURTLE 2) (SHEEP::rest(nobody))]]
+;; turtle 2 has to run procedure sheep::rest with parameter nobody (no target agent)
+</pre>
+
+<p>
+See also <a href="#ioda:eval-condition">ioda:eval-condition</a>, <a href="#ioda:eval-trigger">ioda:eval-trigger</a>.
+</p>
+</DIV>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Assignation-related</h2>
+<div class="outline-text-2" id="text-6">
+<DIV class="dict_entry">
+</div>
+<div id="outline-container-ioda:assignation-from-list" class="outline-3">
+<h3 id="ioda:assignation-from-list"><a id="sec-6-1" name="sec-6-1"></a>ioda:assignation-from-list</h3>
+<div class="outline-text-3" id="text-ioda:assignation-from-list">
+</div>
+<div id="outline-container-sec-6-1-1" class="outline-4">
+<h4 id="sec-6-1-1">ioda:assignation-from-list <i>list</i></h4>
+<div class="outline-text-4" id="text-6-1-1">
+<p>
+Reports an assignation built from the items of the list. The list may
+contain the following items:
+</p>
+<ul class="org-ul">
+<li>a source breed name, an interaction name, a priority level: in that
+case, the target is nobody (reflexive interaction)
+</li>
+<li>a source breed name, an interaction name, a priority level, a target
+breed name, a limit distance
+</li>
+<li>a source breed name, an interaction name, a priority level, a target
+breed name, a limit distance, a target selection policy
+</li>
+</ul>
+
+<pre class="example">
+print ioda:assignation-from-list ["ants" "Take" 20 "food" 1]
+;; reports the assignation of the "Take" interaction (which must exist!)
+;; to "ants" agents as sources, with "food" agents as targets,
+;; at priority level 20, and with a limit distance of 1.
+=&gt; {{ioda:assignation ["ants" "take" 20 "food" 1 "RANDOM"]}}
+</pre>
+
+<p>
+See <a href="#ioda:assignation-to-list">ioda:assignation-to-list</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:assignation-to-list" class="outline-3">
+<h3 id="ioda:assignation-to-list"><a id="sec-6-2" name="sec-6-2"></a>ioda:assignation-to-list</h3>
+<div class="outline-text-3" id="text-ioda:assignation-to-list">
+</div>
+<div id="outline-container-sec-6-2-1" class="outline-4">
+<h4 id="sec-6-2-1">ioda:assignation-to-list <i>assignation</i></h4>
+<div class="outline-text-4" id="text-6-2-1">
+<p>
+Reports a list built from the specified assignation. The list may
+contain the following items:
+</p>
+<ul class="org-ul">
+<li>a source breed name, an interaction name, a priority level: in that
+case, the target is nobody (reflexive interaction)
+</li>
+<li>a source breed name, an interaction name, a priority level, a target
+breed name, a limit distance
+</li>
+<li>a source breed name, an interaction name, a priority level, a target
+breed name, a limit distance, a target selection policy
+</li>
+</ul>
+
+<p>
+See <a href="#ioda:assignation-from-list">ioda:assignation-from-list</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-source-breed" class="outline-3">
+<h3 id="ioda:get-source-breed"><a id="sec-6-3" name="sec-6-3"></a>ioda:get-source-breed</h3>
+<div class="outline-text-3" id="text-ioda:get-source-breed">
+</div>
+<div id="outline-container-sec-6-3-1" class="outline-4">
+<h4 id="sec-6-3-1">ioda:get-source-breed <i>assignation</i></h4>
+<div class="outline-text-4" id="text-6-3-1">
+<p>
+Reports the source breed for the specified assignation.
+</p>
+
+<pre class="example">
+print ioda:get-source-breed ioda:assignation-from-list ["ants" "Take" 20 "food" 1]
+=&gt; ants
+</pre>
+
+<p>
+See also <a href="#ioda:get-target-breed">ioda:get-target-breed</a>, <a href="#ioda:get-priority">ioda:get-priority</a>, <a href="#ioda:get-distance">ioda:get-distance</a>, <a href="#ioda:get-interaction-of">ioda:get-interaction-of</a>,
+<a href="#ioda:target-selection-method">ioda:target-selection-method</a>, <a href="#ioda:set-target-selection-method">ioda:set-target-selection-method</a>, <i>ioda:is-degenerate?</i>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-target-breed" class="outline-3">
+<h3 id="ioda:get-target-breed"><a id="sec-6-4" name="sec-6-4"></a>ioda:get-target-breed</h3>
+<div class="outline-text-3" id="text-ioda:get-target-breed">
+</div>
+<div id="outline-container-sec-6-4-1" class="outline-4">
+<h4 id="sec-6-4-1">ioda:get-target-breed <i>assignation</i></h4>
+<div class="outline-text-4" id="text-6-4-1">
+<p>
+Reports the target breed for the specified assignation.
+</p>
+
+<pre class="example">
+print ioda:get-target-breed ioda:assignation-from-list ["ants" "Take" 20 "food" 1]
+=&gt; food
+print ioda:get-target-breed ioda:assignation-from-list ["ants" "Move" 10]
+=&gt; nobody
+</pre>
+
+<p>
+See also <a href="#ioda:get-source-breed">ioda:get-source-breed</a>, <a href="#ioda:get-priority">ioda:get-priority</a>, <a href="#ioda:get-distance">ioda:get-distance</a>,
+<a href="#ioda:get-interaction-of">ioda:get-interaction-of</a>, <a href="#ioda:target-selection-method">ioda:target-selection-method</a>, <a href="#ioda:set-target-selection-method">ioda:set-target-selection-method</a>,
+<a href="#ioda:is-degenerate">ioda:is-degenerate?</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-priority" class="outline-3">
+<h3 id="ioda:get-priority"><a id="sec-6-5" name="sec-6-5"></a>ioda:get-priority</h3>
+<div class="outline-text-3" id="text-ioda:get-priority">
+</div>
+<div id="outline-container-sec-6-5-1" class="outline-4">
+<h4 id="sec-6-5-1">ioda:get-priority <i>assignation</i></h4>
+<div class="outline-text-4" id="text-6-5-1">
+<p>
+Reports the priority level for the specified assignation.
+</p>
+
+<pre class="example">
+print ioda:get-priority ioda:assignation-from-list ["ants" "Take" 20 "food" 1]
+=&gt; 20
+</pre>
+
+<p>
+See also <a href="#ioda:get-source-breed">ioda:get-source-breed</a>, <a href="#ioda:get-target-breed">ioda:get-target-breed</a>, <a href="#ioda:get-distance">ioda:get-distance</a>,
+<a href="#ioda:get-interaction-of">ioda:get-interaction-of</a>, <a href="#ioda:target-selection-method">ioda:target-selection-method</a>, <a href="#ioda:set-target-selection-method">ioda:set-target-selection-method</a>,
+<i>ioda:is-degenerate?</i>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-distance" class="outline-3">
+<h3 id="ioda:get-distance"><a id="sec-6-6" name="sec-6-6"></a>ioda:get-distance</h3>
+<div class="outline-text-3" id="text-ioda:get-distance">
+</div>
+<div id="outline-container-sec-6-6-1" class="outline-4">
+<h4 id="sec-6-6-1">ioda:get-distance <i>assignation</i></h4>
+<div class="outline-text-4" id="text-6-6-1">
+<p>
+Reports the limit distance for the specified assignation.
+</p>
+
+<pre class="example">
+print ioda:get-distance ioda:assignation-from-list ["ants" "Take" 20 "food" 1]
+=&gt; 1
+</pre>
+
+<p>
+See also <a href="#ioda:get-source-breed">ioda:get-source-breed</a>, <a href="#ioda:get-target-breed">ioda:get-target-breed</a>, <a href="#ioda:get-priority">ioda:get-priority</a>,
+<a href="#ioda:get-interaction-of">ioda:get-interaction-of</a>, <a href="#ioda:target-selection-method">ioda:target-selection-method</a>, <a href="#ioda:set-target-selection-method">ioda:set-target-selection-method</a>,
+<i>ioda:is-degenerate?</i>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-interaction-of" class="outline-3">
+<h3 id="ioda:get-interaction-of"><a id="sec-6-7" name="sec-6-7"></a>ioda:get-interaction-of</h3>
+<div class="outline-text-3" id="text-ioda:get-interaction-of">
+</div>
+<div id="outline-container-sec-6-7-1" class="outline-4">
+<h4 id="sec-6-7-1">ioda:get-interaction-of <i>assignation</i></h4>
+<div class="outline-text-4" id="text-6-7-1">
+<p>
+Reports the interaction for the specified assignation.
+</p>
+
+<pre class="example">
+print ioda:get-interaction-of ioda:assignation-from-list ["turtles" "Delete" 20 "turtles" 1]
+=&gt; {{ioda:interaction ["delete" [] [] ["target:die"]]}}
+</pre>
+
+<p>
+See also <a href="#ioda:get-source-breed">ioda:get-source-breed</a>, <a href="#ioda:get-target-breed">ioda:get-target-breed</a>, <a href="#ioda:get-priority">ioda:get-priority</a>,
+<a href="#ioda:get-distance">ioda:get-distance</a>, <a href="#ioda:target-selection-method">ioda:target-selection-method</a>, <a href="#ioda:set-target-selection-method">ioda:set-target-selection-method</a>,
+<i>ioda:is-degenerate?</i>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:is-degenerate" class="outline-3">
+<h3 id="ioda:is-degenerate"><a id="sec-6-8" name="sec-6-8"></a>ioda:is-degenerate?</h3>
+<div class="outline-text-3" id="text-ioda:is-degenerate">
+</div>
+<div id="outline-container-sec-6-8-1" class="outline-4">
+<h4 id="sec-6-8-1">ioda:is-degenerate? <i>assignation</i></h4>
+<div class="outline-text-4" id="text-6-8-1">
+<p>
+Reports true if the assignation is <i>degenerate</i> (i.e. if it has
+<code>nobody</code> as target), false otherwise.
+</p>
+
+<pre class="example">
+print ioda:is-degenerate? ioda:assignation-from-list ["turtles" "Delete" 20 "turtles" 1]
+=&gt; false
+print ioda:is-degenerate? ioda:assignation-from-list ["ants" "Move" 10]
+=&gt; true
+</pre>
+
+<p>
+See also <a href="#ioda:get-source-breed">ioda:get-source-breed</a>, <a href="#ioda:get-target-breed">ioda:get-target-breed</a>, <a href="#ioda:get-priority">ioda:get-priority</a>, <a href="#ioda:get-distance">ioda:get-distance</a>,
+<a href="#ioda:get-interaction-of">ioda:get-interaction-of</a>, <a href="#ioda:target-selection-method">ioda:target-selection-method</a>, <a href="#ioda:set-target-selection-method">ioda:set-target-selection-method</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:target-selection-method" class="outline-3">
+<h3 id="ioda:target-selection-method"><a id="sec-6-9" name="sec-6-9"></a>ioda:target-selection-method</h3>
+<div class="outline-text-3" id="text-ioda:target-selection-method">
+</div>
+<div id="outline-container-sec-6-9-1" class="outline-4">
+<h4 id="sec-6-9-1">ioda:target-selection-method <i>assignation</i></h4>
+<div class="outline-text-4" id="text-6-9-1">
+<p>
+Reports the interaction/target selection policy used by this
+assignation (by default: "RANDOM", which means that all
+interaction/target pairs found by the simulation engine to be
+realizable are chosen with equal probability for performing an
+interaction.
+</p>
+
+<p>
+See also <a href="#ioda:get-source-breed">ioda:get-source-breed</a>, <a href="#ioda:get-target-breed">ioda:get-target-breed</a>, <a href="#ioda:get-priority">ioda:get-priority</a>, <a href="#ioda:get-distance">ioda:get-distance</a>,
+<a href="#ioda:get-interaction-of">ioda:get-interaction-of</a>, <a href="#ioda:set-target-selection-method">ioda:set-target-selection-method</a>, <i>ioda:is-degenerate?</i>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-target-selection-method" class="outline-3">
+<h3 id="ioda:set-target-selection-method"><a id="sec-6-10" name="sec-6-10"></a>ioda:set-target-selection-method</h3>
+<div class="outline-text-3" id="text-ioda:set-target-selection-method">
+</div>
+<div id="outline-container-sec-6-10-1" class="outline-4">
+<h4 id="sec-6-10-1">ioda:set-target-selection-method <i>assignation</i> <i>string</i></h4>
+<div class="outline-text-4" id="text-6-10-1">
+<p>
+Defines the interaction/target selection policy used by this
+assignation (by default: "RANDOM", which means that all
+interaction/target pairs found by the simulation engine to be
+realizable are chosen with equal probability for performing an
+interaction). Possible string values are: "RANDOM", "RANDOM-INT",
+"BEST:/aReporter/", "PRORATA:/aReporter/", "NUMBER:/min/-/max/",
+"ALL-BEST:/aReporter/", "FILTER:/aReporter/".  Please refer to the
+<a href="IODA-NetLogo-Tutorial.org#pheromones">"Pheromones"</a> and <a href="IODA-NetLogo-Tutorial.org#explosion">"Explosion"</a> sections of the Tutorial to learn about
+target selection policies.
+</p>
+
+<p>
+See also <a href="#ioda:get-source-breed">ioda:get-source-breed</a>, <a href="#ioda:get-target-breed">ioda:get-target-breed</a>, <a href="#ioda:get-priority">ioda:get-priority</a>,
+<a href="#ioda:get-distance">ioda:get-distance</a>, <a href="#ioda:get-interaction-of">ioda:get-interaction-of</a>, <a href="#ioda:target-selection-method">ioda:target-selection-method</a>,
+<i>ioda:is-degenerate?</i>.
+</p>
+</DIV>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">Interaction matrix-related</h2>
+<div class="outline-text-2" id="text-7">
+<DIV class="dict_entry">
+</div>
+<div id="outline-container-ioda:active-agents" class="outline-3">
+<h3 id="ioda:active-agents"><a id="sec-7-1" name="sec-7-1"></a>ioda:active-agents</h3>
+<div class="outline-text-3" id="text-ioda:active-agents">
+</div>
+<div id="outline-container-sec-7-1-1" class="outline-4">
+<h4 id="sec-7-1-1">ioda:active-agents</h4>
+<div class="outline-text-4" id="text-7-1-1">
+<p>
+Reports a list of active breeds (including patches if necessary),
+i.e. breed (or patches in general) that can perform some interactions
+(according to the Interaction Matrix of the current model).
+</p>
+
+<p>
+See also <a href="#ioda:active-agents-with-targets">ioda:active-agents-with-targets</a>, <a href="#ioda:passive-agents">ioda:passive-agents</a>, <a href="#ioda:labile-agents">ioda:labile-agents</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:active-agents-with-targets" class="outline-3">
+<h3 id="ioda:active-agents-with-targets"><a id="sec-7-2" name="sec-7-2"></a>ioda:active-agents-with-targets</h3>
+<div class="outline-text-3" id="text-ioda:active-agents-with-targets">
+</div>
+<div id="outline-container-sec-7-2-1" class="outline-4">
+<h4 id="sec-7-2-1">ioda:active-agents-with-targets</h4>
+<div class="outline-text-4" id="text-7-2-1">
+<p>
+Reports a list of active breeds (including patches if necessary) which
+can perform at least one non-degenerate interaction, i.e. breed (or
+patches in general) that can perform some interactions (according to
+the Interaction Matrix of the current model) on other agents.
+</p>
+
+<p>
+See also <a href="#ioda:active-agents">ioda:active-agents</a>, <a href="#ioda:passive-agents">ioda:passive-agents</a>, <a href="#ioda:labile-agents">ioda:labile-agents</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:passive-agents" class="outline-3">
+<h3 id="ioda:passive-agents"><a id="sec-7-3" name="sec-7-3"></a>ioda:passive-agents</h3>
+<div class="outline-text-3" id="text-ioda:passive-agents">
+</div>
+<div id="outline-container-sec-7-3-1" class="outline-4">
+<h4 id="sec-7-3-1">ioda:passive-agents</h4>
+<div class="outline-text-4" id="text-7-3-1">
+<p>
+Reports a list of passive breeds (including patches if necessary),
+i.e. breed (or patches in general) that can undergo some interactions
+(according to the Interaction Matrix of the current model).
+</p>
+
+<p>
+See also <a href="#ioda:active-agents">ioda:active-agents</a>, <a href="#ioda:active-agents-with-targets">ioda:active-agents-with-targets</a>, <a href="#ioda:labile-agents">ioda:labile-agents</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:labile-agents" class="outline-3">
+<h3 id="ioda:labile-agents"><a id="sec-7-4" name="sec-7-4"></a>ioda:labile-agents</h3>
+<div class="outline-text-3" id="text-ioda:labile-agents">
+</div>
+<div id="outline-container-sec-7-4-1" class="outline-4">
+<h4 id="sec-7-4-1">ioda:labile-agents</h4>
+<div class="outline-text-4" id="text-7-4-1">
+<p>
+Reports a list of labile breeds (including patches if necessary),
+i.e. breed (or patches in general) that can change their state through
+update interactions (according to the Update Matrix of the current
+model).
+</p>
+
+<p>
+See also <a href="#ioda:active-agents">ioda:active-agents</a>, <a href="#ioda:active-agents-with-targets">ioda:active-agents-with-targets</a>, <a href="#ioda:passive-agents">ioda:passive-agents</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:is-active" class="outline-3">
+<h3 id="ioda:is-active"><a id="sec-7-5" name="sec-7-5"></a>ioda:is-active?</h3>
+<div class="outline-text-3" id="text-ioda:is-active">
+</div>
+<div id="outline-container-sec-7-5-1" class="outline-4">
+<h4 id="sec-7-5-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:is-active?</h4>
+<div class="outline-text-4" id="text-7-5-1">
+<p>
+Reports true if this turtle or patch is member of an active breed,
+i.e. if its breed (or if patches in general if this agent is a patch)
+can perform some interactions (according to the Interaction Matrix of
+the current model) ; reports false otherwise.
+</p>
+
+<p>
+See also <i>ioda:is-labile?</i>, <i>ioda:is-passive?</i>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:is-passive" class="outline-3">
+<h3 id="ioda:is-passive"><a id="sec-7-6" name="sec-7-6"></a>ioda:is-passive?</h3>
+<div class="outline-text-3" id="text-ioda:is-passive">
+</div>
+<div id="outline-container-sec-7-6-1" class="outline-4">
+<h4 id="sec-7-6-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:is-passive?</h4>
+<div class="outline-text-4" id="text-7-6-1">
+<p>
+Reports true if this turtle or patch is member of a passive breed,
+i.e. if its breed (or if patches in general if this agent is a patch)
+can undergo some interactions (according to the Interaction Matrix of
+the current model) ; reports false otherwise.
+</p>
+
+<p>
+See also <i>ioda:is-active?</i>, <i>ioda:is-labile?</i>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:is-labile" class="outline-3">
+<h3 id="ioda:is-labile"><a id="sec-7-7" name="sec-7-7"></a>ioda:is-labile?</h3>
+<div class="outline-text-3" id="text-ioda:is-labile">
+</div>
+<div id="outline-container-sec-7-7-1" class="outline-4">
+<h4 id="sec-7-7-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:is-labile?</h4>
+<div class="outline-text-4" id="text-7-7-1">
+<p>
+Reports true if this turtle or patch is member of a labile breed,
+i.e. if its breed (or if patches in general if this agent is a patch)
+can change their state through update interactions (according to the
+Update Matrix of the current model) ; reports false otherwise.
+</p>
+
+<p>
+See also <i>ioda:is-active?</i>, <i>ioda:is-passive?</i>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-interaction-matrix" class="outline-3">
+<h3 id="ioda:get-interaction-matrix"><a id="sec-7-8" name="sec-7-8"></a>ioda:get-interaction-matrix</h3>
+<div class="outline-text-3" id="text-ioda:get-interaction-matrix">
+</div>
+<div id="outline-container-sec-7-8-1" class="outline-4">
+<h4 id="sec-7-8-1">ioda:get-interaction-matrix</h4>
+<div class="outline-text-4" id="text-7-8-1">
+<p>
+Reports the interaction matrix for the current model.
+</p>
+
+<pre class="example">
+;; load the "simple ecosystem" example and run "setup" first
+print ioda:get-interaction-matrix
+=&gt; {{ioda:matrix [{{ioda:assignation ["wolves" "eat" 10 "sheep" 1 "RANDOM"]}} 
+      {{ioda:assignation ["wolves" "hunt" 5 "sheep" 5 "RANDOM"]}} 
+      {{ioda:assignation ["wolves" "moverandomly" 0]}} 
+      {{ioda:assignation ["sheep" "eat" 10 "patches" 0 "RANDOM"]}} 
+      {{ioda:assignation ["sheep" "mate" 5 "sheep" 1 "RANDOM"]}} 
+      {{ioda:assignation ["sheep" "moverandomly" 0]}}]}}
+</pre>
+
+<p>
+See also <a href="#ioda:set-interaction-matrix">ioda:set-interaction-matrix</a>, <a href="#ioda:get-update-matrix">ioda:get-update-matrix</a>, <a href="#ioda:set-update-matrix">ioda:set-update-matrix</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-update-matrix" class="outline-3">
+<h3 id="ioda:get-update-matrix"><a id="sec-7-9" name="sec-7-9"></a>ioda:get-update-matrix</h3>
+<div class="outline-text-3" id="text-ioda:get-update-matrix">
+</div>
+<div id="outline-container-sec-7-9-1" class="outline-4">
+<h4 id="sec-7-9-1">ioda:get-update-matrix</h4>
+<div class="outline-text-4" id="text-7-9-1">
+<p>
+Reports the update matrix for the current model.
+</p>
+
+<pre class="example">
+;; load the "simple ecosystem" example and run "setup" first
+print ioda:get-update-matrix
+=&gt; {{ioda:matrix [{{ioda:assignation ["patches" "grow" 0]}}]}}
+</pre>
+
+<p>
+See also <a href="#ioda:get-interaction-matrix">ioda:get-interaction-matrix</a>, <a href="#ioda:set-interaction-matrix">ioda:set-interaction-matrix</a>, <a href="#ioda:set-update-matrix">ioda:set-update-matrix</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-interaction-matrix" class="outline-3">
+<h3 id="ioda:set-interaction-matrix"><a id="sec-7-10" name="sec-7-10"></a>ioda:set-interaction-matrix</h3>
+<div class="outline-text-3" id="text-ioda:set-interaction-matrix">
+</div>
+<div id="outline-container-sec-7-10-1" class="outline-4">
+<h4 id="sec-7-10-1">ioda:set-interaction-matrix <i>matrix</i></h4>
+<div class="outline-text-4" id="text-7-10-1">
+<p>
+Defines the interaction matrix for the current model.
+</p>
+
+<p>
+See also <a href="#ioda:get-interaction-matrix">ioda:get-interaction-matrix</a>, <a href="#ioda:get-update-matrix">ioda:get-update-matrix</a>, <a href="#ioda:set-update-matrix">ioda:set-update-matrix</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:set-update-matrix" class="outline-3">
+<h3 id="ioda:set-update-matrix"><a id="sec-7-11" name="sec-7-11"></a>ioda:set-update-matrix</h3>
+<div class="outline-text-3" id="text-ioda:set-update-matrix">
+</div>
+<div id="outline-container-sec-7-11-1" class="outline-4">
+<h4 id="sec-7-11-1">ioda:set-update-matrix <i>matrix</i></h4>
+<div class="outline-text-4" id="text-7-11-1">
+<p>
+Defines the update matrix for the current model.
+</p>
+
+<p>
+See also <a href="#ioda:get-interaction-matrix">ioda:get-interaction-matrix</a>, <a href="#ioda:set-interaction-matrix">ioda:set-interaction-matrix</a>, <a href="#ioda:get-update-matrix">ioda:get-update-matrix</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:print-interaction-matrix" class="outline-3">
+<h3 id="ioda:print-interaction-matrix"><a id="sec-7-12" name="sec-7-12"></a>ioda:print-interaction-matrix</h3>
+<div class="outline-text-3" id="text-ioda:print-interaction-matrix">
+</div>
+<div id="outline-container-sec-7-12-1" class="outline-4">
+<h4 id="sec-7-12-1">ioda:print-interaction-matrix</h4>
+<div class="outline-text-4" id="text-7-12-1">
+<p>
+Prints the interaction matrix for the current model as a CSV file (with tabs as field separator).
+</p>
+
+<p>
+See also <a href="#ioda:print-update-matrix">ioda:print-update-matrix</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:print-update-matrix" class="outline-3">
+<h3 id="ioda:print-update-matrix"><a id="sec-7-13" name="sec-7-13"></a>ioda:print-update-matrix</h3>
+<div class="outline-text-3" id="text-ioda:print-update-matrix">
+</div>
+<div id="outline-container-sec-7-13-1" class="outline-4">
+<h4 id="sec-7-13-1">ioda:print-update-matrix</h4>
+<div class="outline-text-4" id="text-7-13-1">
+<p>
+Prints the update matrix for the current model as a CSV file (with tabs as field separator).
+</p>
+
+<p>
+See also <a href="#ioda:print-interaction-matrix">ioda:print-interaction-matrix</a>
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:matrix-make" class="outline-3">
+<h3 id="ioda:matrix-make"><a id="sec-7-14" name="sec-7-14"></a>ioda:matrix-make</h3>
+<div class="outline-text-3" id="text-ioda:matrix-make">
+</div>
+<div id="outline-container-sec-7-14-1" class="outline-4">
+<h4 id="sec-7-14-1">ioda:matrix-make</h4>
+<div class="outline-text-4" id="text-7-14-1">
+<p>
+Reports a new, empty interaction or update matrix.
+</p>
+</DIV>
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:matrix-to-list" class="outline-3">
+<h3 id="ioda:matrix-to-list"><a id="sec-7-15" name="sec-7-15"></a>ioda:matrix-to-list</h3>
+<div class="outline-text-3" id="text-ioda:matrix-to-list">
+</div>
+<div id="outline-container-sec-7-15-1" class="outline-4">
+<h4 id="sec-7-15-1">ioda:matrix-to-list <i>matrix</i></h4>
+<div class="outline-text-4" id="text-7-15-1">
+<p>
+Reports a list containing all assignations contained in the specified matrix.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:matrix-view" class="outline-3">
+<h3 id="ioda:matrix-view"><a id="sec-7-16" name="sec-7-16"></a>ioda:matrix-view</h3>
+<div class="outline-text-3" id="text-ioda:matrix-view">
+</div>
+<div id="outline-container-sec-7-16-1" class="outline-4">
+<h4 id="sec-7-16-1">ioda:matrix-view <i>matrix</i></h4>
+<div class="outline-text-4" id="text-7-16-1">
+<p>
+Reports a list corresponding to the actual data structure used for
+storing assignations (priority-ordered lists, grouped by source
+breeds).
+</p>
+
+<pre class="example">
+;; load the "simple ecosystem" example and run "setup" first
+print ioda:matrix-view ioda:get-interaction-matrix
+=&gt; [[wolves [{{ioda:assignation ["wolves" "eat" 10 "sheep" 1 "RANDOM"]}}] 
+            [{{ioda:assignation ["wolves" "hunt" 5 "sheep" 5 "RANDOM"]}}] 
+            [{{ioda:assignation ["wolves" "moverandomly" 0]}}]] 
+    [sheep [{{ioda:assignation ["sheep" "eat" 10 "patches" 0 "RANDOM"]}}] 
+           [{{ioda:assignation ["sheep" "mate" 5 "sheep" 1 "RANDOM"]}}] 
+           [{{ioda:assignation ["sheep" "moverandomly" 0]}}]]]
+</pre>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:add-assignation" class="outline-3">
+<h3 id="ioda:add-assignation"><a id="sec-7-17" name="sec-7-17"></a>ioda:add-assignation</h3>
+<div class="outline-text-3" id="text-ioda:add-assignation">
+</div>
+<div id="outline-container-sec-7-17-1" class="outline-4">
+<h4 id="sec-7-17-1">ioda:add-assignation <i>matrix</i> <i>assignation</i></h4>
+<div class="outline-text-4" id="text-7-17-1">
+<p>
+Adds the specified assignation to the specified matrix. When used
+direclty, it is recommended to run <a href="#ioda:check-consistency">ioda:check-consistency</a> to ensure
+that all required concrete primitives are already written.
+</p>
+
+<pre class="example">
+;; a very small IODA model
+let im ioda:matrix-make
+let i ioda:interaction-make "Take" [] [["can-take-load?"]] ["take-target" "target:die"]
+ioda:add-assignation im ioda:assignation-from-list ["ants" "Take" 20 "food" 1]
+ioda:set-interaction-matrix im
+</pre>
+
+<p>
+See also <a href="#ioda:remove-assignation">ioda:remove-assignation</a>, <a href="#ioda:replace-assignation">ioda:replace-assignation</a>, <a href="#ioda:check-consistency">ioda:check-consistency</a>
+</p>
+</DIV>
+
+
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:remove-assignation" class="outline-3">
+<h3 id="ioda:remove-assignation"><a id="sec-7-18" name="sec-7-18"></a>ioda:remove-assignation</h3>
+<div class="outline-text-3" id="text-ioda:remove-assignation">
+</div>
+<div id="outline-container-sec-7-18-1" class="outline-4">
+<h4 id="sec-7-18-1">ioda:remove-assignation <i>matrix</i> <i>assignation</i></h4>
+<div class="outline-text-4" id="text-7-18-1">
+<p>
+Removes the specified assignation from the specified matrix.
+</p>
+
+<pre class="example">
+ioda:remove-assignation ioda:get-interaction-matrix ioda:assignation-from-list ["ants" "Take" 20 "food" 1]
+</pre>
+
+<p>
+See also <a href="#ioda:add-assignation">ioda:add-assignation</a>, <a href="#ioda:replace-assignation">ioda:replace-assignation</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:replace-assignation" class="outline-3">
+<h3 id="ioda:replace-assignation"><a id="sec-7-19" name="sec-7-19"></a>ioda:replace-assignation</h3>
+<div class="outline-text-3" id="text-ioda:replace-assignation">
+</div>
+<div id="outline-container-sec-7-19-1" class="outline-4">
+<h4 id="sec-7-19-1">ioda:replace-assignation <i>matrix /old-assignation</i> <i>new-assignation</i></h4>
+<div class="outline-text-4" id="text-7-19-1">
+<p>
+Replaces the specified assignation by the new one in the specified
+matrix. Replacement is done by merely removing the old assignation,
+then adding the new one.  When used direclty, it is recommended to run
+<a href="#ioda:check-consistency">ioda:check-consistency</a> to ensure that all required concrete primitives
+are already written.
+</p>
+
+<pre class="example">
+ioda:replace-assignation ioda:get-interaction-matrix 
+  ioda:assignation-from-list ["ants" "Take" 20 "food" 1]
+  ioda:assignation-from-list ["ants" "Take" 30 "food" 2 "BEST"]
+</pre>
+
+<p>
+See also <a href="#ioda:remove-assignation">ioda:remove-assignation</a>, <a href="#ioda:add-assignation">ioda:add-assignation</a>, <a href="#ioda:check-consistency">ioda:check-consistency</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-matrix-line" class="outline-3">
+<h3 id="ioda:get-matrix-line"><a id="sec-7-20" name="sec-7-20"></a>ioda:get-matrix-line</h3>
+<div class="outline-text-3" id="text-ioda:get-matrix-line">
+</div>
+<div id="outline-container-sec-7-20-1" class="outline-4">
+<h4 id="sec-7-20-1">ioda:get-matrix-line <i>matrix</i> <i>breed</i></h4>
+<div class="outline-text-4" id="text-7-20-1">
+<p>
+Reports a priority-ordered list corresponding to assignations where
+the specified breed plays the role of the source.
+</p>
+
+<pre class="example">
+;; load the "particles" example and run the "setup" procedure first
+print ioda:get-matrix-line ioda:get-interaction-matrix turtles
+=&gt; [[{{ioda:assignation ["turtles" "delete" 1 "turtles" 1 "RANDOM"]}}]
+    [{{ioda:assignation ["turtles" "moverandomly" 0]}}]]
+</pre>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:get-breed-targets" class="outline-3">
+<h3 id="ioda:get-breed-targets"><a id="sec-7-21" name="sec-7-21"></a>ioda:get-breed-targets</h3>
+<div class="outline-text-3" id="text-ioda:get-breed-targets">
+</div>
+<div id="outline-container-sec-7-21-1" class="outline-4">
+<h4 id="sec-7-21-1">ioda:get-breed-targets <i>breed</i></h4>
+<div class="outline-text-4" id="text-7-21-1">
+<p>
+Reports a list of breeds (including patches) corresponding to
+agentsets which can be the target of interactions performed by this
+breed (eventually patches).
+</p>
+
+<pre class="example">
+;; load the "simple ecosystem" example and run the "setup" procedure first
+print ioda:get-breed-targets sheep
+=&gt; [patches sheep]  
+;; that means that sheep are able to perform interaction on patches and on other sheep
+</pre>
+</DIV>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8">Variables</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Several variables of the simulation engine are defined for internal
+use, thus they are not described here.
+</p>
+
+<DIV class="dict_entry">
+</div>
+<div id="outline-container-ioda:metric" class="outline-3">
+<h3 id="ioda:metric"><a id="sec-8-1" name="sec-8-1"></a>ioda:metric</h3>
+<div class="outline-text-3" id="text-ioda:metric">
+</div>
+<div id="outline-container-sec-8-1-1" class="outline-4">
+<h4 id="sec-8-1-1">ioda:metric</h4>
+<div class="outline-text-4" id="text-8-1-1">
+<p>
+The name of the metric used to compute distances between agents in the
+IODA NetLogo simulation.  In this version three metrics are
+pre-defined: "Euclidean", "Moore" and "Von Neumann". In order to
+prevent this variable to take invalid values, please use the
+<a href="#ioda:set-metric">ioda:set-metric</a> procedure to change the metric.
+</p>
+
+<p>
+See also <a href="#ioda:set-metric">ioda:set-metric</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:ordering-policy-for-selection" class="outline-3">
+<h3 id="ioda:ordering-policy-for-selection"><a id="sec-8-2" name="sec-8-2"></a>ioda:ordering-policy-for-selection</h3>
+<div class="outline-text-3" id="text-ioda:ordering-policy-for-selection">
+</div>
+<div id="outline-container-sec-8-2-1" class="outline-4">
+<h4 id="sec-8-2-1">ioda:ordering-policy-for-selection</h4>
+<div class="outline-text-4" id="text-8-2-1">
+<p>
+The task used for scheduling active agents during the interaction
+selection step. The default value for this variable is "random", which
+means that the list of active agents is shuffled at each tick (so as
+to avoid simulation biases). In order to prevent this variable to take
+invalid values, please use the
+<a href="#ioda:set-ordering-policy-for-interaction-selection">ioda:set-ordering-policy-for-interaction-selection</a> procedure to change
+the task.
+</p>
+
+<p>
+See also <a href="#ioda:set-ordering-policy-for-interaction-selection">ioda:set-ordering-policy-for-interaction-selection</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:ordering-policy-for-update" class="outline-3">
+<h3 id="ioda:ordering-policy-for-update"><a id="sec-8-3" name="sec-8-3"></a>ioda:ordering-policy-for-update</h3>
+<div class="outline-text-3" id="text-ioda:ordering-policy-for-update">
+</div>
+<div id="outline-container-sec-8-3-1" class="outline-4">
+<h4 id="sec-8-3-1">ioda:ordering-policy-for-update</h4>
+<div class="outline-text-4" id="text-8-3-1">
+<p>
+The task used for scheduling labile agents during the update step. The
+default value for this variable is "random", which means that the list
+of labile agents is shuffled at each tick (so as to avoid simulation
+biases). In order to prevent this variable to take invalid values,
+please use the <a href="#ioda:set-ordering-policy-for-update">ioda:set-ordering-policy-for-update</a> procedure to change
+the task.
+</p>
+
+<p>
+See also <a href="#ioda:set-ordering-policy-for-update">ioda:set-ordering-policy-for-update</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:performed-interactions" class="outline-3">
+<h3 id="ioda:performed-interactions"><a id="sec-8-4" name="sec-8-4"></a>ioda:performed-interactions</h3>
+<div class="outline-text-3" id="text-ioda:performed-interactions">
+</div>
+<div id="outline-container-sec-8-4-1" class="outline-4">
+<h4 id="sec-8-4-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:performed-interactions</h4>
+<div class="outline-text-4" id="text-8-4-1">
+<p>
+The list of actual interactions that have been performed during one
+interaction selection step within the run of the <code>ioda:go</code>
+procedure. This can be useful for statistics or debugging. The list
+contains items of the form [/source-agent/ <i>interaction-name</i>
+<i>target-agent/], where /target-agent</i> is <code>nobody</code> in reflexive
+interactions.
+</p>
+
+<p>
+See also <a href="#ioda:performed-updates">ioda:performed-updates</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:performed-updates" class="outline-3">
+<h3 id="ioda:performed-updates"><a id="sec-8-5" name="sec-8-5"></a>ioda:performed-updates</h3>
+<div class="outline-text-3" id="text-ioda:performed-updates">
+</div>
+<div id="outline-container-sec-8-5-1" class="outline-4">
+<h4 id="sec-8-5-1"><img src="images/turtle.gif" alt="turtle.gif"> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:performed-updates</h4>
+<div class="outline-text-4" id="text-8-5-1">
+<p>
+The list of actual interactions that have been performed during one
+update step within the <code>ioda:go</code> procedure. This can be useful for
+statistics or debugging. The list contains items of the form
+[/source-agent/ /interaction-name/] (since all update interactions are
+reflexive interactions).
+</p>
+
+<p>
+See also <a href="#ioda:performed-interactions">ioda:performed-interactions</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:alive" class="outline-3">
+<h3 id="ioda:alive"><a id="sec-8-6" name="sec-8-6"></a>ioda:alive?  <BR> ioda:patch-alive?</h3>
+<div class="outline-text-3" id="text-ioda:alive">
+</div>
+<div id="outline-container-sec-8-6-1" class="outline-4">
+<h4 id="sec-8-6-1"><img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:alive?  <BR> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:patch-alive?</h4>
+<div class="outline-text-4" id="text-8-6-1">
+<p>
+Contains true if this agent (turtle or patch) is considered <i>alive</i> in
+the IODA model, i.e. allowed to perform or undergo interactions (from
+the interaction or update matrices). Otherwise, a <i>dead</i> agent cannot
+take part in the simulation.   <BR>
+<b>NB&nbsp; 1:</b> As the <i>alive</i> variable has a different name in turtles
+and patches, you should rather use <i>ioda:is-alive?</i> and <a href="#ioda:set-alive">ioda:set-alive</a>
+to inspect or modify this variable.   <BR>
+<b>NB&nbsp; 2:</b> The <i>alive</i> status can be used to ignore temporarily some
+agents without removing them from the simulation, since <i>dead</i> agents
+are not actually removed, unless they are explicitly <i>killed</i> using
+the <a href="#ioda:die">ioda:die</a> procedure. See for instance the <code>setup</code> and <code>go</code>
+procedures in the "ants and food" example.
+</p>
+
+<p>
+See also <a href="#ioda:die">ioda:die</a>, <i>ioda:is-alive?</i>, <a href="#ioda:set-alive">ioda:set-alive</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:decision" class="outline-3">
+<h3 id="ioda:decision"><a id="sec-8-7" name="sec-8-7"></a>ioda:decision  <BR> ioda:patch-decision</h3>
+<div class="outline-text-3" id="text-ioda:decision">
+</div>
+<div id="outline-container-sec-8-7-1" class="outline-4">
+<h4 id="sec-8-7-1"><img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:decision  <BR> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:patch-decision</h4>
+<div class="outline-text-4" id="text-8-7-1">
+<p>
+Contains the interaction and target that result from the interaction
+selection process of the agent. This depends on the interaction matrix
+and the neighboring agents.  <BR>
+<b>NB:</b> As the <i>decision</i> variable has a different name in turtles and
+patches, you should rather use <a href="#ioda:my-decision">ioda:my-decision</a> to inspect this
+variable.
+</p>
+
+<p>
+See also <a href="#ioda:my-decision">ioda:my-decision</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:neighbors" class="outline-3">
+<h3 id="ioda:neighbors"><a id="sec-8-8" name="sec-8-8"></a>ioda:neighbors  <BR> ioda:patch-neighbors</h3>
+<div class="outline-text-3" id="text-ioda:neighbors">
+</div>
+<div id="outline-container-sec-8-8-1" class="outline-4">
+<h4 id="sec-8-8-1"><img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:neighbors  <BR> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:patch-neighbors</h4>
+<div class="outline-text-4" id="text-8-8-1">
+<p>
+Contains the neighbors that have been perceived by the agent during this time step.<BR>
+<b>NB:</b> As the <i>neighbors</i> variable has a different name in turtles and
+patches, you should rather use <a href="#ioda:my-neighbors">ioda:my-neighbors</a> and
+<a href="#ioda:set-my-neighbors">ioda:set-my-neighbors</a> to inspect or modify this variable.
+</p>
+
+<p>
+See also <a href="#ioda:my-neighbors">ioda:my-neighbors</a>, <a href="#ioda:set-my-neighbors">ioda:set-my-neighbors</a>, <a href="#ioda:filter-neighbors-in-radius">ioda:filter-neighbors-in-radius</a>, 
+<a href="#ioda:filter-neighbors-on-patches">ioda:filter-neighbors-on-patches</a>
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:operative" class="outline-3">
+<h3 id="ioda:operative"><a id="sec-8-9" name="sec-8-9"></a>ioda:operative?  <BR> ioda:patch-operative?</h3>
+<div class="outline-text-3" id="text-ioda:operative">
+</div>
+<div id="outline-container-sec-8-9-1" class="outline-4">
+<h4 id="sec-8-9-1"><img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:operative?  <BR> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:patch-operative?</h4>
+<div class="outline-text-4" id="text-8-9-1">
+<p>
+Contains false if the agent has already performed an interaction or
+if it has been the target of an exclusive interaction within the
+current time step.  <BR> 
+<b>NB:</b> As the <i>operative</i> variable has a different name in turtles and
+patches, you should rather use <i>ioda:is-operative?</i>  and
+<a href="#ioda:set-operative">ioda:set-operative</a> to inspect or modify this variable.
+</p>
+
+<p>
+See also <i>ioda:is-operative?</i>, <a href="#ioda:set-operative">ioda:set-operative</a>.
+</p>
+</DIV>
+
+<DIV class="dict_entry">
+</div>
+</div>
+</div>
+<div id="outline-container-ioda:target" class="outline-3">
+<h3 id="ioda:target"><a id="sec-8-10" name="sec-8-10"></a>ioda:target  <BR> ioda:patch-target</h3>
+<div class="outline-text-3" id="text-ioda:target">
+</div>
+<div id="outline-container-sec-8-10-1" class="outline-4">
+<h4 id="sec-8-10-1"><img src="images/turtle.gif" alt="turtle.gif"> &nbsp; ioda:target  <BR> <img src="images/patch.gif" alt="patch.gif"> &nbsp; ioda:patch-target</h4>
+<div class="outline-text-4" id="text-8-10-1">
+<p>
+This variable can be useful to identify the actual or potential
+partner of an agent in an interaction.   <BR> <b>NB:</b>
+As the <i>target</i> variable has a different name in turtles and patches,
+you should rather use <a href="#ioda:my-target">ioda:my-target</a> to inspect this variable.
+</p>
+
+<p>
+See also <a href="#ioda:my-target">ioda:my-target</a>.
+</p>
+</DIV>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-contact" class="outline-2">
+<h2 id="contact"><a id="sec-9" name="sec-9"></a>Contact Information</h2>
+<div class="outline-text-2" id="text-contact">
+<p>
+Authors: Sébastien PICAULT, Nathan HALLEZ and Philippe MATHIEU
+</p>
+
+<p>
+Email: <b><code>ioda</code> <i>(at)</i> <code>univ-lille1.fr</code></b>
+</p>
+
+<p>
+Team Web Site: <a href="https://github.com/cristal-smac/">https://github.com/cristal-smac/</a>
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-terms" class="outline-2">
+<h2 id="terms"><a id="sec-10" name="sec-10"></a>Terms of Use</h2>
+<div class="outline-text-2" id="text-terms">
+
+<p>
+<a href="https://validator.w3.org/check?uri=referer">
+  <img src="images/valid-html401.png" alt="Valid HTML
+  4.01 Strict" height="31" width="88" style="float: right"></a>
+</p>
+
+<p>
+All contents &copy; 2008-2024 Sébastien PICAULT and Philippe MATHIEU &ndash; <a href="https://github.com/cristal-smac/">SMAC Research Team</a>
+ <BR> Centre de Recherche en Informatique, Signal et Automatique de Lille (CRIStAL), UMR CNRS 9189 
+ <BR> Université de Lille (Sciences et Technologies)
+&ndash; Cité Scientifique, F-59655 Villeneuve d'Ascq Cedex, FRANCE.
+</p>
+
+<p>
+The IODA NetLogo extension is free software: you can redistribute it
+and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+</p>
+
+<p>
+The IODA NetLogo extension is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+</p>
+
+<p>
+You should have received <a href="gpl.txt">a copy</a> of the GNU General Public License
+along with IODA NetLogo extension.  If not, see
+<a href="https://www.gnu.org/licenses">https://www.gnu.org/licenses</a>.
+ <BR> <BR> <BR>
+</p>
+
+<hr >
+<P class="center">
+<IMG SRC="images/URL.png" HEIGHT=80 ALT="https://github.com/cristal-smac/ioda"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-smac.png" HEIGHT=80 ALT="SMAC logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-cristal.png" HEIGHT=80 ALT="CRIStAL logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-cnrs.png" HEIGHT=80 ALT="CNRS logo"> &emsp;&emsp;&emsp;
+<IMG SRC="images/logo-UL1.png" HEIGHT=80 ALT="University of Lille logo">
+</P>
+<hr >
+
+<div class="smaller">
+<p>
+ <P class="center"> <i>Created with Emacs Org-mode</i>
+</p>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

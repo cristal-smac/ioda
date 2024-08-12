@@ -1,0 +1,51 @@
+; This file can be used to define your own interaction
+; matrix and update matrix.
+; SYNTAX:
+; <source> <interaction> <priority>
+; OR: <source> <interaction> <priority> UPDATE
+; OR: <source> <interaction> <priority> <target> <distance> [<target-selection-policy>]
+;
+; By default, each line is added to the appropriate matrix.
+; Lines starting with a '-' character are removed from the appropriate matrix.
+; Lines starting with a '+' character are added to the appropriate matrix ('+' is optional).
+;
+; NB1: this file is read as a CSV file, thus you can use any field separator char 
+; since you put it in the second argument of the ioda:load-matrices command.
+;
+; NB2: any non-letter, non-digit, non '+'/'-' character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+; This file can be used to define your own interaction
+; matrix and update matrix.
+; SYNTAX:
+; <source> <interaction> <priority>
+; OR: <source> <interaction> <priority> UPDATE
+; OR: <source> <interaction> <priority> <target> <distance> [<target-selection-policy>]
+;
+; NB1: this file is read as a CSV file, thus you can use any field separator char 
+; since you put it in the second argument of the ioda:load-matrices command.
+;
+; NB2: any non-letter, non-digit character at the beginning
+; of the line introduces a comment line. Empty lines are ignored.
+;
+
+knights		Rescue		100	princesses 0
+knights		Take		80	keys	   1
+knights		Inspect 	80	doors 	   1
+knights 	Unlock  	80	doors 	   1
+knights 	Open 		80	doors 	   1
+knights 	MakeDetour 	70	keys 	   3
+knights 	AddToGoals 	50   	doors 	   2
+knights		MoveTowards 	40	princesses Infinity
+knights		MoveTowards 	30	doors 	   Infinity	BEST:proximity
+knights 	MoveTowards 	20  	keys 	   Infinity  	BEST:proximity
+knights 	Explore	    	10
+knights 	AddToGoals  	5	doors	   Infinity	BEST:proximity-and-chances
+knights 	AddToNeeds  	3	keys  	   Infinity	BEST:proximity
+knights		Fail	    	0
+
+knights 	UpdateView 	30 	UPDATE
+knights 	StopExploration 20	UPDATE
+knights 	SimplifyGoals 	5 	UPDATE
+knights 	ResetMemory 	0 	UPDATE
