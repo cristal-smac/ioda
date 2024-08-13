@@ -1,4 +1,4 @@
-package fr.lifl.ioda;
+package fr.cristal.ioda;
 
 import java.util.LinkedHashMap ;
 import java.util.ArrayList ;

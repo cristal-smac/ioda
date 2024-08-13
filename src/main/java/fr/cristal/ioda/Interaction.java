@@ -1,4 +1,4 @@
-package fr.lifl.ioda;
+package fr.cristal.ioda;
 
 import java.util.List;
 import java.util.WeakHashMap ;

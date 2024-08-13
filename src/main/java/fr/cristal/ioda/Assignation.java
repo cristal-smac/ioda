@@ -1,4 +1,4 @@
-package fr.lifl.ioda;
+package fr.cristal.ioda;
 
 import org.nlogo.api.*;
 import org.nlogo.api.Command;

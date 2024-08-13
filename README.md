@@ -112,6 +112,18 @@ U. WILENSKY (1999),
 Center for Connected Learning and Computer-Based Modeling,
 Northwestern University.  Evanston, IL.
 
+How to rebuild
+--------------
+
+If you introduce changes in the Java files, the jar file can be rebuilt using Maven:
+
+```
+mvn clean package
+mv target/ioda.jar .
+mvn clean 
+```
+
+
 License
 -------
 

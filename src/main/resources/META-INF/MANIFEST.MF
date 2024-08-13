@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
 Extension-Name: ioda
-Class-Manager: IodaExtension
+Class-Manager: fr.cristal.ioda.IodaExtension
 NetLogo-Extension-API-Version: 6.1
