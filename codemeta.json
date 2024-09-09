@@ -1,0 +1,82 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/GPL-3.0+",
+    "codeRepository": "https://github.com/cristal-smac/ioda",
+    "dateCreated": "2001-03-16",
+    "datePublished": "2018-07-01",
+    "dateModified": "2022-05-12",
+    "name": "ioda",
+    "version": "1.0",
+    "description": "IODA is an extension to the NETLOGO software, enabling programming in NETLOGO according to the IODA interaction-centered methodology. Agents are defined by the skills they can undergo or perform, using an interaction matrix.",
+    "Applicationcategory": "Research, Education",
+    "releaseNotes": "Bug Fixes",
+    "developmentStatus": "active",
+    "isPartOf": "https://github.com/cristal-smac",
+    "referencePublication": "https://inria.hal.science/hal-00825534",
+    "keywords": [
+        "NETLOGO",
+	"Interactions",
+        "Multi-Agent Systems",
+        "Distributed Artificial Intelligence"
+    ],
+    "programmingLanguage": [
+        "Java"
+    ],
+    "operatingSystem": [
+        "Linux",
+        "Windows",
+        "MacOS"
+    ],
+    "softwareRequirements": [
+        "Java 1.7"
+    ],
+    "author": [
+	{
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0001-9029-0555",
+            "givenName": "Sebastien",
+            "familyName": "PICAULT",
+            "email": "Sébastien Picault <sebastien.picault@inrae.fr>",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Univ. Lille, CNRS, Centrale Lille, UMR 9189 - CRIStAL, F-59000 Lille, France"
+            }
+		},
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0003-2786-1209",
+            "givenName": "Philippe",
+            "familyName": "MATHIEU",
+            "email": "philippe.mathieu@univ-lille.fr",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Univ. Lille, CNRS, Centrale Lille, UMR 9189 - CRIStAL, F-59000 Lille, France"
+            }
+        }
+    ],
+    "contributor": [
+	{
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0001-9029-0555",
+            "givenName": "Sebastien",
+            "familyName": "PICAULT",
+            "email": "Sébastien Picault <sebastien.picault@inrae.fr>",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Univ. Lille, CNRS, Centrale Lille, UMR 9189 - CRIStAL, F-59000 Lille, France"
+            }
+	},
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0003-2786-1209",
+            "givenName": "Philippe",
+            "familyName": "MATHIEU",
+            "email": "philippe.mathieu@univ-lille.fr",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Univ. Lille, CNRS, Centrale Lille, UMR 9189 - CRIStAL, F-59000 Lille, France"
+            }
+        }
+    ]
+}
